@@ -8,7 +8,7 @@ final public class APIKeys {
 		return "";
 	}
 	
-	final public static String ParseClientID() {
+	final public static String ParseClientKey() {
 		return "";
 	}
 }
