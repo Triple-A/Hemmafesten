@@ -7,29 +7,31 @@ import com.parse.ParseObject;
 
 public class PartyController {
 	
-	private String partyCode;
+	private String accessCode;
 	private boolean isCreator;
+	private ParseObject party;
 
-	public PartyController() {  // creating a new party
-		super();
+	public PartyController(String name, String pass) {  // creating a new party
+		//super();
 		this.isCreator = true;
-		partyCode = partySessionCode();
-		ParseObject party = new ParseObject("Party");
-		party.put("code", partyCode);
+		accessCode = partySessionCode();
+		party = new ParseObject("Party");
+		party.put("name", name);
+		party.put("accessCode", accessCode);
 		party.saveInBackground();
 	}
 	
 	public PartyController(String pc) {  // joining an existing party    Have to add check that party exists!!!!!!
 		super();
 		this.isCreator = false;
-		this.partyCode = pc;
+		this.accessCode = pc;
 	}
 	
 	public void addSong(String songId){  // add song to party
-		if(partyCode != null){
+		if(party != null){
 			ParseObject song = new ParseObject("Song");
-			song.put("party", partyCode);
-			song.put("songId", songId);
+			song.put("party", party);
+			song.put("spotifyURI", songId);
 			song.saveInBackground();
 		}
 	}
@@ -38,9 +40,21 @@ public class PartyController {
 	
 
 	  
+	public String getAccessCode() {
+		return accessCode;
+	}
+
+	public boolean isCreator() {
+		return isCreator;
+	}
+
+	public ParseObject getParty() {
+		return party;
+	}
+
 	private String partySessionCode() {
 		SecureRandom random = new SecureRandom();
-	    return new BigInteger(130, random).toString(32);
+	    return new BigInteger(50, random).toString(32);
 	}
 
 
