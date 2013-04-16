@@ -1,15 +1,9 @@
 package se.chalmers.hemmafesten;
 
-import android.util.Log;
-
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.security.SecureRandom;
-import java.util.List;
 import java.math.BigInteger;
+import java.security.SecureRandom;
+
+import com.parse.ParseObject;
 
 public class PartyController {
 	
@@ -25,24 +19,22 @@ public class PartyController {
 		party.saveInBackground();
 	}
 	
-	public PartyController(String pc) {  // joining an existing party
+	public PartyController(String pc) {  // joining an existing party    Have to add check that party exists!!!!!!
 		super();
 		this.isCreator = false;
-
-
-		ParseQuery query = new ParseQuery("Party");
-		query.whereEqualTo("code", pc);
-		query.findInBackground(new FindCallback() {
-		    public void done(List<ParseObject> partyList, ParseException e) {
-		        if (e == null || partyList.size() < 1) {
-		        	
-		        } else {
-		            Log.d("party", "Error: " + e.getMessage());
-		        }
-		    }
-
-		});
+		this.partyCode = pc;
 	}
+	
+	public void addSong(String songId){  // add song to party
+		if(partyCode != null){
+			ParseObject song = new ParseObject("Song");
+			song.put("party", partyCode);
+			song.put("songId", songId);
+			song.saveInBackground();
+		}
+	}
+	
+	
 	
 
 	  
