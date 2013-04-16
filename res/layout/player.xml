@@ -6,6 +6,9 @@
     
     
     <include layout="@layout/top_info_bar"/>
+    
+    
+    <include layout="@layout/queue"/>
 
 
 
