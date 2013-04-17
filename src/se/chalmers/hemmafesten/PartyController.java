@@ -1,47 +1,88 @@
 package se.chalmers.hemmafesten;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 
+
+import android.util.Log;
+
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 public class PartyController {
 	
-	private String accessCode;
 	private boolean isCreator;
-	private ParseObject party;
+	private ParseObject party = null;
+	private String accessCode;
 
-	public PartyController(String name, String pass) {  // creating a new party
-		//super();
+	public PartyController() {  // creating a new party
 		this.isCreator = true;
-		accessCode = partySessionCode();
 		party = new ParseObject("Party");
-		party.put("name", name);
-		party.put("accessCode", accessCode);
 		party.saveInBackground();
 	}
 	
-	public PartyController(String pc) {  // joining an existing party    Have to add check that party exists!!!!!!
-		super();
-		this.isCreator = false;
-		this.accessCode = pc;
+	
+	/**
+	 * 
+	 * @param accessCode
+	 */
+	public PartyController(String accessCode) {  // joining an existing party
+		ParseQuery query = new ParseQuery("party");
+		query.getInBackground(accessCode, new GetCallback() {
+		  public void done(ParseObject object, ParseException e) {
+		    if (e == null) {
+		    	party = object;
+		    	isCreator = false;
+		    } else {
+		      // something went wrong
+		    }
+		  }
+		});
 	}
 	
-	public void addSong(String songId){  // add song to party
+	
+	/**
+	 * Adds a "song"(spotify uri) to the Song table in parse and a relation between current party and the new song
+	 * 
+	 * @param spotifyURI Spotify uri as a string
+	 */
+	public void addSong(String spotifyURI){  // add song to party
 		if(party != null){
-			ParseObject song = new ParseObject("Song");
-			song.put("party", party);
-			song.put("spotifyURI", songId);
-			song.saveInBackground();
+			try {
+				ParseObject song = new ParseObject("Song");
+				song.put("spotifyURI", spotifyURI);
+				song.save();
+				
+				ParseRelation relation = party.getRelation("songs");
+				relation.add(song);
+				party.saveInBackground();
+			} catch (ParseException e) {
+				Log.d("addSong","SpotifyURI: "+ spotifyURI + " could not be added to party: "+party);
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	
-	
+	/**
+	 * setts the name of current party
+	 * @param name New name as a string
+	 */
+	public void setName(String name){
+		if(party != null){
+			party.put("name", name);
+			party.saveInBackground();
+		}
+	}
 
-	  
-	public String getAccessCode() {
-		return accessCode;
+	
+	/**
+	 * doesnt work at the moment?
+	 * @return
+	 */
+	public String getAccessCode() {         //// diskutera både alternativ lösning och varför inte ddetta funkar!!!!
+		return party.getObjectId();
 	}
 
 	public boolean isCreator() {
@@ -51,15 +92,5 @@ public class PartyController {
 	public ParseObject getParty() {
 		return party;
 	}
-
-	private String partySessionCode() {
-		SecureRandom random = new SecureRandom();
-	    return new BigInteger(50, random).toString(32);
-	}
-
-
-	
-	
-
 
 }
