@@ -6,16 +6,16 @@ import android.view.Menu;
 
 public class CreatePartyActivity extends Activity {
 	
-	private static PartyController party = PartyController.getInstance();
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_party);
+		PartyController.createParty();
+		PartyController pc = PartyController.getInstance();
 		
-	}
-
-	
+		String string = getString(R.string.Connection_code_name, PartyController.getInstance().getAccessCode());
+	}	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

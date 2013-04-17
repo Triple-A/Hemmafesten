@@ -25,13 +25,13 @@ public class PartyController {
 		return instance;
 	}
 	
-	public void createParty(){
+	public static void createParty(){
 		if(instance == null){
 			instance = new PartyController();
 		}
 	}
 	
-	public void joinParty(String accessCode){
+	public static void joinParty(String accessCode){
 		if(instance == null){
 			instance = new PartyController(accessCode);
 		}else{
