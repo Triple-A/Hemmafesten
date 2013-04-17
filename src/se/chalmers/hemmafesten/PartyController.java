@@ -18,7 +18,6 @@ public class PartyController {
 	
 	private boolean isCreator;
 	private ParseObject party = null;
-	private String accessCode;
 
 	
 	public static PartyController getInstance(){
@@ -44,9 +43,15 @@ public class PartyController {
 	 * Construct for creating a new party
 	 */
 	private PartyController() {  // creating a new party
-		this.isCreator = true;
-		party = new ParseObject("Party");
-		party.saveInBackground();
+		
+		try {
+			this.isCreator = true;
+			party = new ParseObject("Party");
+			party.save();
+		} catch (ParseException e) {
+			// TODO add logcat here
+			e.printStackTrace();
+		}
 	}
 	
 	
