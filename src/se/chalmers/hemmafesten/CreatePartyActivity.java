@@ -12,8 +12,6 @@ public class CreatePartyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_party);
-		//party.createParty();
-		//String string = getString(R.string.Connection_code_name, party.getAccessCode());
 		
 	}
 
