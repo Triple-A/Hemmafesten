@@ -3,6 +3,7 @@ package se.chalmers.hemmafesten;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class CreatePartyActivity extends Activity {
 	
@@ -13,9 +14,10 @@ public class CreatePartyActivity extends Activity {
 		setContentView(R.layout.activity_create_party);
 		PartyController.createParty();
 		PartyController pc = PartyController.getInstance();
-		
-		String string = getString(R.string.Connection_code_name, PartyController.getInstance().getAccessCode());
-	}	
+		TextView txt;
+		txt = (TextView)findViewById(R.id.info_bar_partycode);
+		txt.setText("Accesscode: " + pc.getAccessCode());
+		}	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
