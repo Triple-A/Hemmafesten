@@ -22,7 +22,7 @@ public class PartyController {
 	private String accessCode;
 
 	
-	public PartyController getInstance(){
+	public static PartyController getInstance(){
 		return instance;
 	}
 	
