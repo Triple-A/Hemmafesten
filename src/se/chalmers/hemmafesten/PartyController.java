@@ -64,7 +64,6 @@ public class PartyController {
 		}
 	}
 	
-	
 	/**
 	 * setts the name of current party
 	 * @param name New name as a string
