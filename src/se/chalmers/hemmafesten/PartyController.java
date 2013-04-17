@@ -15,20 +15,28 @@ import com.parse.ParseRelation;
 public class PartyController {
 	
 	private static PartyController instance = null;
-	
 	private boolean isCreator;
 	private ParseObject party = null;
 
 	
+	/**
+	 * Party has to be crated or joined before instance can be returned 
+	 * use static methods createParty() or joinParty(String accessCode) before.
+	 * @return PartyController instance or null
+	 */
 	public static PartyController getInstance(){
 		return instance;
 	}
 	
+	/**
+	 * initiates a party instance.
+	 */
 	public static void createParty(){
 		if(instance == null){
 			instance = new PartyController();
 		}
 	}
+	
 	
 	public static void joinParty(String accessCode){
 		if(instance == null){
@@ -49,7 +57,7 @@ public class PartyController {
 			party = new ParseObject("Party");
 			party.save();
 		} catch (ParseException e) {
-			// TODO add logcat here
+			Log.d("PartyController","create construct: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -66,7 +74,9 @@ public class PartyController {
 		    if (e == null) {
 		    	party = object;
 		    	isCreator = false;
+		    	Log.d("PartyController","join construct: joined party: "+ party.toString());
 		    } else {
+		    	Log.d("PartyController","join construct: " + e.getMessage());
 		      // something went wrong
 		    }
 		  }
@@ -114,7 +124,7 @@ public class PartyController {
 	 * @return
 	 */
 	public String getAccessCode() {         //// diskutera både alternativ lösning och varför inte ddetta funkar!!!!
-		return party.getObjectId();
+		return party.getObjectId().toString();
 	}
 
 	public boolean isCreator() {
@@ -123,6 +133,18 @@ public class PartyController {
 
 	public ParseObject getParty() {
 		return party;
+	}
+	
+	public void killParty(){
+		
+		if(isCreator){
+			party.deleteInBackground();
+			Log.d("PartyController","killParty: Creator is killing the party");
+		}else{
+			Log.d("PartyController","killParty: joiner is leaving the party");
+		}
+		party = null;
+		instance = null;
 	}
 	
 	public List<ParseObject> getList(){

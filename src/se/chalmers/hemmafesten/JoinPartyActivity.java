@@ -2,8 +2,11 @@ package se.chalmers.hemmafesten;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.support.v4.app.NavUtils;
 
 public class JoinPartyActivity extends Activity {
@@ -12,20 +15,31 @@ public class JoinPartyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_join_party);
-		/////////////////////////////////////////////////////////////////
-		/////test area  remove later
-		
-		PartyController.createParty();
-		PartyController pc = PartyController.getInstance();
-		
-		pc.addSong("hej hej hej");
-		
-		
-		
-		///////////////////////////////////////////////////////////////
 		// Show the Up button in the action bar.
+		
 		setupActionBar();
 	}
+	
+	
+	/**
+	 * connect to party 
+	 * @param sender
+	 */
+	public void onConnect(View sender){
+		EditText et = (EditText)findViewById(R.id.accessInput);
+		String accessCode = et.getText().toString();
+		PartyController.joinParty(accessCode);
+		PartyController pc = PartyController.getInstance();
+		if( pc == null){
+			//could not connect!!!!!!
+			Log.d("onConnect","could not connect");
+		}else{
+			Log.d("onConnect","connected to: " + pc.getAccessCode());
+		}
+			
+	}
+	
+	
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.

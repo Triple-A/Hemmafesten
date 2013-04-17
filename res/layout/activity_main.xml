@@ -28,6 +28,7 @@
         android:layout_below="@+id/create_new_party_button"
         android:layout_marginTop="52dp"
         android:text="@string/join_a_party_button_title"
-        android:name="joinParty" />
+        android:name="joinParty"
+        android:onClick="joinParty" />
 
 </RelativeLayout>
