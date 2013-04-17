@@ -1,5 +1,6 @@
 package se.chalmers.hemmafesten;
 
+import se.chalmers.hemmafesten.PartyController.Status;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -26,17 +27,23 @@ public class JoinPartyActivity extends Activity {
 	 * @param sender
 	 */
 	public void onConnect(View sender){
-		EditText et = (EditText)findViewById(R.id.accessInput);
-		String accessCode = et.getText().toString();
-		PartyController.joinParty(accessCode);
-		PartyController pc = PartyController.getInstance();
-		if( pc == null){
-			//could not connect!!!!!!
-			Log.d("onConnect","could not connect");
-		}else{
-			Log.d("onConnect","connected to: " + pc.getAccessCode());
-		}
+		switch(PartyController.getStatus()){
+			case FREE:
+				EditText et = (EditText)findViewById(R.id.accessInput);
+				String accessCode = et.getText().toString();
+				PartyController.joinParty(accessCode);   ////  accessCode
+				if(PartyController.getStatus() == Status.GUEST){
+					Log.i("JoinPartyActivity","onConnect: connected to: " + PartyController.getInstance().getParty());
+				}else{
+					//could not connect!!!!!!
+					Log.e("JoinPartyActivity","onConnect: could not connect");
+				}
+				break;
+			case HOST:
+			case GUEST:
+			case FAILED:
 			
+		}
 	}
 	
 	

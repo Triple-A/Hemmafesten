@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -17,10 +16,17 @@ public class PartyController {
 	private static PartyController instance = null;
 	private boolean isCreator;
 	private ParseObject party = null;
+	private static Status status = Status.FREE;
+	public enum Status {
+	    FREE,
+	    HOST,
+	    GUEST,
+	    FAILED
+	}
 
 	
 	/**
-	 * Party has to be crated or joined before instance can be returned 
+	 * Party has to be created or joined before instance can be returned 
 	 * use static methods createParty() or joinParty(String accessCode) before.
 	 * @return PartyController instance or null
 	 */
@@ -40,7 +46,12 @@ public class PartyController {
 	
 	public static void joinParty(String accessCode){
 		if(instance == null){
-			instance = new PartyController(accessCode);
+			PartyController tmp = new PartyController(accessCode);
+			if(status == Status.GUEST){
+				instance = tmp;
+			}else if(status == Status.FAILED){
+				//failed to join party
+			}
 		}else{
 			// add code for telling you that you'r already connected to a party?
 		}
@@ -56,9 +67,11 @@ public class PartyController {
 			this.isCreator = true;
 			party = new ParseObject("Party");
 			party.save();
+			status = Status.HOST;
+			Log.e("PartyController","PartyController(): party created");
 		} catch (ParseException e) {
-			Log.d("PartyController","create construct: " + e.getMessage());
-			e.printStackTrace();
+			Log.e("PartyController","PartyController(): failed: " + e.getMessage());
+			status = Status.FAILED;
 		}
 	}
 	
@@ -68,19 +81,19 @@ public class PartyController {
 	 * @param accessCode
 	 */
 	private PartyController(String accessCode) {  // joining an existing party
-		ParseQuery query = new ParseQuery("party");
-		query.getInBackground(accessCode, new GetCallback() {
-		  public void done(ParseObject object, ParseException e) {
-		    if (e == null) {
-		    	party = object;
+		try {
+			ParseQuery query = new ParseQuery("Party");
+			party = query.get(accessCode);
+			if(party != null){
 		    	isCreator = false;
-		    	Log.d("PartyController","join construct: joined party: "+ party.toString());
-		    } else {
-		    	Log.d("PartyController","join construct: " + e.getMessage());
-		      // something went wrong
-		    }
-		  }
-		});
+		    	status = Status.GUEST;
+		    	Log.i("PartyController","PartyController(String accessCode): joined party: "+ party.toString());
+			}
+		} catch (ParseException e) {
+			Log.e("PartyController","PartyController(String accessCode): failed: " + e.getMessage());
+	    	status = Status.FAILED;
+	      // something went wrong
+		}
 	}
 	
 	
@@ -101,14 +114,13 @@ public class PartyController {
 				relation.add(song);
 				party.saveInBackground();
 			} catch (ParseException e) {
-				Log.d("addSong","SpotifyURI: "+ spotifyURI + " could not be added to party: "+party);
-				e.printStackTrace();
+				Log.e("PartyController","addSong: SpotifyURI: "+ spotifyURI + " could not be added to party: "+party);
 			}
 		}
 	}
 	
 	/**
-	 * setts the name of current party
+	 * sets the name of current party
 	 * @param name New name as a string
 	 */
 	public void setName(String name){
@@ -139,12 +151,17 @@ public class PartyController {
 		
 		if(isCreator){
 			party.deleteInBackground();
-			Log.d("PartyController","killParty: Creator is killing the party");
+			Log.i("PartyController","killParty: Creator is killing the party");
 		}else{
-			Log.d("PartyController","killParty: joiner is leaving the party");
+			Log.i("PartyController","killParty: joiner is leaving the party");
 		}
 		party = null;
 		instance = null;
+		status = Status.FREE;
+	}
+	
+	public static Status getStatus(){
+		return status;
 	}
 	
 	public List<ParseObject> getList(){
@@ -153,10 +170,17 @@ public class PartyController {
 			query.whereEqualTo("party", party);
 			return query.find();
 		} catch (ParseException e) {
-			e.printStackTrace();
+			Log.e("PartyController", "getList: " + e.getMessage());
 		}
 		return null;
-		
 	}
+
+	@Override
+	public String toString() {
+		return "PartyController [isCreator=" + isCreator + ", party=" + party
+				+ "]";
+	}
+	
+	
 
 }
