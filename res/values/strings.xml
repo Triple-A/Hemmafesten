@@ -8,5 +8,7 @@
     <string name="join_a_party_button_title">Join a party</string>
     <string name="Connection_code_name">Code: </string>
     <string name="title_activity_create_party">CreatePartyActivity</string>
+    <string name="title_activity_join_party">JoinPartyActivity</string>
+    <string name="title_activity_party">PartyActivity</string>
 
 </resources>

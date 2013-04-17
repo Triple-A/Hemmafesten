@@ -5,7 +5,6 @@ import com.parse.Parse;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -27,15 +26,13 @@ public class MainActivity extends Activity {
     
     
     public void createParty(View sender) {
-    	/*Intent createPartyIntent = new Intent(MainActivity.this, null);
-    	MainActivity.this.startActivity(createPartyIntent);*/
-    	Intent myIntent = new Intent(this, CreatePartyActivity.class);
-    	startActivity(myIntent);
+    	Intent createIntent = new Intent(this, CreatePartyActivity.class);
+    	startActivity(createIntent);
     }
     
     
     public void joinParty(View sender) {
-    	Intent joinPartyIntent = new Intent(MainActivity.this, null);
-    	MainActivity.this.startActivity(joinPartyIntent);
+    	Intent joinIntent = new Intent(this, JoinPartyActivity.class);
+    	startActivity(joinIntent);
     }
 }
