@@ -24,10 +24,14 @@ public class MainActivity extends Activity {
         return true;
     }
     
+    
     public void createParty(View sender) {
-    	Intent createPartyIntent = new Intent(MainActivity.this, null);
-    	MainActivity.this.startActivity(createPartyIntent);
+    	/*Intent createPartyIntent = new Intent(MainActivity.this, null);
+    	MainActivity.this.startActivity(createPartyIntent);*/
+    	Intent myIntent = new Intent(this, CreatePartyActivity.class);
+    	startActivity(myIntent);
     }
+    
     
     public void joinParty(View sender) {
     	Intent joinPartyIntent = new Intent(MainActivity.this, null);

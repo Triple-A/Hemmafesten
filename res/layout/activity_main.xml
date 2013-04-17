@@ -16,7 +16,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
         android:text="@string/create_a_new_party_button_title"
-        android:name="createParty" />
+        android:name="createParty"
+        android:onClick="createParty" />
 
     <Button
         android:id="@+id/join_party_button"
