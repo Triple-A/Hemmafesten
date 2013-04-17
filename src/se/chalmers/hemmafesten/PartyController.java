@@ -34,9 +34,6 @@ public class PartyController {
 		}
 	}
 	
-	
-	
-
 	  
 	private String partySessionCode() {
 		SecureRandom random = new SecureRandom();
