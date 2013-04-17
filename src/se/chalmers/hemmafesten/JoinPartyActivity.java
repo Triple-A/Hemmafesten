@@ -12,6 +12,17 @@ public class JoinPartyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_join_party);
+		/////////////////////////////////////////////////////////////////
+		/////test area  remove later
+		
+		PartyController.createParty();
+		PartyController pc = PartyController.getInstance();
+		
+		pc.addSong("hej hej hej");
+		
+		
+		
+		///////////////////////////////////////////////////////////////
 		// Show the Up button in the action bar.
 		setupActionBar();
 	}
