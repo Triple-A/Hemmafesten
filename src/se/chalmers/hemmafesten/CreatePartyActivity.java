@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.view.Menu;
 
 public class CreatePartyActivity extends Activity {
+	
+	private static PartyController party = PartyController.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -13,6 +15,8 @@ public class CreatePartyActivity extends Activity {
 		
 	}
 
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
