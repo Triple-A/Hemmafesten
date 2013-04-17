@@ -5,10 +5,10 @@ package se.chalmers.hemmafesten;
 
 final public class APIKeys {
 	final public static String ParseApplicationID() {
-		return "";
+		return "IVQ694NtHRaYKClh8SYVocGI8f8S5ze0znQSTa8z";
 	}
 	
 	final public static String ParseClientKey() {
-		return "";
+		return "91upZwzFSnEsQqLjKj0W5X7GnxGSSSEpGoc6jzgE";
 	}
 }
