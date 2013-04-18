@@ -23,7 +23,7 @@ public class JoinPartyActivity extends Activity {
 		
 		if(PartyService.getStatus() == Status.FREE){
 			
-			String accessCode = this.getAccessCode();                  // get accessCode
+			String accessCode = this.getCodeInput();                  // gets the accessCode from input
 			
 			Intent partyIntent = new Intent(this, PartyService.class); //                          
 			partyIntent.putExtra("isCreator", false);                  //
@@ -31,12 +31,12 @@ public class JoinPartyActivity extends Activity {
 			startService(partyIntent);                                 // Starting partyService
 			
 			if(PartyService.getStatus() == Status.GUEST){              // success!!
-				Log.i("JoinPartyActivity","onConnect: connected to: " + PartyService.getParty());
+				Log.i("JoinPartyActivity","onClickConnect: connected to: " + PartyService.getParty().getAccessCode());
 				
 				/// todo: switch screen to PartyActivity
 				
 			}else if(PartyService.getStatus() == Status.FAILED){       //fail
-				Log.e("JoinPartyActivity","onConnect: could not connect to party: "+ accessCode);
+				Log.e("JoinPartyActivity","onClickConnect: unable to connect to party: "+ accessCode);
 				
 				//todo:  reset service and ask user to try again???
 				
@@ -48,13 +48,13 @@ public class JoinPartyActivity extends Activity {
 	}
 	
 	
-	private String getAccessCode(){
+	private String getCodeInput(){
 		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
 		return et.getText().toString();             			// get accessCode
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////
-	//auto generated code
+
 
 	
 	@Override
