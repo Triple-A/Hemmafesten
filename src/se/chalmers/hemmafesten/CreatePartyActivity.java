@@ -12,11 +12,9 @@ public class CreatePartyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_party);
-		PartyController.createParty();
-		PartyController pc = PartyController.getInstance();
 		TextView txt;
 		txt = (TextView)findViewById(R.id.info_bar_partycode);
-		txt.setText("Accesscode: " + pc.getAccessCode());
+		//txt.setText("Accesscode: " + pc.getAccessCode());
 		}	
 	
 	@Override

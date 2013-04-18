@@ -13,65 +13,19 @@ import com.parse.ParseRelation;
 
 public class PartyController {
 	
-	private static PartyController instance = null;
-	private boolean isCreator;
 	private ParseObject party = null;
-	private static Status status = Status.FREE;
-	public enum Status {
-	    FREE,
-	    HOST,
-	    GUEST,
-	    FAILED
-	}
+	
 
-	
-	/**
-	 * Party has to be created or joined before instance can be returned 
-	 * use static methods createParty() or joinParty(String accessCode) before.
-	 * @return PartyController instance or null
-	 */
-	public static PartyController getInstance(){
-		return instance;
-	}
-	
-	/**
-	 * initiates a party instance.
-	 */
-	public static void createParty(){
-		if(instance == null){
-			instance = new PartyController();
-		}
-	}
-	
-	
-	public static void joinParty(String accessCode){
-		if(instance == null){
-			PartyController tmp = new PartyController(accessCode);
-			if(status == Status.GUEST){
-				instance = tmp;
-			}else if(status == Status.FAILED){
-				//failed to join party
-			}
-		}else{
-			// add code for telling you that you'r already connected to a party?
-		}
-		
-	}
-	
 	/**
 	 * Construct for creating a new party
 	 */
-	private PartyController() {  // creating a new party
-		
+	 public PartyController() {  // creating a new party
 		try {
-			this.isCreator = true;
 			party = new ParseObject("Party");
 			party.save();
-			status = Status.HOST;
 			Log.e("PartyController","PartyController(): party created");
 		} catch (ParseException e) {
 			Log.e("PartyController","PartyController(): failed: " + e.getMessage());
-			status = Status.FAILED;
 		}
 	}
 	
@@ -80,18 +34,15 @@ public class PartyController {
 	 * construct for creating a partyController connected to an existing party
 	 * @param accessCode
 	 */
-	private PartyController(String accessCode) {  // joining an existing party
+	public PartyController(String accessCode) {  // joining an existing party
 		try {
 			ParseQuery query = new ParseQuery("Party");
 			party = query.get(accessCode);
 			if(party != null){
-		    	isCreator = false;
-		    	status = Status.GUEST;
 		    	Log.i("PartyController","PartyController(String accessCode): joined party: "+ party.toString());
 			}
 		} catch (ParseException e) {
 			Log.e("PartyController","PartyController(String accessCode): failed: " + e.getMessage());
-	    	status = Status.FAILED;
 	      // something went wrong
 		}
 	}
@@ -132,23 +83,19 @@ public class PartyController {
 
 	
 	/**
-	 * doesnt work at the moment?
-	 * @return
+	 * 
+	 * @return the accesCode of the party (string)
 	 */
-	public String getAccessCode() {         //// diskutera både alternativ lösning och varför inte ddetta funkar!!!!
+	public String getAccessCode() {
 		return party.getObjectId().toString();
 	}
 
-	public boolean isCreator() {
-		return isCreator;
-	}
 
-	public ParseObject getParty() {
+	public ParseObject getParty() {   /// is this needed??????????
 		return party;
 	}
 	
-	public void killParty(){
-		
+	public void killParty(boolean isCreator){
 		if(isCreator){
 			party.deleteInBackground();
 			Log.i("PartyController","killParty: Creator is killing the party");
@@ -156,12 +103,6 @@ public class PartyController {
 			Log.i("PartyController","killParty: joiner is leaving the party");
 		}
 		party = null;
-		instance = null;
-		status = Status.FREE;
-	}
-	
-	public static Status getStatus(){
-		return status;
 	}
 	
 	public List<ParseObject> getList(){
@@ -177,10 +118,7 @@ public class PartyController {
 
 	@Override
 	public String toString() {
-		return "PartyController [isCreator=" + isCreator + ", party=" + party
+		return "PartyController [party=" + party
 				+ "]";
 	}
-	
-	
-
 }
