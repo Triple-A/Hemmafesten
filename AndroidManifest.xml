@@ -45,6 +45,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.chalmers.hemmafesten.MainActivity" />
         </activity>
+        
+        <service
+  			android:name="PartyService"
+  			android:process=":party_service" 
+  			android:label="@string/service_name">
+		</service> 
     </application>
 
 </manifest>

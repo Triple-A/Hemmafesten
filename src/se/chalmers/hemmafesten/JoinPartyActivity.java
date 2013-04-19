@@ -1,7 +1,10 @@
 package se.chalmers.hemmafesten;
 
+import se.chalmers.hemmafesten.PartyService;
+import se.chalmers.hemmafesten.PartyService.Status;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,36 +14,57 @@ import android.support.v4.app.NavUtils;
 
 public class JoinPartyActivity extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_join_party);
-		// Show the Up button in the action bar.
-		
-		setupActionBar();
-	}
-	
 	
 	/**
 	 * connect to party 
 	 * @param sender
 	 */
-	public void onConnect(View sender){
-		EditText et = (EditText)findViewById(R.id.accessInput);
-		String accessCode = et.getText().toString();
-		PartyController.joinParty(accessCode);
-		PartyController pc = PartyController.getInstance();
-		if( pc == null){
-			//could not connect!!!!!!
-			Log.d("onConnect","could not connect");
-		}else{
-			Log.d("onConnect","connected to: " + pc.getAccessCode());
-		}
+	public void onClickConnect(View sender){
+		
+		if(PartyService.getStatus() == Status.FREE){
 			
+			String accessCode = this.getCodeInput();                  // gets the accessCode from input
+			
+			Intent partyIntent = new Intent(this, PartyService.class); //                          
+			partyIntent.putExtra("isCreator", false);                  //
+			partyIntent.putExtra("accessCode", accessCode);            //
+			startService(partyIntent);                                 // Starting partyService
+			
+			if(PartyService.getStatus() == Status.GUEST){              // success!!
+				Log.i("JoinPartyActivity","onClickConnect: connected to: " + PartyService.getParty().getAccessCode());
+				
+				/// todo: switch screen to PartyActivity
+				
+			}else if(PartyService.getStatus() == Status.FAILED){       //fail
+				Log.e("JoinPartyActivity","onClickConnect: unable to connect to party: "+ accessCode);
+				
+				//todo:  reset service and ask user to try again???
+				
+			}
+			
+		}else{
+			//PartyService busy
+		}
 	}
 	
 	
+	private String getCodeInput(){
+		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
+		return et.getText().toString();             			// get accessCode
+	}
+	
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_join_party);
+		// Show the Up button in the action bar.
+		setupActionBar();
+	}
+	
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */

@@ -36,6 +36,6 @@
         android:layout_below="@+id/accessInput"
         android:layout_marginTop="15dp"
         android:text="@string/connect_button_string"
-        android:onClick="onConnect" />
+        android:onClick="onClickConnect" />
 
 </RelativeLayout>
