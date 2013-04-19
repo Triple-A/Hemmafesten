@@ -5,7 +5,6 @@ import se.chalmers.hemmafesten.PartyService.Status;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,27 +19,14 @@ public class JoinPartyActivity extends Activity {
 	 * @param sender
 	 */
 	public void onClickConnect(View sender){
-		
 		if(PartyService.getStatus() == Status.FREE){
 			
-			String accessCode = this.getCodeInput();                  // gets the accessCode from input
 			
+			String accessCode = this.getCodeInput();                  // gets the accessCode from input
 			Intent partyIntent = new Intent(this, PartyService.class); //                          
 			partyIntent.putExtra("isCreator", false);                  //
 			partyIntent.putExtra("accessCode", accessCode);            //
 			startService(partyIntent);                                 // Starting partyService
-			
-			if(PartyService.getStatus() == Status.GUEST){              // success!!
-				Log.i("JoinPartyActivity","onClickConnect: connected to: " + PartyService.getParty().getAccessCode());
-				
-				/// todo: switch screen to PartyActivity
-				
-			}else if(PartyService.getStatus() == Status.FAILED){       //fail
-				Log.e("JoinPartyActivity","onClickConnect: unable to connect to party: "+ accessCode);
-				
-				//todo:  reset service and ask user to try again???
-				
-			}
 			
 		}else{
 			//PartyService busy
