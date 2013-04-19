@@ -11,5 +11,6 @@
     <string name="title_activity_party">PartyActivity</string>
     <string name="input_accessCode_string">Input AccessCode: </string>
     <string name="connect_button_string">Connect</string>
+    <string name="menu_search">Search</string>
 
 </resources>
