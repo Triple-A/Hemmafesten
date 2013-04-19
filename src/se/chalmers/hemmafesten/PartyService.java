@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 public class PartyService extends Service {
 	
@@ -23,22 +24,29 @@ public class PartyService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		
-		initiateParty(intent);
+		if(status == Status.FREE){
+			Parse.initialize(this, APIKeys.ParseApplicationID(), APIKeys.ParseClientKey());
+			initiateParty(intent);
+		}
 	    return Service.START_NOT_STICKY;
 	}
 	
 	private void initiateParty(Intent intent){
-		Parse.initialize(this, APIKeys.ParseApplicationID(), APIKeys.ParseClientKey());
+		
 		Bundle bundle = intent.getExtras();      // get passed parameters
 		
 		if(bundle.getBoolean("isCreator")){  // if service started by creator
 			pc = new PartyController();
-			status = Status.HOST;
+			status = ((pc != null) ? Status.HOST : Status.FAILED);
 		}else{                                // if service started by guest
 			String accessCode = bundle.getString("accessCode");
 			pc = new PartyController(accessCode);
-			status = Status.GUEST;
+			status = ((pc != null) ? Status.GUEST : Status.FAILED);
 		}
+	}
+	
+	public void addSong(String spotifyURI){
+		pc.addSong(spotifyURI);
 	}
 	
 	public static Status getStatus(){
@@ -46,6 +54,7 @@ public class PartyService extends Service {
 	}
 	
 	public static PartyController getParty() {
+		Log.d("debugg","steg ett" + pc);
 		return pc;
 	}
 	

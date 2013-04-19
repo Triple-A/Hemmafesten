@@ -26,18 +26,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="se.chalmers.hemmafesten.CreatePartyActivity"
-            android:label="@string/title_activity_create_party" >
-        </activity>
-        <activity
-            android:name="se.chalmers.hemmafesten.JoinPartyActivity"
-            android:label="@string/title_activity_join_party"
-            android:parentActivityName="se.chalmers.hemmafesten.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="se.chalmers.hemmafesten.MainActivity" />
-        </activity>
-        <activity
             android:name="se.chalmers.hemmafesten.PartyActivity"
             android:label="@string/title_activity_party"
             android:parentActivityName="se.chalmers.hemmafesten.MainActivity" >
