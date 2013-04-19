@@ -13,7 +13,7 @@
         <item
             android:id="@+id/leaveParty"
             android:title="Leave Party"
-            android:onClick="leavePartyClicked"/>
+        />
         <item
             android:id="@+id/menuSortRating"
             android:title="Saved Parties" />

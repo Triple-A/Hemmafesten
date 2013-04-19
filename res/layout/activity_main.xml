@@ -28,6 +28,7 @@
     <include
         android:id="@+id/joinFrame"
         layout="@layout/join_party"
-        android:visibility="gone" />
+        android:visibility="gone" 
+     />
 
 </LinearLayout>
