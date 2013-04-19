@@ -37,18 +37,12 @@ public class PartyService extends Service {
 		
 		if(bundle.getBoolean("isCreator")){  // if service started by creator
 			pc = new PartyController();
-			status = Status.HOST;
+			status = ((pc != null) ? Status.HOST : Status.FAILED);
 		}else{                                // if service started by guest
 			String accessCode = bundle.getString("accessCode");
 			pc = new PartyController(accessCode);
-			status = Status.GUEST;
+			status = ((pc != null) ? Status.GUEST : Status.FAILED);
 		}
-		
-		if(pc == null) status = Status.FAILED;
-		else{
-			addSong("testar " + status + "la till en låt");
-		}
-
 	}
 	
 	public void addSong(String spotifyURI){

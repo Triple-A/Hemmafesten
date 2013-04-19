@@ -1,19 +1,69 @@
 package se.chalmers.hemmafesten;
 
+import se.chalmers.hemmafesten.PartyService.Status;
+
 import com.parse.Parse;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.Layout;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
+    
+    
+    public void createParty(View sender) {
+    	createPartyService(true);
+    }
+    
+    
+    public void joinParty(View sender) {
+    	View joinFrame = findViewById(R.id.joinFrame);
+    	
+    	int visible = joinFrame.getVisibility();
+    	
+    	if(visible == 0){ //visible
+    		joinFrame.setVisibility(8);
+    	}else if(visible == 4){ // invisble
+    		joinFrame.setVisibility(0);
+    	}else{// 2 = gone
+    		joinFrame.setVisibility(0);
+    	}
+    	
+    }
+    
+    
+    /**
+     * Start partyService, 
+     * @param isCreator true=with new party. false = connected to existing party.
+     */
+    private void createPartyService(boolean isCreator){
+    	if(PartyService.getStatus() == Status.FREE){
+			Intent partyIntent = new Intent(this, PartyService.class); //                          
+			partyIntent.putExtra("isCreator", isCreator);                  //
+			if(isCreator) partyIntent.putExtra("accessCode", getCodeInput());
+			startService(partyIntent);                                 // Starting partyService
+		}else{
+				//PartyService busy
+		}
+    }
+    
+    private String getCodeInput(){
+		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
+		return et.getText().toString();             			// get accessCode
+	}
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Parse.initialize(this, APIKeys.ParseApplicationID(), APIKeys.ParseClientKey());
         setContentView(R.layout.activity_main);
     }
 
@@ -22,17 +72,5 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-    
-    
-    public void createParty(View sender) {
-    	Intent createIntent = new Intent(this, CreatePartyActivity.class);
-    	startActivity(createIntent);
-    }
-    
-    
-    public void joinParty(View sender) {
-    	Intent joinIntent = new Intent(this, JoinPartyActivity.class);
-    	startActivity(joinIntent);
     }
 }
