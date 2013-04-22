@@ -7,7 +7,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
+
 
 public class PartyService extends Service {
 	
@@ -54,7 +54,6 @@ public class PartyService extends Service {
 	}
 	
 	public static PartyController getParty() {
-		Log.d("debugg","steg ett" + pc);
 		return pc;
 	}
 	

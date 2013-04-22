@@ -5,9 +5,13 @@ import se.chalmers.hemmafesten.PartyService.Status;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
@@ -35,6 +39,11 @@ public class MainActivity extends Activity {
     }
     
     
+    public void clickConnect(View sender){
+    	createPartyService(false);
+    }
+    
+    
     /**
      * Start partyService, 
      * @param isCreator true=with new party. false = connected to existing party.
@@ -43,7 +52,7 @@ public class MainActivity extends Activity {
     	if(PartyService.getStatus() == Status.FREE){
 			Intent partyIntent = new Intent(this, PartyService.class); //                          
 			partyIntent.putExtra("isCreator", isCreator);                  //
-			if(isCreator) partyIntent.putExtra("accessCode", getCodeInput());
+			if(!isCreator) partyIntent.putExtra("accessCode", getCodeInput());
 			startService(partyIntent);                                 // Starting partyService
 		}else{
 				//PartyService busy
@@ -54,6 +63,7 @@ public class MainActivity extends Activity {
 		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
 		return et.getText().toString();             			// get accessCode
 	}
+    
     
     
     ///////////////////////////////////////////////////////////////////////////////////////
