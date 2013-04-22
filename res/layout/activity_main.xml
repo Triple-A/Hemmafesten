@@ -14,7 +14,7 @@
         android:name="createParty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="createParty"
+        android:onClick="clickCreateParty"
         android:text="@string/create_a_new_party_button_title" />
 
     <Button
@@ -22,13 +22,12 @@
         android:name="joinParty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="joinParty"
+        android:onClick="clickJoinParty"
         android:text="@string/join_a_party_button_title" />
 
     <include
         android:id="@+id/joinFrame"
         layout="@layout/join_party"
-        android:visibility="gone" 
-     />
+        android:visibility="gone" />
 
 </LinearLayout>
