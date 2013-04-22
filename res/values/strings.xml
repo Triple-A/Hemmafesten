@@ -15,5 +15,6 @@
     <string name="leaveParty">Leave party</string>
     <string name="service_name">HemmaFestenService</string>
     <string name="title_activity_action_bar">ActionBarActivity</string>
+    <string name="active_party">Active Party</string>
 
 </resources>

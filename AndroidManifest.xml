@@ -36,8 +36,7 @@
 
         <service
             android:name="se.chalmers.hemmafesten.PartyService"
-            android:label="@string/service_name"
-            android:process=":party_service" >
+            android:label="@string/service_name">
         </service>
 
     </application>

@@ -1,22 +1,21 @@
 package se.chalmers.hemmafesten;
 
 import se.chalmers.hemmafesten.PartyService.Status;
-
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.content.ServiceConnection;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    
+	
     
     public void createParty(View sender) {
     	createPartyService(true);
@@ -32,7 +31,7 @@ public class MainActivity extends Activity {
     		joinFrame.setVisibility(8);
     	}else if(visible == 4){ // invisble
     		joinFrame.setVisibility(0);
-    	}else{// 2 = gone
+    	}else{// 8 = gone
     		joinFrame.setVisibility(0);
     	}
     	
@@ -54,6 +53,10 @@ public class MainActivity extends Activity {
 			partyIntent.putExtra("isCreator", isCreator);                  //
 			if(!isCreator) partyIntent.putExtra("accessCode", getCodeInput());
 			startService(partyIntent);                                 // Starting partyService
+			
+			Intent intent = new Intent(this, PartyActivity.class);
+			startActivity(intent);
+			
 		}else{
 				//PartyService busy
 		}
@@ -65,12 +68,51 @@ public class MainActivity extends Activity {
 	}
     
     
-    
     ///////////////////////////////////////////////////////////////////////////////////////
+    
+    private PartyService boundService;
+    private boolean mIsBound;
+	
+	
+	private ServiceConnection mConnection = new ServiceConnection() {
+	    public void onServiceConnected(ComponentName className, IBinder service) {
+	        boundService = ((PartyService.LocalBinder)service).getService();
+	        Toast.makeText(MainActivity.this, "testetaijföaosijrföaoijrföaoiwjregöoaijwre",
+	                Toast.LENGTH_SHORT).show();
+	    }
+
+	    public void onServiceDisconnected(ComponentName className) {
+	        boundService = null;
+	        Toast.makeText(MainActivity.this, "test",
+	                Toast.LENGTH_SHORT).show();
+	    }
+	};
+    
+    void doBindService() {
+        bindService(new Intent(this, PartyService.class), mConnection, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService() {
+        if (mIsBound) {
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+      /*  View activePartyButton = findViewById(R.id.active_party_button);
+        if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
+        	activePartyButton.setVisibility(0);
+        }else{
+        	activePartyButton.setVisibility(8);
+        }*/
+        
         setContentView(R.layout.activity_main);
     }
 
