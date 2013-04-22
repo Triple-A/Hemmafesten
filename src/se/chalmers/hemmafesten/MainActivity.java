@@ -1,39 +1,33 @@
 package se.chalmers.hemmafesten;
 
 import se.chalmers.hemmafesten.PartyService.Status;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.util.Log;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    
-    private boolean pcIsBound;
-    Messenger mService = null;
-    final Messenger mMessenger = new Messenger(new IncomingHandler());
 
-	public void clickCreateParty(View sender) {
+    public void clickcreateParty(View sender) {
     	createPartyService(true);
     }
     
     
 	public void clickJoinParty(View sender) {
     	View joinFrame = findViewById(R.id.joinFrame);
-    	if(joinFrame.getVisibility() == 0){ //visible
+    	int visible = joinFrame.getVisibility();
+    	if(visible == 0){ //visible
     		joinFrame.setVisibility(8);
+    	}else if(visible == 4){ // invisble
+    		joinFrame.setVisibility(0);
     	}else{// 8 = gone
     		joinFrame.setVisibility(0);
     	}
@@ -57,77 +51,57 @@ public class MainActivity extends Activity {
 				partyIntent.putExtra("accessCode", "MqF3jjzsw0"); //getCodeInput()
 			}
 			startService(partyIntent);                                 // Starting partyService
-    	}else{
+
+			Intent intent = new Intent(this, PartyActivity.class);
+			startActivity(intent);
+			
+		}else{
 				//PartyService busy
 		}
     	doBindService();
     }
     
     
-    void doBindService() {
-        bindService(new Intent(this, PartyService.class), mConnection, Context.BIND_AUTO_CREATE);
-        pcIsBound = true;
-    }
-    void doUnbindService() {
-        if (pcIsBound) {
-            // If we have received the service, and hence registered with it, then now is the time to unregister.
-            if (mService != null) {
-                try {
-                    Message msg = Message.obtain(null, PartyService.MSG_UNREGISTER_CLIENT);
-                    msg.replyTo = mMessenger;
-                    mService.send(msg);
-                } catch (RemoteException e) {
-                    // There is nothing special we need to do if the service has crashed.
-                }
-            }
-            // Detach our existing connection.
-            unbindService(mConnection);
-            pcIsBound = false;
-        }
-    }
-    
-    private ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mService = new Messenger(service);
-            try {
-                Message msg = Message.obtain(null, PartyService.MSG_REGISTER_CLIENT);
-                msg.replyTo = mMessenger;
-                mService.send(msg);
-            } catch (RemoteException e) {
-                Log.e("MainActivity", "onServiceConnecte: " + e.getMessage());
-            }
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been unexpectedly disconnected - process crashed.
-            mService = null;
-        }
-    };
-    
     private String getCodeInput(){
 		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
 		return et.getText().toString();             			// get accessCode
 	}
     
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     
-    class IncomingHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-        	switch(PartyService.getStatus()){
-        		case FREE:
-        			break;
-        		case HOST:
-        		case GUEST:
-        			Intent intent = new Intent(null, PartyActivity.class);
-        			startActivity(intent);
-        			break;
-        		case FAILED:
-        			break;
-        	}
+    private PartyService partyService;
+    private boolean psIsBound;
+	
+	
+	private ServiceConnection mConnection = new ServiceConnection() {
+	    public void onServiceConnected(ComponentName className, IBinder service) {
+	        partyService = ((PartyService.LocalBinder)service).getService();
+	        Toast.makeText(MainActivity.this, "testetaijföaosijrföaoijrföaoiwjregöoaijwre",
+	                Toast.LENGTH_SHORT).show();
+	    }
+
+	    public void onServiceDisconnected(ComponentName className) {
+	        partyService = null;
+	        Toast.makeText(MainActivity.this, "test",
+	                Toast.LENGTH_SHORT).show();
+	    }
+	};
+    
+    void doBindService() {
+        bindService(new Intent(this, PartyService.class), mConnection, Context.BIND_AUTO_CREATE);
+        psIsBound = true;
+    }
+
+    void doUnbindService() {
+        if (psIsBound) {
+            unbindService(mConnection);
+            psIsBound = false;
         }
     }
-    
-    
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {

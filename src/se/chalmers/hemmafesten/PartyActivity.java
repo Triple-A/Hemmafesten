@@ -1,13 +1,57 @@
 package se.chalmers.hemmafesten;
 
 import android.os.Bundle;
+import android.os.IBinder;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class PartyActivity extends Activity {
 
+
+	
+	
+///////////////////////////////////////////////////////////////////////////////////////
+    
+	private PartyService partyService;
+	private boolean psIsBound;
+	
+	
+	private ServiceConnection mConnection = new ServiceConnection() {
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			partyService = ((PartyService.LocalBinder)service).getService();
+			Toast.makeText(PartyActivity.this,
+					"testetaijföaosijrföaoijrföaoiwjregöoaijwre",
+					Toast.LENGTH_SHORT).show();
+		}
+		
+		public void onServiceDisconnected(ComponentName className) {
+			partyService = null;
+			Toast.makeText(PartyActivity.this, "test",
+			Toast.LENGTH_SHORT).show();
+		}
+	};
+	
+	void doBindService() {
+		bindService(new Intent(this, PartyService.class), mConnection, Context.BIND_AUTO_CREATE);
+		psIsBound = true;
+	}
+	
+	void doUnbindService() {
+		if (psIsBound) {
+			unbindService(mConnection);
+			psIsBound = false;
+		}
+	}	
+	
+///////////////////////////////////////////////////////////////////////////////////////////////7	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,9 +64,7 @@ public class PartyActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
