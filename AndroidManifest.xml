@@ -40,6 +40,16 @@
             android:process=":party_service" >
         </service>
 
+        <activity
+            android:name="se.chalmers.hemmafesten.ActionBarActivity"
+            android:label="@string/title_activity_action_bar"
+            android:launchMode="singleInstance" >
+        </activity>
+        <activity
+            android:name="se.chalmers.hemmafesten.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:launchMode="singleInstance" >
+        </activity>
     </application>
 
 </manifest>

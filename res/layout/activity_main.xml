@@ -15,6 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="createParty"
+        android:background="@color/sp_green"
+        android:layout_marginBottom="30dip"
         android:text="@string/create_a_new_party_button_title" />
 
     <Button
@@ -23,6 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="joinParty"
+        android:background="@color/sp_green"
+        android:layout_marginTop="30dip"
         android:text="@string/join_a_party_button_title" />
 
     <include
