@@ -16,5 +16,7 @@
     <string name="service_name">HemmaFestenService</string>
     <string name="title_activity_action_bar">ActionBarActivity</string>
     <string name="active_party">Active Party</string>
+    <string name="title_activity_saved_parties">SavedPartiesActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
 
 </resources>

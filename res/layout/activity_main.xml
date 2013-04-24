@@ -14,6 +14,8 @@
         android:name="clickCreateParty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/sp_green"
+        android:layout_marginBottom="30dip"
         android:onClick="clickCreateParty"
         android:text="@string/create_a_new_party_button_title" />
 
@@ -22,6 +24,8 @@
         android:name="clickJoinParty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/sp_green"
+        android:layout_marginTop="30dip"
         android:onClick="clickJoinParty"
         android:text="@string/join_a_party_button_title" />
 
