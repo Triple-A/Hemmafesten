@@ -11,7 +11,7 @@
 
     <Button
         android:id="@+id/create_new_party_button"
-        android:name="createParty"
+        android:name="clickCreateParty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="clickCreateParty"
@@ -19,7 +19,7 @@
 
     <Button
         android:id="@+id/join_party_button"
-        android:name="joinParty"
+        android:name="clickJoinParty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="clickJoinParty"

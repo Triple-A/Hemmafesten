@@ -64,6 +64,7 @@ public class PartyService extends Service {
 	
 	public void killService(){
 		pc.killParty(status == Status.HOST);
+		pc = null;
 		status = Status.FREE;
 		stopSelf();
 	}

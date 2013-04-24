@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 
-    public void clickcreateParty(View sender) {
+    public void clickCreateParty(View sender) {
     	createPartyService(true);
     }
     
@@ -56,7 +56,9 @@ public class MainActivity extends Activity {
 			startActivity(intent);
 			
 		}else{
-				//PartyService busy
+			Toast.makeText(MainActivity.this,
+					"PartServicen är upptagen",
+					Toast.LENGTH_SHORT).show();
 		}
     	doBindService();
     }

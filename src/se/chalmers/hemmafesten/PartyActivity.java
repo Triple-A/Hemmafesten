@@ -58,6 +58,8 @@ public class PartyActivity extends Activity {
 		setContentView(R.layout.activity_party);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		doBindService();
 	}
 
 	/**

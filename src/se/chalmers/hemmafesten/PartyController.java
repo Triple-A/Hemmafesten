@@ -71,6 +71,26 @@ public class PartyController {
 		}
 	}
 	
+	public void removeSong(ParseObject song){
+		ParseRelation relation = party.getRelation("songs");
+		relation.remove(song);
+		party.saveInBackground();
+		song.deleteInBackground();
+	}
+
+	
+	public List<ParseObject> getList(){
+		try {
+			ParseQuery query = new ParseQuery("Song");
+			query.whereEqualTo("party", party);
+			return query.find();
+		} catch (ParseException e) {
+			Log.e("PartyController", "getList: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * sets the name of current party
 	 * @param name New name as a string
@@ -106,16 +126,7 @@ public class PartyController {
 		party = null;
 	}
 	
-	public List<ParseObject> getList(){
-		try {
-			ParseQuery query = new ParseQuery("Song");
-			query.whereEqualTo("party", party);
-			return query.find();
-		} catch (ParseException e) {
-			Log.e("PartyController", "getList: " + e.getMessage());
-		}
-		return null;
-	}
+	
 
 	@Override
 	public String toString() {
