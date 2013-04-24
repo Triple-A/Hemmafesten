@@ -36,8 +36,7 @@
 
         <service
             android:name="se.chalmers.hemmafesten.PartyService"
-            android:label="@string/service_name"
-            android:process=":party_service" >
+            android:label="@string/service_name" >
         </service>
 
         <activity
@@ -49,6 +48,14 @@
             android:name="se.chalmers.hemmafesten.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:launchMode="singleInstance" >
+        </activity>
+        <activity
+            android:name="se.chalmers.hemmafesten.SavedPartiesActivity"
+            android:label="@string/title_activity_saved_parties" >
+        </activity>
+        <activity
+            android:name="se.chalmers.hemmafesten.HelpActivity"
+            android:label="@string/title_activity_help" >
         </activity>
     </application>
 

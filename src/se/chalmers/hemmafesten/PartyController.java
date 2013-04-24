@@ -14,6 +14,7 @@ import com.parse.ParseRelation;
 public class PartyController {
 	
 	private ParseObject party = null;
+
 	
 
 	/**
@@ -23,7 +24,7 @@ public class PartyController {
 		try {
 			party = new ParseObject("Party");
 			party.save();
-			Log.e("PartyController","PartyController(): party created");
+			Log.i("PartyController","PartyController(): party created");
 		} catch (ParseException e) {
 			Log.e("PartyController","PartyController(): failed: " + e.getMessage());
 		}
@@ -54,15 +55,12 @@ public class PartyController {
 	 * @param spotifyURI Spotify uri as a string
 	 */
 	public void addSong(String spotifyURI){  // add song to party
-		Log.d("debugg","stegg 3..." + party);
 		if(party != null){
 			try {
 				ParseObject song = new ParseObject("Song");
 				song.put("party", party);
 				song.put("spotifyURI", spotifyURI);
 				song.save();
-				
-				Log.d("debugg","steg fyra... after save()");
 				
 				ParseRelation relation = party.getRelation("songs");
 				relation.add(song);
