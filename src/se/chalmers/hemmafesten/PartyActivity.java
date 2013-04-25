@@ -26,15 +26,15 @@ public class PartyActivity extends ActionBarActivity {
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			partyService = ((PartyService.LocalBinder)service).getService();
-			Toast.makeText(PartyActivity.this,
+			/*Toast.makeText(PartyActivity.this,
 					"testetaijföaosijrföaoijrföaoiwjregöoaijwre",
-					Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_SHORT).show();*/
 		}
 		
 		public void onServiceDisconnected(ComponentName className) {
 			partyService = null;
-			Toast.makeText(PartyActivity.this, "test",
-			Toast.LENGTH_SHORT).show();
+			/*Toast.makeText(PartyActivity.this, "test",
+			Toast.LENGTH_SHORT).show();*/
 		}
 	};
 	
