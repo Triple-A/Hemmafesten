@@ -19,6 +19,10 @@ import android.text.TextUtils;
 
 import java.util.List;
 
+import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.R.string;
+import se.chalmers.hemmafesten.R.xml;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,

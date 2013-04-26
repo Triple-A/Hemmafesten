@@ -2,13 +2,15 @@ package se.chalmers.hemmafesten;
 
 import java.util.zip.Inflater;
 
+import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.R.id;
+import se.chalmers.hemmafesten.R.layout;
+import se.chalmers.hemmafesten.R.menu;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,10 +27,12 @@ public class ActionBarActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
-	    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+	    //SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
 	    //set up search view
 
 	    inflater.inflate(R.menu.action_bar, menu);
+	    ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 	    return true;
 	}
 	
@@ -60,6 +64,9 @@ public class ActionBarActivity extends Activity {
 	            settingsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	            startActivity(settingsIntent);
 	        	return true;
+	        case android.R.id.home:
+	            onBackPressed();
+	            return true;
 	        default:
 	            return false;
 	    }

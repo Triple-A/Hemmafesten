@@ -1,5 +1,7 @@
 package se.chalmers.hemmafesten;
 
+import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.R.layout;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
