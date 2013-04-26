@@ -1,6 +1,9 @@
 package se.chalmers.hemmafesten;
 
 import se.chalmers.hemmafesten.PartyService.Status;
+import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.R.id;
+import se.chalmers.hemmafesten.R.layout;
 
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -31,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     	int visible = joinFrame.getVisibility();
     	if(visible == 0){ //visible
     		joinFrame.setVisibility(8);
-    	}else if(visible == 4){ // invisble
+    	}else if(visible == 4){  //invisible
     		joinFrame.setVisibility(0);
     	}else{// 8 = gone
     		joinFrame.setVisibility(0);
