@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
@@ -22,8 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.SearchSuggestionProvider;
 import se.chalmers.hemmafesten.R.layout;
+import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
 import com.parse.signpost.http.HttpResponse;
 
@@ -38,8 +39,6 @@ import android.widget.TextView;
 
 public class SearchableActivity extends ActionBarActivity {
 	
-	private JSONArray array;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,37 +61,23 @@ public class SearchableActivity extends ActionBarActivity {
 	        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	            String query = intent.getStringExtra(SearchManager.QUERY);
 	            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-	                    SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
-	            suggestions.saveRecentQuery(query, null);
-	            	            
-	            //String test = getSearchResult(query);
-
-	        }
-	}	 
-	 
-     
-	  private static String getSearchResult(String searchInput)
-		 {
-		     StringBuilder response  = new StringBuilder();
-		     try{
-		     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+searchInput);
-		     HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
-		     if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
-		     {
-		         BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),8192);
-		         String strLine = null;
-		         while ((strLine = input.readLine()) != null)
-		         {
-		        	 response.append(strLine);		        	 
-		         }
-		         input.close();
-		         
-		     }
-		     }catch(IOException e){
-		    	 
-		     }
-		     return response.toString();
-		 }
-
-	 
+	                  SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+	            suggestions.saveRecentQuery(query, null);            	            
+	           
+	            	RetreiveMusicTask task = new RetreiveMusicTask();
+					String result;
+					try {
+						result = task.execute(query).get();
+						TextView view = (TextView) findViewById(R.id.textView1);
+			            view.setText("You searched for: " + result);    
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        }	 
+	 }
 }

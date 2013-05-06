@@ -18,18 +18,17 @@
         android:theme="@style/AppTheme" >
        <meta-data
         android:name="android.app.default_searchable"
-        android:value=".SearchableActivity" /> 
-          <provider android:name=".SearchSuggestionProvider"
-              android:authorities="se.chalmers.hemmafesten.SearchSuggestionProvider"
+        android:value="se.chalmers.hemmafesten.activity.SearchableActivity" /> 
+          <provider android:name="se.chalmers.hemmafesten.activity.SearchSuggestionProvider"
+              android:authorities="se.chalmers.hemmafesten.activity.SearchSuggestionProvider"
               android:exported="false" />
         <activity
             android:name="se.chalmers.hemmafesten.activity.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+           <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
         <activity
             android:name="se.chalmers.hemmafesten.activity.PartyActivity"
@@ -41,27 +40,22 @@
         </activity>
 
         <service
-            android:name="se.chalmers.hemmafesten.PartyService"
+            android:name="se.chalmers.hemmafesten.service.PartyService"
             android:label="@string/service_name" >
         </service>
 
         <activity
-            android:name="se.chalmers.hemmafesten.ActionBarActivity"
+            android:name="se.chalmers.hemmafesten.activity.ActionBarActivity"
             android:label="@string/title_activity_action_bar"
             android:launchMode="singleInstance" >
-           <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        
         </activity>
         <activity
-            android:name="se.chalmers.hemmafesten.SettingsActivity"
+            android:name="se.chalmers.hemmafesten.activity.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name="se.chalmers.hemmafesten.SavedPartiesActivity"
+            android:name="se.chalmers.hemmafesten.activity.SavedPartiesActivity"
             android:label="@string/title_activity_saved_parties" >
         </activity>
         <activity
@@ -69,7 +63,7 @@
             android:label="@string/title_activity_help" >
         </activity>
         <activity
-            android:name="se.chalmers.hemmafesten.SearchableActivity"
+            android:name="se.chalmers.hemmafesten.activity.SearchableActivity"
             android:label="@string/title_activity_searchable" >
             
         <!-- This intent-filter identifies this activity as "searchable" -->
