@@ -40,8 +40,6 @@ import android.widget.TextView;
 
 public class SearchableActivity extends ActionBarActivity {
 	
-	private JSONArray array;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
