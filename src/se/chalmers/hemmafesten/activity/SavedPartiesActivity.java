@@ -1,4 +1,4 @@
-package se.chalmers.hemmafesten;
+package se.chalmers.hemmafesten.activity;
 
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.R.layout;
@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class HelpActivity extends ActionBarActivity {
+public class SavedPartiesActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.activity_help);
+		setContentView(R.layout.activity_saved_parties);
 	}
 
 	@Override

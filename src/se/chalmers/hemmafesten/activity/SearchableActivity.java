@@ -1,4 +1,4 @@
-package se.chalmers.hemmafesten;
+package se.chalmers.hemmafesten.activity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +20,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.SearchSuggestionProvider;
+import se.chalmers.hemmafesten.R.layout;
 
 import com.parse.signpost.http.HttpResponse;
 
