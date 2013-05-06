@@ -129,7 +129,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		this(new ParseObject(getParseObjectName()));
 	}
 	
-	private Song(ParseObject parseObject) {
+	public Song(ParseObject parseObject) {
 		super(parseObject);
 	}
 
