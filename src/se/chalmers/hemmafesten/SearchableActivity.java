@@ -60,49 +60,35 @@ public class SearchableActivity extends ActionBarActivity {
 	            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
 	                    SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
 	            suggestions.saveRecentQuery(query, null);
-	            
-	            String test = getWantedTracksJSON(query);
-	            
+	            	            
 	            //String test = getSearchResult(query);
-	           // try {
-					//JSONObject object = new JSONObject(test);
-	            	
-					TextView view = (TextView) findViewById(R.id.textView1);
-					view.setText(test);
-			//	} catch (JSONException e) {
-					// TODO Auto-generated catch block
-			//		e.printStackTrace();
-			//	}
-	            //Log.i("jsonmessage", getSearchResult(query));
+
 	        }
 	}	 
 	 
-	 public String getWantedTracksJSON(String input) {
-		    StringBuilder jsonString = new StringBuilder();
-		    HttpClient client = new DefaultHttpClient();
-		    HttpGet httpGet = new HttpGet("http://ws.spotify.com/search/1/track.json?q="+input);
-		    try {
-		      HttpResponse response = (HttpResponse) client.execute(httpGet);
-		      StatusLine statusLine = ((org.apache.http.HttpResponse) response).getStatusLine();
-		      int statusCode = statusLine.getStatusCode();
-		      if (statusCode == 200) {
-		        HttpEntity entity = ((HttpEntityEnclosingRequestBase) response).getEntity();
-		        InputStream content = entity.getContent();
-		        BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-		        String line;
-		        while ((line = reader.readLine()) != null) {
-		          jsonString.append(line);
-		        }
-		      } else {
-		        Log.e(SearchableActivity.class.toString(), "Failed to download file");
-		      }
-		    } catch (ClientProtocolException e) {
-		      e.printStackTrace();
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
-		    return jsonString.toString();
-		  }
-	 
+     
+	  private static String getSearchResult(String searchInput)
+		 {
+		     StringBuilder response  = new StringBuilder();
+		     try{
+		     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+searchInput);
+		     HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
+		     if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
+		     {
+		         BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),8192);
+		         String strLine = null;
+		         while ((strLine = input.readLine()) != null)
+		         {
+		        	 response.append(strLine);		        	 
+		         }
+		         input.close();
+		         
+		     }
+		     }catch(IOException e){
+		    	 
+		     }
+		     return response.toString();
+		 }
+
 	 
 }
