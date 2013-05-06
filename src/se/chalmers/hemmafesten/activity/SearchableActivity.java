@@ -81,29 +81,5 @@ public class SearchableActivity extends ActionBarActivity {
 	        }
 	}	 
 	 
-     
-	  private static String getSearchResult(String searchInput)
-		 {
-		     StringBuilder response  = new StringBuilder();
-		     try{
-		     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+searchInput);
-		     HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
-		     if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
-		     {
-		         BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),8192);
-		         String strLine = null;
-		         while ((strLine = input.readLine()) != null)
-		         {
-		        	 response.append(strLine);		        	 
-		         }
-		         input.close();
-		         
-		     }
-		     }catch(IOException e){
-		    	 
-		     }
-		     return response.toString();
-		 }
 
-	 
 }
