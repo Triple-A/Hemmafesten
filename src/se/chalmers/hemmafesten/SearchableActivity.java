@@ -61,8 +61,8 @@ public class SearchableActivity extends ActionBarActivity {
 	                    SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
 	            suggestions.saveRecentQuery(query, null);
 	            	            
-	            //String test = getSearchResult(query);
-
+	            TextView view = (TextView) findViewById(R.id.textView1);
+	            view.setText("You searched for: ");
 	        }
 	}	 
 	 
