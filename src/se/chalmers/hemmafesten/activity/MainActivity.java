@@ -1,9 +1,11 @@
-package se.chalmers.hemmafesten;
+package se.chalmers.hemmafesten.activity;
 
-import se.chalmers.hemmafesten.PartyService.Status;
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.R.id;
 import se.chalmers.hemmafesten.R.layout;
+import se.chalmers.hemmafesten.service.PartyService;
+import se.chalmers.hemmafesten.service.PartyService.LocalBinder;
+import se.chalmers.hemmafesten.service.PartyService.Status;
 
 import android.os.Bundle;
 import android.app.ActionBar;

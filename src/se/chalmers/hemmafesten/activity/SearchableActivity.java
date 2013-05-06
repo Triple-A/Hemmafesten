@@ -1,4 +1,4 @@
-package se.chalmers.hemmafesten;
+package se.chalmers.hemmafesten.activity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
@@ -20,6 +21,11 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.SearchSuggestionProvider;
+import se.chalmers.hemmafesten.R.layout;
+import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
 import com.parse.signpost.http.HttpResponse;
 
@@ -61,8 +67,19 @@ public class SearchableActivity extends ActionBarActivity {
 	                    SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
 	            suggestions.saveRecentQuery(query, null);
 	            	            
-	            TextView view = (TextView) findViewById(R.id.textView1);
-	            view.setText("You searched for: ");
+	            try {
+	            	RetreiveMusicTask task = new RetreiveMusicTask();
+					String result = task.execute(query).get();
+					TextView view = (TextView) findViewById(R.id.textView1);
+		            view.setText("You searched for: " + result);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            
 	        }
 	}	 
 	 

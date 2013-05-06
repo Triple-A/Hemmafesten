@@ -23,7 +23,7 @@
               android:authorities="se.chalmers.hemmafesten.SearchSuggestionProvider"
               android:exported="false" />
         <activity
-            android:name="se.chalmers.hemmafesten.MainActivity"
+            android:name="se.chalmers.hemmafesten.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,9 +32,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="se.chalmers.hemmafesten.PartyActivity"
+            android:name="se.chalmers.hemmafesten.activity.PartyActivity"
             android:label="@string/title_activity_party"
-            android:parentActivityName="se.chalmers.hemmafesten.MainActivity" >
+            android:parentActivityName="se.chalmers.hemmafesten.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.chalmers.hemmafesten.MainActivity" />
@@ -65,7 +65,7 @@
             android:label="@string/title_activity_saved_parties" >
         </activity>
         <activity
-            android:name="se.chalmers.hemmafesten.HelpActivity"
+            android:name="se.chalmers.hemmafesten.activity.HelpActivity"
             android:label="@string/title_activity_help" >
         </activity>
         <activity
