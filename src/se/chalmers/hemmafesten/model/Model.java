@@ -38,4 +38,21 @@ public abstract class Model {
 	public void saveInBackground() {
 		this.parseObject.saveInBackground();
 	}
+	
+	// Equality and hashing
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Model)) return false;
+	
+		 Model lhs = (Model) o;
+		 return this.getParseObject().equals(lhs.getParseObject());
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 23;
+		hash = 37 * hash + this.getParseObject().hashCode();
+		return hash;
+	}
 }
