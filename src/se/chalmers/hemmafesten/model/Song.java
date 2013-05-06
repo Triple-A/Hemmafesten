@@ -58,7 +58,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	 * @param spotifyUri The Spotify URI used to identify the song.
 	 * @param callback The callback which handles the song(s) fetched.
 	 */
-	public static void getSongBySpotifyAsync(String spotifyUri, final se.chalmers.hemmafesten.model.callback.FindCallback callback) {
+	public static void getSongBySpotifyURIAsync(String spotifyUri, final se.chalmers.hemmafesten.model.callback.FindCallback callback) {
 		songQueryBySpotifyURI(spotifyUri).findInBackground(new com.parse.FindCallback() {
 			@Override
 			public void done(List<ParseObject> objects, ParseException e) {
@@ -91,9 +91,9 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	}
 
 	/**
-	 * Synchronously tries to get a song for the given JSON object and if it could not be found creates it.
+	 * Synchronously tries to get a song for the given JSON object and if it could not be found a new song will be created.
 	 * @param jsonObject A Spotify JSON object.
-	 * @return
+	 * @return Returns the found user object or the newly created.
 	 * @throws JSONException
 	 */
 	public static Song getOrCreateSong(JSONObject jsonObject) throws JSONException {
@@ -101,15 +101,36 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		
 		Song song = getSongBySpotifyURI(spotifyUri);
 		if (song == null) {
-			Log.i("DATA_LAYER", "Did not find the song for the given json object, creating it.");
-			song = new Song(jsonObject);
-		} else {
-			Log.i("DATA_LAYER", "Found the song for the given json object, updating it.");
-			song.updateWithSpotifyJSONObject(jsonObject);
+			song = new Song();
 		}
 		
+		song.updateWithSpotifyJSONObject(jsonObject);
 		return song;
-	} 
+	}
+	
+	/**
+	 * Asynchronously tries to get a song for the given JSON object and if it could not be found a new song will be created.
+	 * @param jsonObject A Spotify JSON object.
+	 * @param callback The callback which is called when the user object has been fetched or created.
+	 * @throws JSONException
+	 */
+	public static void getOrCreateSongAsync(final JSONObject jsonObject, final se.chalmers.hemmafesten.model.callback.GetCallback callback) throws JSONException {
+		String spotifyUri = jsonObject.getString(SPOTIFY_JSON_SONG_URI_KEY);
+		ParseQuery query = songQueryBySpotifyURI(spotifyUri);
+		query.findInBackground(new com.parse.FindCallback() {
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) {
+				ParseObject parseObject = (objects.size() > 0 ? objects.get(0) : null);
+				Song song = new Song(parseObject);
+				
+				try { song.updateWithSpotifyJSONObject(jsonObject); }
+				catch (JSONException e1) { e1.printStackTrace(); }
+				
+				callback.done(song, e);
+			}
+		});
+	}
+	
 	
 	// Parse queries
 	private static ParseQuery songQueryBySpotifyURI(String spotifyUri) {
