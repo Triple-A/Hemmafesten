@@ -29,7 +29,7 @@ public class Song extends ParseObject {
 	
 	private static final String SPOTIFY_JSON_ARTISTS_KEY = "artists";
 	private static final String SPOTIFY_JSON_ARTISTS_ARTIST_NAME_KEY = "name";
-	private static final String SPOTIFY_JSON_ARTISTS_ARTIST_URI_KEY = "href";
+	//private static final String SPOTIFY_JSON_ARTISTS_ARTIST_URI_KEY = "href";
 	
 	private double length;
 	private double popularity;
