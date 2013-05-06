@@ -1,43 +1,37 @@
 package se.chalmers.hemmafesten.activity;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.R.layout;
 import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
-import com.parse.signpost.http.HttpResponse;
 
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.app.Activity;
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 public class SearchableActivity extends ActionBarActivity {
+		
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,18 +56,39 @@ public class SearchableActivity extends ActionBarActivity {
 	            String query = intent.getStringExtra(SearchManager.QUERY);
 	            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
 	                  SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
-	            suggestions.saveRecentQuery(query, null);            	            
+	            suggestions.saveRecentQuery(query, null);   
+	            
+	            ActionBar bar = getActionBar();
+	            bar.setTitle("Result: " +  query);
 	           
 	            	RetreiveMusicTask task = new RetreiveMusicTask();
 					String result;
 					try {
 						result = task.execute(query).get();
-						TextView view = (TextView) findViewById(R.id.textView1);
-			            view.setText("You searched for: " + result);    
+						JSONObject object = new JSONObject(result);
+						JSONArray arr = object.getJSONArray("tracks");
+												
+						ArrayList<String> songz = new ArrayList<String>();
+						
+						for(int i=0; i<arr.length(); i++){
+							songz.add(arr.getJSONObject(i).getString("name"));
+						}
+						
+						
+				    //Present data in list view
+					ListView resultsListView = (ListView) findViewById(R.id.results_list);
+					        resultsListView.setAdapter(new ArrayAdapter<String>(this,
+					                android.R.layout.simple_list_item_1, 
+					                songz));
+						
+						
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
