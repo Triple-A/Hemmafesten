@@ -16,7 +16,7 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, String> {
 	protected String doInBackground(String... params) {
 		StringBuilder response  = new StringBuilder();
 	     try{
-	     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+params);
+	     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+params[0]);
 	     HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
 	     if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
 	     {
@@ -27,17 +27,17 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, String> {
 	        	 response.append(strLine);		        	 
 	         }
 	         input.close();
+	         return response.toString();
 	         
 	     }
 	     }catch(IOException e){
-	    	 
+	    	 e.printStackTrace();
 	     }
-	     return response.toString();
+	     return null;
 	 }
 	 
 	 @Override
 	 protected void onPostExecute(String result){
-		super.onPostExecute(result);
 	 }
 
 }

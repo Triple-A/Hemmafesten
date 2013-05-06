@@ -23,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.SearchSuggestionProvider;
 import se.chalmers.hemmafesten.R.layout;
 import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
@@ -62,24 +61,23 @@ public class SearchableActivity extends ActionBarActivity {
 	        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	            String query = intent.getStringExtra(SearchManager.QUERY);
 	            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-	                    SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
-	            suggestions.saveRecentQuery(query, null);
-	            	            
-	            try {
+	                  SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+	            suggestions.saveRecentQuery(query, null);            	            
+	           
 	            	RetreiveMusicTask task = new RetreiveMusicTask();
-					String result = task.execute(query).get();
-					TextView view = (TextView) findViewById(R.id.textView1);
-		            view.setText("You searched for: " + result);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	            
-	        }
-	}	 
-	 
-
+					String result;
+					try {
+						result = task.execute(query).get();
+						TextView view = (TextView) findViewById(R.id.textView1);
+			            view.setText("You searched for: " + result);    
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        }	 
+	 }
 }
