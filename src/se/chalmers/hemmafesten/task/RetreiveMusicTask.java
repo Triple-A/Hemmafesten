@@ -16,11 +16,13 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, String> {
 	protected String doInBackground(String... params) {
 		StringBuilder response  = new StringBuilder();
 	     try{
-	     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+params[0]);
+	     String temp=params[0];
+	     String result = temp.replaceAll(" ", "%20");
+	     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+result);
 	     HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
 	     if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
 	     {
-	         BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),8192);
+	         BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream(), "UTF-8"),8192);
 	         String strLine = null;
 	         while ((strLine = input.readLine()) != null)
 	         {

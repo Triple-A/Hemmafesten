@@ -34,15 +34,14 @@
         layout="@layout/join_party"
         android:visibility="gone" />
 
-
     <Button
         android:id="@+id/active_party_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/sp_green"
         android:layout_marginTop="5dp"
+        android:background="@color/sp_green"
         android:onClick=""
-        android:text="@string/active_party" />
-
+        android:text="@string/active_party"
+        android:visibility="gone" />
 
 </LinearLayout>

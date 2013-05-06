@@ -1,4 +1,4 @@
-package se.chalmers.hemmafesten;
+package se.chalmers.hemmafesten.service;
 
 
 
