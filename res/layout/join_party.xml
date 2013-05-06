@@ -12,16 +12,15 @@
         android:text="@string/input_accessCode_string"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    
-
     <EditText
         android:id="@+id/accessInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:ems="10" >
+        android:ems="10"
+        android:singleLine="true" >
 
         <requestFocus />
     </EditText>
@@ -30,6 +29,7 @@
         android:id="@+id/connect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/sp_green"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/accessInput"
         android:layout_marginTop="5dp"
