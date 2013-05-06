@@ -16,9 +16,6 @@ import android.support.v4.app.NavUtils;
 
 public class PartyActivity extends ActionBarActivity {
 
-
-	
-	
 ///////////////////////////////////////////////////////////////////////////////////////
     
 	private PartyService partyService;

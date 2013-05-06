@@ -10,6 +10,8 @@ import se.chalmers.hemmafesten.R.menu;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,12 +29,18 @@ public class ActionBarActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
-	    //SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-	    //set up search view
-
 	    inflater.inflate(R.menu.action_bar, menu);
-	    ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayHomeAsUpEnabled(true);
+	    
+	    SearchManager searchManager =
+	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	     SearchView searchView =
+	             (SearchView) menu.findItem(R.id.menu_search).getActionView();
+	     searchView.setSearchableInfo(
+	             searchManager.getSearchableInfo(getComponentName()));
+
+		    ActionBar actionBar = getActionBar();
+		    actionBar.setDisplayHomeAsUpEnabled(true);
+	    
 	    return true;
 	}
 	
