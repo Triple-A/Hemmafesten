@@ -2,7 +2,6 @@ package se.chalmers.hemmafesten.service;
 
 
 import se.chalmers.hemmafesten.APIKeys;
-import se.chalmers.hemmafesten.PartyController;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;

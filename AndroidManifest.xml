@@ -41,7 +41,7 @@
         </activity>
 
         <service
-            android:name="se.chalmers.hemmafesten.PartyService"
+            android:name="se.chalmers.hemmafesten.service.PartyService"
             android:label="@string/service_name" >
         </service>
 

@@ -6,17 +6,22 @@ import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.R.id;
 import se.chalmers.hemmafesten.R.layout;
 import se.chalmers.hemmafesten.R.menu;
+import se.chalmers.hemmafesten.service.PartyService;
 
 import android.os.Bundle;
+import android.os.IBinder;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 public class ActionBarActivity extends Activity {
 
@@ -40,9 +45,9 @@ public class ActionBarActivity extends Activity {
 
 		    ActionBar actionBar = getActionBar();
 		    actionBar.setDisplayHomeAsUpEnabled(true);
-	    
 	    return true;
 	}
+	
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId,MenuItem item) {
@@ -53,9 +58,6 @@ public class ActionBarActivity extends Activity {
 	        	startActivity(homeIntent);
 	        	return true;
 	        case R.id.leaveParty:
-	            Intent leavePartyintent = new Intent(this, ActionBarActivity.class);
-	            leavePartyintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-	            startActivity(leavePartyintent);
 	            return true;
 	        case R.id.savedParties:
 	            Intent savedPartiesIntent = new Intent(this, SavedPartiesActivity.class);
@@ -79,6 +81,4 @@ public class ActionBarActivity extends Activity {
 	            return false;
 	    }
 	}
-
-	
 }
