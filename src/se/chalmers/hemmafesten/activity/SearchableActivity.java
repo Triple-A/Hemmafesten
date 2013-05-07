@@ -50,6 +50,11 @@ public class SearchableActivity extends ActionBarActivity {
         handleIntent(intent);
     }
 	
+	/**
+	 * Gets search query which is typed and performs a search to the spotify
+	 * metadata API. presents the result in a ListView
+	 * @param intent
+	 */
 	 private void handleIntent(Intent intent) {
 
 	        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {

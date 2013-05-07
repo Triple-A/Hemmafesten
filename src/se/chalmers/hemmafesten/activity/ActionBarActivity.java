@@ -31,6 +31,9 @@ public class ActionBarActivity extends Activity {
 		setContentView(R.layout.activity_action_bar);
 	}
 
+	/**
+	 * Handler for when a menu button is clicked
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
