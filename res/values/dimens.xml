@@ -3,5 +3,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">20dp</dimen>
     <dimen name="activity_vertical_margin">20dp</dimen>
-
+    
+    <dimen name="top_info_bar_height">100dp</dimen>
+	<dimen name="top_info_bar_qr_size">80dp</dimen>
+	<dimen name="top_info_bar_qr_padding">10dp</dimen>
 </resources>

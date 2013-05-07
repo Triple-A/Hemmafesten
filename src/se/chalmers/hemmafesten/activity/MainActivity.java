@@ -1,10 +1,10 @@
 package se.chalmers.hemmafesten.activity;
 
-import se.chalmers.hemmafesten.IntentIntegrator;
-import se.chalmers.hemmafesten.IntentResult;
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
+import se.chalmers.zxing.IntentIntegrator;
+import se.chalmers.zxing.IntentResult;
 import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -80,8 +80,10 @@ public class MainActivity extends ActionBarActivity {
 			if(!isCreator){
 				partyIntent.putExtra("accessCode", getCodeInput()); //
 			}
+			
 			startService(partyIntent);                                 // Starting partyService
 
+			
 			Intent intent = new Intent(this, PartyActivity.class);
 			startActivity(intent);
 			

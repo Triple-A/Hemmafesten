@@ -2,6 +2,7 @@ package se.chalmers.hemmafesten.activity;
 
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
+import se.chalmers.hemmafesten.task.RetreiveQrTask;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class PartyActivity extends ActionBarActivity {
+	
+	
+	
+	
+	
+	public void loadQR(){
+		new RetreiveQrTask(this, partyService).execute();
+	}
+	
+	
 
 ///////////////////////////////////////////////////////////////////////////////////////
     
@@ -23,8 +34,9 @@ public class PartyActivity extends ActionBarActivity {
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			partyService = ((PartyService.LocalBinder)service).getService();
+			loadQR();
 		}
-		
+
 		public void onServiceDisconnected(ComponentName className) {
 			partyService = null;
 		}
@@ -50,25 +62,10 @@ public class PartyActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_party);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		
 		doBindService();
 		
-	/*	
-				
-		InputStream URLcontent;
-		try {
-			ImageView qr = (ImageView) findViewById(R.drawable.qr_code);
-			URLcontent = (InputStream) new URL("http://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+partyService.getParty().getAccessCode()).getContent();
-			Drawable image = Drawable.createFromStream(URLcontent, "your source link");
-			qr.setImageDrawable(image);
-		} catch (MalformedURLException e) {
-			Log.e("qr-code", e.getMessage());
-		} catch (IOException e) {
-			Log.e("qr-code", e.getMessage());
-		}*/
 		
 	}
-	
 
 	protected void onPause(){
 		super.onPause();
@@ -104,5 +101,4 @@ public class PartyActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 }

@@ -4,7 +4,7 @@
     android:orientation="vertical" >
     
     <include
-        android:layout_height="60dp"
+        android:layout_height="@dimen/top_info_bar_height"
         layout="@layout/top_info_bar" />
     
     <include layout="@layout/queue"/>
