@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    
+    <Button
+        android:id="@+id/active_party_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/kill_party"
+        android:background="@color/sp_green"
+        android:layout_marginRight="@dimen/between_buttons_margin"
+        android:onClick="clickActiveParty"
+        android:text="@string/active_party" />
+
+    <Button
+        android:id="@+id/kill_party"
+        android:layout_width="@dimen/join_party_sidebutton"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/active_party_button"
+        android:layout_alignBottom="@+id/active_party_button"
+        android:layout_alignParentRight="true"
+        android:background="@color/sp_green"
+        android:onClick=""
+        android:text="X" 
+        />
+
+</RelativeLayout>

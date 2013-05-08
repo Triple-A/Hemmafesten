@@ -1,10 +1,10 @@
 package se.chalmers.hemmafesten.activity;
 
-import se.chalmers.hemmafesten.IntentIntegrator;
-import se.chalmers.hemmafesten.IntentResult;
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
+import se.chalmers.zxing.IntentIntegrator;
+import se.chalmers.zxing.IntentResult;
 import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -22,8 +22,8 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
-	
-	  
+
+
     public void clickCreateParty(View sender) {
     	createPartyService(true);
     }
@@ -39,6 +39,8 @@ public class MainActivity extends ActionBarActivity {
     	    String qr = (String) scanResult.getContents();
     	    EditText et = (EditText)findViewById(R.id.accessInput);
     	    et.setText(qr);
+    	    
+    	    createPartyService(false);
     	  }
     	  // else continue with any other code you need in the method
     }
@@ -68,6 +70,13 @@ public class MainActivity extends ActionBarActivity {
     	}
     }
     
+    public void clickKillParty(View sender){
+    	if(psIsBound){
+    		partyService.killService();
+    		doUnbindService();
+    	}
+    }
+    
     
     /**
      * Start partyService, 
@@ -80,11 +89,13 @@ public class MainActivity extends ActionBarActivity {
 			if(!isCreator){
 				partyIntent.putExtra("accessCode", getCodeInput()); //
 			}
+
 			startService(partyIntent);                                 // Starting partyService
+
 
 			Intent intent = new Intent(this, PartyActivity.class);
 			startActivity(intent);
-			
+
 		}else{
 			Toast.makeText(MainActivity.this,
 					"PartServicen är upptagen",
@@ -105,8 +116,8 @@ public class MainActivity extends ActionBarActivity {
     
     private PartyService partyService;
     private boolean psIsBound;
-	
-	
+
+
 	private ServiceConnection mConnection = new ServiceConnection() {
 	    public void onServiceConnected(ComponentName className, IBinder service) {
 	        partyService = ((PartyService.LocalBinder)service).getService();
@@ -150,9 +161,9 @@ public class MainActivity extends ActionBarActivity {
     
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
-    		findViewById(R.id.active_party_button).setVisibility(0);
+    		findViewById(R.id.activePartyFrame).setVisibility(0);
     	}else{
-    		findViewById(R.id.active_party_button).setVisibility(8);
+    		findViewById(R.id.activePartyFrame).setVisibility(8);
     	}
     }
 
@@ -161,7 +172,7 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.action_bar, menu);
-	    
+
 	    SearchManager searchManager =
 	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	     SearchView searchView =
@@ -171,10 +182,10 @@ public class MainActivity extends ActionBarActivity {
 
 		    ActionBar actionBar = getActionBar();
 		    actionBar.setDisplayHomeAsUpEnabled(false);
-	    
+
 	    return true;
 	}
-	
-	
+
+
  
 }

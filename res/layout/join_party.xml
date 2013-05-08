@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/between_buttons_margin" >
 
     
     <TextView
@@ -18,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/between_buttons_margin"
         android:ems="10"
         android:singleLine="true" >
 
@@ -31,16 +32,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/accessInput"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="2dp"
-        android:layout_toLeftOf="@+id/button2"
+        android:layout_marginTop="@dimen/between_buttons_margin"
+        android:layout_marginRight="@dimen/between_buttons_margin"
+        android:layout_toLeftOf="@+id/scan"
         android:background="@color/sp_green"
         android:onClick="clickConnect"
         android:text="@string/connect_button_string" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:id="@+id/scan"
+        android:layout_width="@dimen/join_party_sidebutton"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/connect"
         android:layout_alignBottom="@+id/connect"

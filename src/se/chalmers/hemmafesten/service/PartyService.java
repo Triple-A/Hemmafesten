@@ -4,11 +4,11 @@ package se.chalmers.hemmafesten.service;
 import se.chalmers.hemmafesten.APIKeys;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-
 import com.parse.Parse;
 
 
@@ -22,14 +22,13 @@ public class PartyService extends Service {
 	    GUEST,
 	    FAILED
 	}
-
+	private Bitmap qrCode = null;
 	private final IBinder mBinder = new LocalBinder();
 
 
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		
 		if(status == Status.FREE){
 			initiateParty(intent);
 		}
@@ -58,8 +57,8 @@ public class PartyService extends Service {
 	public static Status getStatus(){
 		return status;
 	}
-	
-	public static PartyController getParty() {
+     
+	public PartyController getParty() {
 		return pc;
 	}
 	
@@ -67,7 +66,6 @@ public class PartyService extends Service {
 		pc.killParty(status == Status.HOST);
 		pc = null;
 		status = Status.FREE;
-		stopSelf();
 	}
 	
 	
@@ -87,6 +85,5 @@ public class PartyService extends Service {
             return PartyService.this;
         }
     }
-
 }
 
