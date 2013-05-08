@@ -13,12 +13,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class RetreiveQrTask extends AsyncTask<String, Void, Bitmap>{
+public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
 	
 	private ImageView qr_view;
 	private Activity activity;
-	//private Bitmap qrCode;
-	private String accessCode = "test";
+	private String accessCode;
 	
 	public RetreiveQrTask(Activity activity, PartyService partyService){
 		this.activity = activity;
@@ -32,7 +31,7 @@ public class RetreiveQrTask extends AsyncTask<String, Void, Bitmap>{
         qr_view = (ImageView) activity.findViewById(R.id.qr_icon);
     }
 
-    protected Bitmap doInBackground(String... args) {
+    protected Bitmap doInBackground(Void... arg0) {
     	try {
     		URL url = new URL("http://api.qrserver.com/v1/create-qr-code/?size=80x80&data=" + accessCode);
     		return BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -44,5 +43,4 @@ public class RetreiveQrTask extends AsyncTask<String, Void, Bitmap>{
     protected void onPostExecute(Bitmap qrCode) {
     	qr_view.setImageBitmap(qrCode);
     }
-
 }

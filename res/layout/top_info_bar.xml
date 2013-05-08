@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/top_info_bar_height" >
-
-    <TextView
-        android:id="@+id/info_bar_partycode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="10dp"
-        android:layout_y="10dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
         android:id="@+id/qr_icon"
         android:layout_width="@dimen/top_info_bar_qr_size"
         android:layout_height="@dimen/top_info_bar_qr_size"
-        android:layout_x="@dimen/top_info_bar_qr_padding"
-        android:layout_y="@dimen/top_info_bar_qr_padding"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/ic_action_overflow" />
 
-</AbsoluteLayout>
+    <TextView
+        android:id="@+id/info_bar_partycode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/qr_icon"
+        android:text="test"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

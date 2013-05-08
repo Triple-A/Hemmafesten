@@ -14,16 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class PartyActivity extends ActionBarActivity {
-	
-	
-	
+
 	
 	
 	public void loadQR(){
 		new RetreiveQrTask(this, partyService).execute();
 	}
-	
-	
 
 ///////////////////////////////////////////////////////////////////////////////////////
     

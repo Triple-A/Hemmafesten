@@ -39,6 +39,8 @@ public class MainActivity extends ActionBarActivity {
     	    String qr = (String) scanResult.getContents();
     	    EditText et = (EditText)findViewById(R.id.accessInput);
     	    et.setText(qr);
+    	    
+    	    createPartyService(false);
     	  }
     	  // else continue with any other code you need in the method
     }
@@ -65,6 +67,13 @@ public class MainActivity extends ActionBarActivity {
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
     		Intent intent = new Intent(this, PartyActivity.class);
 			startActivity(intent);
+    	}
+    }
+    
+    public void clickKillParty(View sender){
+    	if(psIsBound){
+    		partyService.killService();
+    		doUnbindService();
     	}
     }
     
@@ -152,9 +161,9 @@ public class MainActivity extends ActionBarActivity {
     
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
-    		findViewById(R.id.active_party_button).setVisibility(0);
+    		findViewById(R.id.activePartyFrame).setVisibility(0);
     	}else{
-    		findViewById(R.id.active_party_button).setVisibility(8);
+    		findViewById(R.id.activePartyFrame).setVisibility(8);
     	}
     }
 
