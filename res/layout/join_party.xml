@@ -29,11 +29,24 @@
         android:id="@+id/connect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/sp_green"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/accessInput"
         android:layout_marginTop="5dp"
-        android:text="@string/connect_button_string"
-        android:onClick="clickConnect" />
+        android:layout_marginRight="2dp"
+        android:layout_toLeftOf="@+id/button2"
+        android:background="@color/sp_green"
+        android:onClick="clickConnect"
+        android:text="@string/connect_button_string" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/connect"
+        android:layout_alignBottom="@+id/connect"
+        android:layout_alignParentRight="true"
+        android:background="@color/sp_green"
+        android:onClick="scanQRParty"
+        android:text="Scan" />
 
 </RelativeLayout>

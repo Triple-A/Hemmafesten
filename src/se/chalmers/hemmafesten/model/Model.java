@@ -6,8 +6,17 @@ import com.parse.ParseObject;
 public abstract class Model {
 	private ParseObject parseObject;
 	
+	public Model() {
+		this((ParseObject)null);
+	}
+	
 	public Model(ParseObject parseObject) {
-		if (parseObject.getClassName().equals(this.getParseObjectNameInternal())) {
+		String parseClassName = this.getParseObjectNameInternal();
+		if (parseObject == null) {
+			parseObject = new ParseObject(parseClassName);
+		}
+		
+		if (parseObject.getClassName().equals(parseClassName)) {
 			this.parseObject = parseObject;
 		} else {
 			throw new IllegalArgumentException("Parse object must be of type " + this.getParseObjectNameInternal() + ", got: " + parseObject.getClassName());
@@ -37,5 +46,22 @@ public abstract class Model {
 	
 	public void saveInBackground() {
 		this.parseObject.saveInBackground();
+	}
+	
+	// Equality and hashing
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Model)) return false;
+	
+		 Model lhs = (Model) o;
+		 return this.getParseObject().equals(lhs.getParseObject());
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 23;
+		hash = 37 * hash + this.getParseObject().hashCode();
+		return hash;
 	}
 }

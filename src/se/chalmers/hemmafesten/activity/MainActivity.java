@@ -1,5 +1,7 @@
 package se.chalmers.hemmafesten.activity;
 
+import se.chalmers.hemmafesten.IntentIntegrator;
+import se.chalmers.hemmafesten.IntentResult;
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
@@ -24,6 +26,21 @@ public class MainActivity extends ActionBarActivity {
 	  
     public void clickCreateParty(View sender) {
     	createPartyService(true);
+    }
+    
+    public void scanQRParty(View sender) {
+    	IntentIntegrator integrator = new IntentIntegrator(this);
+    	integrator.initiateScan();
+    }
+    
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    	  IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+    	  if (scanResult != null) {
+    	    String qr = (String) scanResult.getContents();
+    	    EditText et = (EditText)findViewById(R.id.accessInput);
+    	    et.setText(qr);
+    	  }
+    	  // else continue with any other code you need in the method
     }
     
     
@@ -157,5 +174,7 @@ public class MainActivity extends ActionBarActivity {
 	    
 	    return true;
 	}
+	
+	
  
 }
