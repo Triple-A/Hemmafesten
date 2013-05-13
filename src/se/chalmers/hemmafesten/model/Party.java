@@ -23,7 +23,10 @@ public class Party extends Model {
 		query.getInBackground(partyId, new com.parse.GetCallback() {
 			@Override
 			public void done(ParseObject parsePartyObject, ParseException e) {
-				Party party = new Party(parsePartyObject);
+				Party party = null;
+				if (parsePartyObject != null) {
+					party = new Party(parsePartyObject);
+				}
 				callback.done(party, e);
 			}
 		});
@@ -50,7 +53,7 @@ public class Party extends Model {
 				callback.done(party, e);
 			}
 		});
-	}	
+	}
 	
 	// Constructors
 	// To create a new party object you should really use the static
