@@ -1,5 +1,6 @@
 package se.chalmers.hemmafesten.activity;
 
+
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;

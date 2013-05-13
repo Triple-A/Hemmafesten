@@ -12,12 +12,14 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
 	
 	private ImageView qr_view;
 	private Activity activity;
 	private String accessCode;
+	private TextView accessCode_text;
 	
 	public RetreiveQrTask(Activity activity, PartyService partyService){
 		this.activity = activity;
@@ -29,6 +31,7 @@ public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
     protected void onPreExecute() {
         super.onPreExecute();
         qr_view = (ImageView) activity.findViewById(R.id.qr_icon);
+        accessCode_text = (TextView) activity.findViewById(R.id.info_bar_partycode);
     }
 
     protected Bitmap doInBackground(Void... arg0) {
@@ -42,5 +45,7 @@ public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
     }
     protected void onPostExecute(Bitmap qrCode) {
     	qr_view.setImageBitmap(qrCode);
+    	accessCode_text.setText(accessCode);
+    	
     }
 }
