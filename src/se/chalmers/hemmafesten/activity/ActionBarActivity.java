@@ -6,7 +6,9 @@ import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.R.id;
 import se.chalmers.hemmafesten.R.layout;
 import se.chalmers.hemmafesten.R.menu;
+import se.chalmers.hemmafesten.service.PartyController;
 import se.chalmers.hemmafesten.service.PartyService;
+import se.chalmers.hemmafesten.service.PartyService.Status;
 
 import android.os.Bundle;
 import android.os.IBinder;
@@ -24,6 +26,8 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 public class ActionBarActivity extends Activity {
+	
+	private PartyController controller = PartyService.getParty();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,14 @@ public class ActionBarActivity extends Activity {
 	    return true;
 	}
 	
+	@Override
+	public boolean onSearchRequested()
+	{
+	   if(PartyService.getStatus()==Status.FREE){
+	   return false;
+	   }else
+	   return true;
+	}
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId,MenuItem item) {
