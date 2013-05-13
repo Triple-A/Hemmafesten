@@ -43,6 +43,7 @@ public class ActionBarActivity extends Activity {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.action_bar, menu);
 	    
+	    
 	    SearchManager searchManager =
 	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	     SearchView searchView =

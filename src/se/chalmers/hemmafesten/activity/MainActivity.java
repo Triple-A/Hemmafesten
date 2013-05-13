@@ -47,15 +47,21 @@ public class MainActivity extends ActionBarActivity {
     
     
 	public void clickJoinParty(View sender) {
-    	View joinFrame = findViewById(R.id.joinFrame);
-    	int visible = joinFrame.getVisibility();
-    	if(visible == 0){ //visible
-    		joinFrame.setVisibility(8);
-    	}else if(visible == 4){  //invisible
-    		joinFrame.setVisibility(0);
-    	}else{// 8 = gone
-    		joinFrame.setVisibility(0);
-    	}
+		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
+			Toast.makeText(MainActivity.this,
+					"Kill old party before connecting to a new one!",
+					Toast.LENGTH_SHORT).show();
+		}else{
+			View joinFrame = findViewById(R.id.joinFrame);
+	    	int visible = joinFrame.getVisibility();
+	    	if(visible == 0){ //visible
+	    		joinFrame.setVisibility(8);
+	    	}else if(visible == 4){  //invisible
+	    		joinFrame.setVisibility(0);
+	    	}else{// 8 = gone
+	    		joinFrame.setVisibility(0);
+	    	}
+		}
     }
     
     
@@ -74,6 +80,11 @@ public class MainActivity extends ActionBarActivity {
     	if(psIsBound){
     		partyService.killService();
     		doUnbindService();
+    		activePartyVisibility();
+    		Toast.makeText(MainActivity.this,
+					"Party: Disconnected",
+					Toast.LENGTH_SHORT).show();
+    		
     	}
     }
     
@@ -101,7 +112,7 @@ public class MainActivity extends ActionBarActivity {
 					"PartServicen är upptagen",
 					Toast.LENGTH_SHORT).show();
 		}
-    	//doBindService();
+    	doBindService();
     }
     
     
@@ -121,14 +132,14 @@ public class MainActivity extends ActionBarActivity {
 	private ServiceConnection mConnection = new ServiceConnection() {
 	    public void onServiceConnected(ComponentName className, IBinder service) {
 	        partyService = ((PartyService.LocalBinder)service).getService();
-	        Toast.makeText(MainActivity.this, "onServiceConnected",
-	                Toast.LENGTH_SHORT).show();
+	        /*Toast.makeText(MainActivity.this, "onServiceConnected",
+	                Toast.LENGTH_SHORT).show();*/
 	    }
 
 	    public void onServiceDisconnected(ComponentName className) {
 	        partyService = null;
-	        Toast.makeText(MainActivity.this, "onServiceDisconected",
-	                Toast.LENGTH_SHORT).show();
+	        /*Toast.makeText(MainActivity.this, "onServiceDisconected",
+	                Toast.LENGTH_SHORT).show();*/
 	    }
 	};
     
