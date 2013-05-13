@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 import se.chalmers.hemmafesten.activity.MainActivity;
 import se.chalmers.hemmafesten.task.GetAlbumImageTask;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +20,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,14 +43,15 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
 	}
 
 	private class ViewHolder {
-		 ImageView view;
+		 WebView view;
 		 Button button;
 	     TextView song;
 	     TextView artist;
 	}
 	
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @SuppressLint("SetJavaScriptEnabled")
+	public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         final SongItem songItem = getItem(position);
  
@@ -59,7 +64,7 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
             holder.artist = (TextView) convertView.findViewById(R.id.artist);
             holder.button = (Button) convertView.findViewById(R.id.button1);
             
-            holder.view = (ImageView) convertView.findViewById(R.id.icon);
+            holder.view = (WebView) convertView.findViewById(R.id.webview);
 
             convertView.setTag(holder);
         } else
@@ -77,24 +82,27 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
         	           	v.getContext().startActivity(launcher);
         	            }
         	         });
-        String uriwithoutSorT= songItem.getUri().substring(12);
         
-        String imageUrl;
-		try {
-			imageUrl = new GetAlbumImageTask().execute("http://open.spotify.com/track/"+uriwithoutSorT).get();
-			
-			Log.v("IMAGEURL", imageUrl);
-			        
-	         return convertView;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
         
-        return null;
+        //holder.view.loadUrl("https://embed.spotify.com/?uri"+songItem.getUri());
+        holder.view.getSettings().setJavaScriptEnabled(true);
+        holder.view.setVerticalScrollBarEnabled(false);
+        holder.view.setHorizontalScrollBarEnabled(false);
+        holder.view.getSettings().setLoadWithOverviewMode(true);
+        holder.view.getSettings().setUseWideViewPort(false);
+        holder.view.setVisibility(View.VISIBLE);
+        holder.view.setKeepScreenOn(true);
+        holder.view.setSaveEnabled(true);
+        holder.view.setPadding(0, 0, 0, 0);
+        
+        String customHtml = "<iframe src='https://embed.spotify.com/?uri="+songItem.getUri()+"' width='80' height='80' frameborder='0' allowtransparency='true'></iframe>";
+        holder.view.loadData(customHtml, "text/html", "UTF-8");
+
+        Log.i("spotifyuri", songItem.getUri());
+
+        
+        
+        return convertView;
     }
 }
 	
