@@ -30,7 +30,6 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	private static final String SPOTIFY_JSON_ARTISTS_ARTIST_NAME_KEY = "name";
 	//private static final String SPOTIFY_JSON_ARTISTS_ARTIST_URI_KEY = "href";
 	
-	private double length;
 	private double popularity;
 	private String albumSpotifyUri;
 	
@@ -221,6 +220,14 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		this.getParseObject().put("spotifyURI", spotifyUri);
 	}
 	
+	public double getLength() {
+		return this.getParseObject().getDouble("length");
+	}
+
+	public void setLength(double length) {
+		this.getParseObject().put("length", length);
+	}
+	
 	// Local
 	public String getAlbumURI() {
 		return this.albumSpotifyUri;
@@ -228,14 +235,6 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	
 	public void setAlbumURI(String albumUri) {
 		this.albumSpotifyUri = albumUri;
-	}
-	
-	public double getLength() {
-		return length;
-	}
-
-	public void setLength(double length) {
-		this.length = length;
 	}
 	
 	public double getPopularity() {
