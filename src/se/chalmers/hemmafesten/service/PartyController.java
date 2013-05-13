@@ -4,6 +4,9 @@ package se.chalmers.hemmafesten.service;
 
 import java.util.List;
 
+import se.chalmers.hemmafesten.model.Party;
+import se.chalmers.hemmafesten.model.Song;
+
 import android.util.Log;
 
 import com.parse.ParseException;
@@ -13,7 +16,7 @@ import com.parse.ParseRelation;
 
 public class PartyController {
 	
-	private ParseObject party = null;
+	private Party party = null;
 
 	
 
@@ -22,7 +25,7 @@ public class PartyController {
 	 */
 	 public PartyController() {  // creating a new party
 		try {
-			party = new ParseObject("Party");
+			party = new Party();
 			party.save();
 			Log.i("PartyController","PartyController(): party created");
 		} catch (ParseException e) {
@@ -37,8 +40,7 @@ public class PartyController {
 	 */
 	public PartyController(String accessCode) {  // joining an existing party
 		try {
-			ParseQuery query = new ParseQuery("Party");
-			party = query.get(accessCode);
+			party = Party.getParty(accessCode);
 			if(party != null){
 		    	Log.i("PartyController","PartyController(String accessCode): joined party: "+ party.toString());
 			}
@@ -57,33 +59,46 @@ public class PartyController {
 	public void addSong(String spotifyURI){  // add song to party
 		if(party != null){
 			try {
-				ParseObject song = new ParseObject("Song");
-				song.put("party", party);
-				song.put("spotifyURI", spotifyURI);
-				song.save();
-				
-				ParseRelation relation = party.getRelation("songs");
-				relation.add(song);
-				party.saveInBackground();
+				Song song = Song.getOrCreateSongBySpotifyURI(spotifyURI);
+				party.addSong(song);
+				party.saveEventually();
 			} catch (ParseException e) {
 				Log.e("PartyController","addSong: SpotifyURI: "+ spotifyURI + " could not be added to party: "+party);
 			}
+			
+			
+//			try {
+//				ParseObject song = new ParseObject("Song");
+//				song.put("party", party);
+//				song.put("spotifyURI", spotifyURI);
+//				song.save();
+//				
+//				ParseRelation relation = party.getRelation("songs");
+//				relation.add(song);
+//				party.saveInBackground();
+//			} catch (ParseException e) {
+//				Log.e("PartyController","addSong: SpotifyURI: "+ spotifyURI + " could not be added to party: "+party);
+//			}
 		}
 	}
 	
-	public void removeSong(ParseObject song){
-		ParseRelation relation = party.getRelation("songs");
-		relation.remove(song);
-		party.saveInBackground();
-		song.deleteInBackground();
+	public void removeSong(Song song){
+		party.removeSong(song);
+		party.saveEventually();
+		
+//		ParseRelation relation = party.getSongs();
+//		relation.remove(song);
+//		party.saveInBackground();
+//		song.deleteInBackground();
 	}
 
 	
 	public List<ParseObject> getList(){
 		try {
-			ParseQuery query = new ParseQuery("Song");
-			query.whereEqualTo("party", party);
-			return query.find();
+			return party.songs().getQuery().find();
+//			ParseQuery query = new ParseQuery("Song");
+//			query.whereEqualTo("party", party);
+//			return query.find();
 		} catch (ParseException e) {
 			Log.e("PartyController", "getList: " + e.getMessage());
 		}
@@ -97,7 +112,7 @@ public class PartyController {
 	 */
 	public void setName(String name){
 		if(party != null){
-			party.put("name", name);
+			party.setName(name);
 			party.saveInBackground();
 		}
 	}
@@ -108,17 +123,17 @@ public class PartyController {
 	 * @return the accesCode of the party (string)
 	 */
 	public String getAccessCode() {
-		return party.getObjectId().toString();
+		return party.getAccessCode();
 	}
 
 
-	public ParseObject getParty() {   /// is this needed??????????
+	public Party getParty() {   /// is this needed??????????
 		return party;
 	}
 	
 	public void killParty(boolean isCreator){
 		if(isCreator){
-			party.deleteInBackground();
+			party.deleteEventually();
 			Log.i("PartyController","killParty: Creator is killing the party");
 		}else{
 			Log.i("PartyController","killParty: joiner is leaving the party");
