@@ -1,5 +1,7 @@
 package se.chalmers.hemmafesten.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,16 +76,29 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	 * @param spotifyUri The Spotify URI used to identify the song.
 	 * @return The song associated with the Spotify URI if found, otherwise `null`.
 	 */
-	public static Song getSongBySpotifyURI(String spotifyUri) {
+	public static Song getSongBySpotifyURI(String spotifyUri) throws ParseException {
 		Song song = null;
 		List<ParseObject> songs = null;
-		try { songs = songQueryBySpotifyURI(spotifyUri).find();	}
-		catch (ParseException e) { e.printStackTrace(); }
+		songs = songQueryBySpotifyURI(spotifyUri).find();
 		
 		if (songs != null && songs.size() > 0) {
 			song = new Song(songs.get(0));
 		}
 		
+		return song;
+	}
+	
+	/**
+	 * Synchronously gets a song from the backend.
+	 * @param spotifyUri The Spotify URI used to identify the song.
+	 * @return The song associated with the Spotify URI if found, otherwise `null`.
+	 */
+	public static Song getOrCreateSongBySpotifyURI(String spotifyUri) throws ParseException {
+		Song song = getSongBySpotifyURI(spotifyUri);
+		if (song == null) {
+			song = new Song();
+			song.setSpotifyURI(spotifyUri);
+		}
 		return song;
 	}
 
@@ -93,7 +108,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	 * @return Returns the found user object or the newly created.
 	 * @throws JSONException
 	 */
-	public static Song getOrCreateSong(JSONObject jsonObject) throws JSONException {
+	public static Song getOrCreateSong(JSONObject jsonObject) throws JSONException, ParseException {
 		String spotifyUri = jsonObject.getString(SPOTIFY_JSON_SONG_URI_KEY);
 		
 		Song song = getSongBySpotifyURI(spotifyUri);
