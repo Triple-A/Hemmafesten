@@ -73,7 +73,9 @@
         <activity
             android:name="se.chalmers.hemmafesten.activity.SearchableActivity"
             android:label="@string/title_activity_searchable"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:configChanges="orientation" 
+            android:hardwareAccelerated="false" >
             
         <!-- This intent-filter identifies this activity as "searchable" -->
 
@@ -90,6 +92,7 @@
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
         </activity>
+       
     </application>
 
 </manifest>

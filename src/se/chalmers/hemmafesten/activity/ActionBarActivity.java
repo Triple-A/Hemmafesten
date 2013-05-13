@@ -7,6 +7,7 @@ import se.chalmers.hemmafesten.R.id;
 import se.chalmers.hemmafesten.R.layout;
 import se.chalmers.hemmafesten.R.menu;
 import se.chalmers.hemmafesten.service.PartyService;
+import se.chalmers.hemmafesten.service.PartyService.Status;
 
 import android.os.Bundle;
 import android.os.IBinder;
@@ -38,6 +39,7 @@ public class ActionBarActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.action_bar, menu);
+	    
 	    
 	    SearchManager searchManager =
 	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);

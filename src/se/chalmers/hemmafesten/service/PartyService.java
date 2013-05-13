@@ -29,6 +29,7 @@ public class PartyService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		
 		if(status == Status.FREE){
 			initiateParty(intent);
 		}
@@ -58,7 +59,7 @@ public class PartyService extends Service {
 		return status;
 	}
      
-	public PartyController getParty() {
+	public static PartyController getParty() {
 		return pc;
 	}
 	
