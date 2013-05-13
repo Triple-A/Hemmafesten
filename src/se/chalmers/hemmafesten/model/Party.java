@@ -23,12 +23,9 @@ public class Party extends Model {
 		this.getParseObject().put("name", name);
 	}
 	
+	// The access code is the Parse object ID, which is garantued to be unique.
 	public String getAccessCode() {
-		return this.getParseObject().getString("accessCode");
-	}
-	
-	public void setAccessCode(String accessCode) {
-		this.getParseObject().put("accessCode", accessCode);
+		return this.getParseObject().getObjectId();
 	}
 	
 	public ParseUser getHost() {

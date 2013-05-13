@@ -7,8 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -16,7 +14,7 @@ import com.parse.ParseQuery;
 /**
  * The Song class represent a single song, or track, in the Spotify library.
  * 
- * @author aron
+ * @author Aron
  */
 public class Song extends se.chalmers.hemmafesten.model.Model {	
 	private static final String SPOTIFY_JSON_SONG_URI_KEY = "href";
@@ -38,7 +36,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	
 	
 	/**
-	 * Asynchronously fetches a song from the backend.
+	 * Asynchronously fetches a specific song from the backend.
 	 * @param songId The Parse identifier associated with the song object.
 	 * @param callback The callback which handles the song.
 	 */
