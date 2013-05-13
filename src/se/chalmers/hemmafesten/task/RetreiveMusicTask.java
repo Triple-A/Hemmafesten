@@ -6,12 +6,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.json.JSONObject;
-
 import android.os.AsyncTask;
 
 public class RetreiveMusicTask extends AsyncTask<String, Void, String> {
 
+	/**
+	 * makes an HTTP request to spotify for making a search.
+	 * Saves the JSON response in String
+	 */
 	@Override
 	protected String doInBackground(String... params) {
 		StringBuilder response  = new StringBuilder();
@@ -38,6 +40,9 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, String> {
 	     return null;
 	 }
 	 
+	/**
+	 * nothing yao
+	 */
 	 @Override
 	 protected void onPostExecute(String result){
 	 }

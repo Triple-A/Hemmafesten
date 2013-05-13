@@ -15,8 +15,8 @@ import android.view.MenuItem;
 
 public class PartyActivity extends ActionBarActivity {
 
-	
-	
+
+
 	public void loadQR(){
 		new RetreiveQrTask(this, partyService).execute();
 	}
@@ -25,8 +25,8 @@ public class PartyActivity extends ActionBarActivity {
     
 	private PartyService partyService;
 	private boolean psIsBound;
-	
-	
+
+
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			partyService = ((PartyService.LocalBinder)service).getService();
@@ -37,21 +37,21 @@ public class PartyActivity extends ActionBarActivity {
 			partyService = null;
 		}
 	};
-	
+
 	void doBindService() {
 		bindService(new Intent(this, PartyService.class), mConnection, Context.BIND_AUTO_CREATE);
 		psIsBound = true;
 	}
-	
+
 	void doUnbindService() {
 		if (psIsBound) {
 			unbindService(mConnection);
 			psIsBound = false;
 		}
 	}	
-	
+
 ///////////////////////////////////////////////////////////////////////////////////////////////7	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,8 +59,8 @@ public class PartyActivity extends ActionBarActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		doBindService();
-		
-		
+
+
 	}
 
 	protected void onPause(){

@@ -11,6 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.SongAdapter;
+import se.chalmers.hemmafesten.SongItem;
+import se.chalmers.hemmafesten.task.GetAlbumImageTask;
 import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
 
@@ -24,6 +27,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -50,6 +54,11 @@ public class SearchableActivity extends ActionBarActivity {
         handleIntent(intent);
     }
 	
+	/**
+	 * Gets search query which is typed and performs a search to the spotify
+	 * metadata API. presents the result in a ListView
+	 * @param intent
+	 */
 	 private void handleIntent(Intent intent) {
 
 	        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -68,19 +77,21 @@ public class SearchableActivity extends ActionBarActivity {
 						JSONObject object = new JSONObject(result);
 						JSONArray arr = object.getJSONArray("tracks");
 												
-						ArrayList<String> songz = new ArrayList<String>();
+						ArrayList<SongItem> songz = new ArrayList<SongItem>();
 						
 						for(int i=0; i<arr.length(); i++){
-							songz.add(arr.getJSONObject(i).getString("name"));
+							SongItem song = new SongItem(arr.getJSONObject(i).getString("name"),
+									arr.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("name"),
+									arr.getJSONObject(i).getString("href"), 
+									arr.getJSONObject(i).getDouble("length"));
+							songz.add(song);
 						}
-						
-						
-				    //Present data in list view
-					ListView resultsListView = (ListView) findViewById(R.id.results_list);
-					        resultsListView.setAdapter(new ArrayAdapter<String>(this,
-					                android.R.layout.simple_list_item_1, 
-					                songz));
-						
+			
+					
+					ListView  listView = (ListView) findViewById(R.id.results_list);
+				    SongAdapter adapter = new SongAdapter(this,
+				                R.layout.song_list_item, songz);
+				     listView.setAdapter(adapter);
 						
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block

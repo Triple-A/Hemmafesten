@@ -20,5 +20,6 @@
     <string name="title_activity_help">HelpActivity</string>
     <string name="search_hint">Search for songs</string>
     <string name="title_activity_searchable">Result:</string>
+    <string name="image"></string>
 
 </resources>

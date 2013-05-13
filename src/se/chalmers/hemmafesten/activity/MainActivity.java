@@ -22,8 +22,8 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
-	
-	  
+
+
     public void clickCreateParty(View sender) {
     	createPartyService(true);
     }
@@ -89,13 +89,13 @@ public class MainActivity extends ActionBarActivity {
 			if(!isCreator){
 				partyIntent.putExtra("accessCode", getCodeInput()); //
 			}
-			
+
 			startService(partyIntent);                                 // Starting partyService
 
-			
+
 			Intent intent = new Intent(this, PartyActivity.class);
 			startActivity(intent);
-			
+
 		}else{
 			Toast.makeText(MainActivity.this,
 					"PartServicen är upptagen",
@@ -116,8 +116,8 @@ public class MainActivity extends ActionBarActivity {
     
     private PartyService partyService;
     private boolean psIsBound;
-	
-	
+
+
 	private ServiceConnection mConnection = new ServiceConnection() {
 	    public void onServiceConnected(ComponentName className, IBinder service) {
 	        partyService = ((PartyService.LocalBinder)service).getService();
@@ -172,7 +172,7 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.action_bar, menu);
-	    
+
 	    SearchManager searchManager =
 	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	     SearchView searchView =
@@ -182,10 +182,10 @@ public class MainActivity extends ActionBarActivity {
 
 		    ActionBar actionBar = getActionBar();
 		    actionBar.setDisplayHomeAsUpEnabled(false);
-	    
+
 	    return true;
 	}
-	
-	
+
+
  
 }
