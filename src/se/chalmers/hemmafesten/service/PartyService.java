@@ -59,7 +59,7 @@ public class PartyService extends Service {
 		return status;
 	}
      
-	public PartyController getParty() {
+	public static PartyController getParty() {
 		return pc;
 	}
 	
