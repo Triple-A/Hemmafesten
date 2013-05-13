@@ -2,22 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:background="@color/white"
     >
   
-      <ImageView
-        android:id="@+id/icon"
+      <WebView
+        android:id="@+id/webview"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:contentDescription="@string/image"
         android:src="@drawable/dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:saveEnabled="true"
+        android:keepScreenOn="true" />
     
     <TextView
         android:id="@+id/song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
+        android:layout_toRightOf="@+id/webview"
         android:paddingTop="5dp"
         android:paddingBottom="4dp"
         android:textColor="#000000"
@@ -41,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/artist"
-        android:layout_toRightOf="@+id/icon"
+        android:layout_toRightOf="@+id/webview"
         android:background="@color/sp_green"
         android:minHeight="10dip"
         android:minWidth="64dip"
