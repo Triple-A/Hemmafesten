@@ -7,8 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -16,7 +14,7 @@ import com.parse.ParseQuery;
 /**
  * The Song class represent a single song, or track, in the Spotify library.
  * 
- * @author aron
+ * @author Aron
  */
 public class Song extends se.chalmers.hemmafesten.model.Model {	
 	private static final String SPOTIFY_JSON_SONG_URI_KEY = "href";
@@ -32,13 +30,12 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	private static final String SPOTIFY_JSON_ARTISTS_ARTIST_NAME_KEY = "name";
 	//private static final String SPOTIFY_JSON_ARTISTS_ARTIST_URI_KEY = "href";
 	
-	private double length;
 	private double popularity;
 	private String albumSpotifyUri;
 	
 	
 	/**
-	 * Asynchronously fetches a song from the backend.
+	 * Asynchronously fetches a specific song from the backend.
 	 * @param songId The Parse identifier associated with the song object.
 	 * @param callback The callback which handles the song.
 	 */
@@ -223,6 +220,14 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		this.getParseObject().put("spotifyURI", spotifyUri);
 	}
 	
+	public double getLength() {
+		return this.getParseObject().getDouble("length");
+	}
+
+	public void setLength(double length) {
+		this.getParseObject().put("length", length);
+	}
+	
 	// Local
 	public String getAlbumURI() {
 		return this.albumSpotifyUri;
@@ -230,14 +235,6 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	
 	public void setAlbumURI(String albumUri) {
 		this.albumSpotifyUri = albumUri;
-	}
-	
-	public double getLength() {
-		return length;
-	}
-
-	public void setLength(double length) {
-		this.length = length;
 	}
 	
 	public double getPopularity() {
