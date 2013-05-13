@@ -56,14 +56,20 @@ public abstract class Model {
 	public void delete() throws ParseException {
 		this.parseObject.delete();
 	}
-
+	
 	public void deleteInBackground() {
 		this.parseObject.deleteInBackground();
 	}
-
+	
 	public void deleteEventually() {
 		this.parseObject.deleteEventually();
 	}
+	
+	// Refreshing
+	public void refresh() throws ParseException {
+		this.parseObject.refresh();
+	}
+	
 	// Equality and hashing
 	@Override
 	public boolean equals(Object o) {
