@@ -5,6 +5,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -12,6 +14,32 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 public class Party extends Model {
+	
+	/**
+	 * Synchronously fetches a specific party from the backend.
+	 * @param partyId The Parse object ID of the party.
+	 * @param callback The callback which is called once the party has been fetched and converted to a Party object.
+	 * @throws ParseException Throws an exception when the network connection fails.
+	 */
+	public static Party getParty(String partyId) throws ParseException {
+		ParseQuery query = new ParseQuery(getParseObjectName());
+		ParseObject parsePartyObject = null;
+		try {
+			parsePartyObject = query.get(partyId);
+		} catch (ParseException e) {
+			if (e.getCode() != ParseException.OBJECT_NOT_FOUND) {
+				Log.e("DATA_LAYER", "getParty(String): failed: " + e.getMessage());
+				throw e;
+			}
+		}
+		
+		Party party = null;
+		if (parsePartyObject != null) {
+			party = new Party(parsePartyObject);
+		}
+		
+		return party;
+	}
 	
 	/**
 	 * Asynchronously fetches a specific party from the backend.
