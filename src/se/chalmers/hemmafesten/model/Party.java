@@ -1,5 +1,10 @@
 package se.chalmers.hemmafesten.model;
 
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -33,6 +38,23 @@ public class Party extends Model {
 		getPartyAsync(accessCode, callback);
 	}
 	
+	/**
+	 * 
+	 * @param callback
+	 */
+	public static void createPartyAsync(final se.chalmers.hemmafesten.model.callback.GetCallback callback) {
+		final Party party = new Party();
+		party.getParseObject().saveInBackground(new com.parse.SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				callback.done(party, e);
+			}
+		});
+	}	
+	
+	// Constructors
+	// To create a new party object you should really use the static
+	// createPartyAsync method.
 	public Party() {
 		super(new ParseObject(getParseObjectName()));
 	}
@@ -51,7 +73,14 @@ public class Party extends Model {
 		this.getParseObject().put("name", name);
 	}
 	
-	// The access code is the Parse object ID, which is garantued to be unique.
+	/**
+	 * The access code of the party.
+	 * 
+	 * The access code is the Parse object ID, which is garantued to be unique.
+	 * 
+	 * @warning This is not available until the object has been saved.
+	 * @return
+	 */
 	public String getAccessCode() {
 		return this.getParseObject().getObjectId();
 	}
