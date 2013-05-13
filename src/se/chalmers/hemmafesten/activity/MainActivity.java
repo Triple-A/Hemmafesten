@@ -106,13 +106,11 @@ public class MainActivity extends ActionBarActivity {
 		if(!isCreator){
 			partyIntent.putExtra("accessCode", getCodeInput()); //
 		}
-
-		startService(partyIntent);                                 // Starting partyService
-
+		
+		partyService.initiateParty(partyIntent);
+		
 		Intent intent = new Intent(this, PartyActivity.class);
 		startActivity(intent);
-
-    	doBindService();
     }
     
     
@@ -159,14 +157,28 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startService(new Intent(this, PartyService.class)); 
+        doBindService();
         activePartyVisibility();
     }
     
-
     protected void onResume(){
     	super.onResume();
+    	doBindService();
     	activePartyVisibility();
     }
+    
+    protected void onPause(){
+    	super.onPause();
+    	doUnbindService();
+    }
+    
+    protected void onStop(){
+    	super.onStop();
+    	doUnbindService();
+    }
+    
+    
     
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
