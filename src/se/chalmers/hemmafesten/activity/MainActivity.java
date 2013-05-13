@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -25,7 +26,13 @@ public class MainActivity extends ActionBarActivity {
 
 
     public void clickCreateParty(View sender) {
-    	createPartyService(true);
+    	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
+			Toast.makeText(MainActivity.this,
+					"Kill old party before creating to a new one!",
+					Toast.LENGTH_SHORT).show();
+		}else{
+			createPartyService(true);
+		}
     }
     
     public void scanQRParty(View sender) {
@@ -94,24 +101,17 @@ public class MainActivity extends ActionBarActivity {
      * @param isCreator true=with new party. false = connected to existing party.
      */
     private void createPartyService(boolean isCreator){
-    	if(PartyService.getStatus() == Status.FREE){
-			Intent partyIntent = new Intent(this, PartyService.class); //                          
-			partyIntent.putExtra("isCreator", isCreator);                  //
-			if(!isCreator){
-				partyIntent.putExtra("accessCode", getCodeInput()); //
-			}
-
-			startService(partyIntent);                                 // Starting partyService
-
-
-			Intent intent = new Intent(this, PartyActivity.class);
-			startActivity(intent);
-
-		}else{
-			Toast.makeText(MainActivity.this,
-					"PartServicen är upptagen",
-					Toast.LENGTH_SHORT).show();
+		Intent partyIntent = new Intent(this, PartyService.class); //                          
+		partyIntent.putExtra("isCreator", isCreator);                  //
+		if(!isCreator){
+			partyIntent.putExtra("accessCode", getCodeInput()); //
 		}
+
+		startService(partyIntent);                                 // Starting partyService
+
+		Intent intent = new Intent(this, PartyActivity.class);
+		startActivity(intent);
+
     	doBindService();
     }
     
@@ -132,14 +132,12 @@ public class MainActivity extends ActionBarActivity {
 	private ServiceConnection mConnection = new ServiceConnection() {
 	    public void onServiceConnected(ComponentName className, IBinder service) {
 	        partyService = ((PartyService.LocalBinder)service).getService();
-	        /*Toast.makeText(MainActivity.this, "onServiceConnected",
-	                Toast.LENGTH_SHORT).show();*/
+	        Log.i("MainActivity", "onServiceConnected");
 	    }
 
 	    public void onServiceDisconnected(ComponentName className) {
 	        partyService = null;
-	        /*Toast.makeText(MainActivity.this, "onServiceDisconected",
-	                Toast.LENGTH_SHORT).show();*/
+	        Log.i("MainActivity", "onServiceDisconnected");
 	    }
 	};
     
