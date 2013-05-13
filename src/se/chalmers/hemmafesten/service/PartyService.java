@@ -29,6 +29,7 @@ public class PartyService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		
 		if(status == Status.FREE){
 			initiateParty(intent);
 		}
