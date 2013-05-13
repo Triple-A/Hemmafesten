@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import se.chalmers.hemmafesten.activity.MainActivity;
+import se.chalmers.hemmafesten.service.PartyController;
+import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.task.GetAlbumImageTask;
 
 import android.annotation.SuppressLint;
@@ -32,6 +34,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SongAdapter extends ArrayAdapter<SongItem> {
 
@@ -78,8 +81,18 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
         	        public void onClick(View v)
         	            {
         	        	String uri = songItem.getUri();
+        	        	/*
         	           	Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri) );
         	           	v.getContext().startActivity(launcher);
+        	           	*/
+        	        	PartyController controller = PartyService.getParty();
+        	        	controller.addSong(uri);
+        	        	
+        	        	CharSequence text = "Song added to party";
+        	        	int duration = Toast.LENGTH_SHORT;
+
+        	        	Toast toast = Toast.makeText(context, text, duration);
+        	        	toast.show();
         	            }
         	         });
         
