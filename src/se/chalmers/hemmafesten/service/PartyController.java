@@ -65,40 +65,18 @@ public class PartyController {
 			} catch (ParseException e) {
 				Log.e("PartyController","addSong: SpotifyURI: "+ spotifyURI + " could not be added to party: "+party);
 			}
-			
-			
-//			try {
-//				ParseObject song = new ParseObject("Song");
-//				song.put("party", party);
-//				song.put("spotifyURI", spotifyURI);
-//				song.save();
-//				
-//				ParseRelation relation = party.getRelation("songs");
-//				relation.add(song);
-//				party.saveInBackground();
-//			} catch (ParseException e) {
-//				Log.e("PartyController","addSong: SpotifyURI: "+ spotifyURI + " could not be added to party: "+party);
-//			}
 		}
 	}
 	
 	public void removeSong(Song song){
 		party.removeSong(song);
 		party.saveEventually();
-		
-//		ParseRelation relation = party.getSongs();
-//		relation.remove(song);
-//		party.saveInBackground();
-//		song.deleteInBackground();
 	}
 
 	
 	public List<ParseObject> getList(){
 		try {
 			return party.songs().getQuery().find();
-//			ParseQuery query = new ParseQuery("Song");
-//			query.whereEqualTo("party", party);
-//			return query.find();
 		} catch (ParseException e) {
 			Log.e("PartyController", "getList: " + e.getMessage());
 		}
