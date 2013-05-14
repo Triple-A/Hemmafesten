@@ -19,6 +19,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,27 +29,19 @@ import android.widget.Toast;
 
 public class ActionBarActivity extends Activity {
 	
-	private PartyController controller = PartyService.getParty();
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_action_bar);
 	}
 
-	/**
-	 * Handler for when a menu button is clicked
-	 */
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.action_bar, menu);
 	    
-
-	   // if(PartyService.getStatus()==Status.FREE){
-	    	MenuItem item = menu.findItem(R.id.menu_search);
-	    	item.setEnabled(false);
-	    //}
 	    
 	    SearchManager searchManager =
 	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -59,19 +52,34 @@ public class ActionBarActivity extends Activity {
 	     
 		    ActionBar actionBar = getActionBar();
 		    actionBar.setDisplayHomeAsUpEnabled(true);
-	    return true;
+	    return super.onCreateOptionsMenu(menu);
 	}
+	
+	
+	@Override 
+	public boolean onPrepareOptionsMenu(Menu menu){
+   
+		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
+	    	menu.findItem(R.id.menu_search).setVisible(true);
+	    	}else{
+	    	menu.findItem(R.id.menu_search).setVisible(false);
+			}
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
 	
 	@Override
 	public boolean onSearchRequested()
 	{
+	 /*
 	   if(PartyService.getStatus()!=Status.FREE){
 	   return false;
 	   }else{
 	   return true;
        }
+       */
+		return true;
 	}
-	
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId,MenuItem item) {

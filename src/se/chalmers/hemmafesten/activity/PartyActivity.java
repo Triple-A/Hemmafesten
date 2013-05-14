@@ -79,9 +79,15 @@ public class PartyActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		return super.onCreateOptionsMenu(menu);
+		//return super.onCreateOptionsMenu(menu);
+		return true;
 	}
 
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu){
+		return super.onCreateOptionsMenu(menu);
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

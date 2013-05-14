@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SearchView;
@@ -183,30 +184,30 @@ public class MainActivity extends ActionBarActivity {
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
     		findViewById(R.id.activePartyFrame).setVisibility(0);
+    		findViewById(R.id.create_new_party_button).setVisibility(8);
+    		findViewById(R.id.join_party_button).setVisibility(8);
     	}else{
     		findViewById(R.id.activePartyFrame).setVisibility(8);
+    		findViewById(R.id.create_new_party_button).setVisibility(0);
+    		findViewById(R.id.join_party_button).setVisibility(0);
     	}
     }
 
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.action_bar, menu);
-
-	    SearchManager searchManager =
-	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-	     SearchView searchView =
-	             (SearchView) menu.findItem(R.id.menu_search).getActionView();
-	     searchView.setSearchableInfo(
-	             searchManager.getSearchableInfo(getComponentName()));
-
-		    ActionBar actionBar = getActionBar();
-		    actionBar.setDisplayHomeAsUpEnabled(false);
-
+		super.onCreateOptionsMenu(menu);
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(false);
+	    actionBar.setHomeButtonEnabled(false);
 	    return true;
 	}
 
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu){
+		return super.onPrepareOptionsMenu(menu);
+	}
 
  
 }
