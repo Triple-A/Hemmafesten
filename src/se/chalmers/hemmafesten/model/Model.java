@@ -48,6 +48,28 @@ public abstract class Model {
 		this.parseObject.saveInBackground();
 	}
 	
+	public void saveEventually() {
+		this.parseObject.saveEventually();
+	}
+	
+	// Deleting
+	public void delete() throws ParseException {
+		this.parseObject.delete();
+	}
+	
+	public void deleteInBackground() {
+		this.parseObject.deleteInBackground();
+	}
+	
+	public void deleteEventually() {
+		this.parseObject.deleteEventually();
+	}
+	
+	// Refreshing
+	public void refresh() throws ParseException {
+		this.parseObject.refresh();
+	}
+	
 	// Equality and hashing
 	@Override
 	public boolean equals(Object o) {

@@ -1,5 +1,12 @@
 package se.chalmers.hemmafesten.model;
 
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -7,6 +14,32 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 public class Party extends Model {
+	
+	/**
+	 * Synchronously fetches a specific party from the backend.
+	 * @param partyId The Parse object ID of the party.
+	 * @param callback The callback which is called once the party has been fetched and converted to a Party object.
+	 * @throws ParseException Throws an exception when the network connection fails.
+	 */
+	public static Party getParty(String partyId) throws ParseException {
+		ParseQuery query = new ParseQuery(getParseObjectName());
+		ParseObject parsePartyObject = null;
+		try {
+			parsePartyObject = query.get(partyId);
+		} catch (ParseException e) {
+			if (e.getCode() != ParseException.OBJECT_NOT_FOUND) {
+				Log.e("DATA_LAYER", "getParty(String): failed: " + e.getMessage());
+				throw e;
+			}
+		}
+		
+		Party party = null;
+		if (parsePartyObject != null) {
+			party = new Party(parsePartyObject);
+		}
+		
+		return party;
+	}
 	
 	/**
 	 * Asynchronously fetches a specific party from the backend.
@@ -18,7 +51,10 @@ public class Party extends Model {
 		query.getInBackground(partyId, new com.parse.GetCallback() {
 			@Override
 			public void done(ParseObject parsePartyObject, ParseException e) {
-				Party party = new Party(parsePartyObject);
+				Party party = null;
+				if (parsePartyObject != null) {
+					party = new Party(parsePartyObject);
+				}
 				callback.done(party, e);
 			}
 		});
@@ -33,6 +69,23 @@ public class Party extends Model {
 		getPartyAsync(accessCode, callback);
 	}
 	
+	/**
+	 * 
+	 * @param callback
+	 */
+	public static void createPartyAsync(final se.chalmers.hemmafesten.model.callback.GetCallback callback) {
+		final Party party = new Party();
+		party.getParseObject().saveInBackground(new com.parse.SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				callback.done(party, e);
+			}
+		});
+	}
+	
+	// Constructors
+	// To create a new party object you should really use the static
+	// createPartyAsync method.
 	public Party() {
 		super(new ParseObject(getParseObjectName()));
 	}
@@ -51,7 +104,14 @@ public class Party extends Model {
 		this.getParseObject().put("name", name);
 	}
 	
-	// The access code is the Parse object ID, which is garantued to be unique.
+	/**
+	 * The access code of the party.
+	 * 
+	 * The access code is the Parse object ID, which is garantued to be unique.
+	 * 
+	 * @warning This is not available until the object has been saved.
+	 * @return
+	 */
 	public String getAccessCode() {
 		return this.getParseObject().getObjectId();
 	}

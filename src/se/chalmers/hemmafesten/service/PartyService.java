@@ -2,13 +2,18 @@ package se.chalmers.hemmafesten.service;
 
 
 import se.chalmers.hemmafesten.APIKeys;
+import se.chalmers.hemmafesten.model.Song;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.parse.Parse;
 
 
@@ -29,14 +34,10 @@ public class PartyService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		
-		if(status == Status.FREE){
-			initiateParty(intent);
-		}
 	    return Service.START_NOT_STICKY;
 	}
 	
-	private void initiateParty(Intent intent){
+	public void initiateParty(Intent intent){
 		
 		Bundle bundle = intent.getExtras();      // get passed parameters
 		
@@ -48,6 +49,7 @@ public class PartyService extends Service {
 			pc = new PartyController(accessCode);
 			status = ((pc != null) ? Status.GUEST : Status.FAILED);
 		}
+		
 	}
 	
 	
@@ -86,5 +88,44 @@ public class PartyService extends Service {
             return PartyService.this;
         }
     }
+    
+    
+////////////////////////////////////////spotify timer/player
+    
+    
+    private void startLoop(){
+    	handler.post(playback);
+    }
+    
+    private void stopLoop(){
+    	handler.removeCallbacks(playback);    /// doesnt work!!!!!
+    }
+    
+    private Song getNext(){
+    	//TODO add code for retreiving the next song
+    	return new Song();
+    }
+    
+    private void playSong(Song song){
+    	String uri = song.getSpotifyURI();
+    	Log.d("playSong", song.toString());
+    	Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri) );
+    	
+    	startActivity(launcher);
+    }
+
+    private Handler handler = new Handler();
+    private Runnable playback = new Runnable(){
+
+    	private Long time = 2000L;
+    	private Song song = null;
+    	  @Override
+    	public void run() {
+    		  
+    		  song = getNext();
+    		  time = Double.valueOf(song.getLength()).longValue() * 1000;
+    		  handler.postDelayed(playback, time);
+    		  playSong(song);
+    	}};
 }
 
