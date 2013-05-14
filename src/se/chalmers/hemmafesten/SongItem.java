@@ -13,13 +13,16 @@ public class SongItem {
 	private String name;
 	private String artist;
 	private String uri;
+	private String album;
+	//kanske längre fram
 	private ImageView image;
 	private double length;
 	
-	public SongItem(String name, String artist, String uri, double length){
+	public SongItem(String name, String artist, String uri, String album, double length){
 		this.name = name;
 		this.artist = artist;
 		this.uri = uri;
+		this.album = album;
 		this.length = length;
 	}
 	
@@ -52,6 +55,14 @@ public class SongItem {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(String album) {
+		this.album = album;
 	}
 
 }

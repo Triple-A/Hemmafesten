@@ -80,13 +80,15 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
         		new Button.OnClickListener() {  
         	        public void onClick(View v)
         	            {
+        	        	String name = songItem.getName();
+        	        	String artist = songItem.getArtist();
         	        	String uri = songItem.getUri();
-        	        	/*
-        	           	Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri) );
-        	           	v.getContext().startActivity(launcher);
-        	           	*/
+        	        	String album = songItem.getAlbum();
+        	        	double length = songItem.getLength();
+        	        	
+        	        	
         	        	PartyController controller = PartyService.getParty();
-        	        	controller.addSong(uri);
+        	        	controller.addSong(album,artist,name,length,uri);
         	        	
         	        	CharSequence text = "Song added to party";
         	        	int duration = Toast.LENGTH_SHORT;

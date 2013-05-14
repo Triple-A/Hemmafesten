@@ -53,8 +53,8 @@ public class PartyService extends Service {
 	}
 	
 	
-	public void addSong(String spotifyURI){
-		pc.addSong(spotifyURI);
+	public void addSong(String album, String artist, String name, double length, String spotifyURI){
+		pc.addSong(album,artist,name,length,spotifyURI);
 	}
 	
 	public static Status getStatus(){

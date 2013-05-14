@@ -54,12 +54,16 @@ public class PartyController {
 	 * 
 	 * @param spotifyURI Spotify uri as a string
 	 */
-	public void addSong(String spotifyURI){  // add song to party
+	public void addSong(String album, String artist, String name, double length, String spotifyURI){  // add song to party
 		if(party != null){
 			try {
 				ParseObject song = new ParseObject("Song");
 				song.put("party", party);
 				song.put("spotifyURI", spotifyURI);
+				song.put("album", album);
+				song.put("artist", artist);
+				song.put("name", name);
+				song.put("length",length);
 				song.save();
 				
 				ParseRelation relation = party.getRelation("songs");

@@ -82,10 +82,12 @@ public class SearchableActivity extends ActionBarActivity {
 						for(int i=0; i<arr.length(); i++){
 							SongItem song = new SongItem(arr.getJSONObject(i).getString("name"),
 									arr.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("name"),
-									arr.getJSONObject(i).getString("href"), 
+									arr.getJSONObject(i).getString("href"),
+									arr.getJSONObject(i).getJSONObject("album").getString("name"),
 									arr.getJSONObject(i).getDouble("length"));
 							songz.add(song);
 						}
+
 			
 					
 					ListView  listView = (ListView) findViewById(R.id.results_list);

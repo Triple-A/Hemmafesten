@@ -58,7 +58,6 @@ public class ActionBarActivity extends Activity {
 	
 	@Override 
 	public boolean onPrepareOptionsMenu(Menu menu){
-   
 		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
 	    	menu.findItem(R.id.menu_search).setVisible(true);
 	    	}else{
