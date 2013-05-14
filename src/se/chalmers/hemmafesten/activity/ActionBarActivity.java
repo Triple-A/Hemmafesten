@@ -22,6 +22,7 @@ import android.content.ServiceConnection;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -43,6 +44,11 @@ public class ActionBarActivity extends Activity {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.action_bar, menu);
 	    
+
+	   // if(PartyService.getStatus()==Status.FREE){
+	    	MenuItem item = menu.findItem(R.id.menu_search);
+	    	item.setEnabled(false);
+	    //}
 	    
 	    SearchManager searchManager =
 	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -50,7 +56,7 @@ public class ActionBarActivity extends Activity {
 	             (SearchView) menu.findItem(R.id.menu_search).getActionView();
 	     searchView.setSearchableInfo(
 	             searchManager.getSearchableInfo(getComponentName()));
-
+	     
 		    ActionBar actionBar = getActionBar();
 		    actionBar.setDisplayHomeAsUpEnabled(true);
 	    return true;
@@ -59,11 +65,13 @@ public class ActionBarActivity extends Activity {
 	@Override
 	public boolean onSearchRequested()
 	{
-	   if(PartyService.getStatus()==Status.FREE){
+	   if(PartyService.getStatus()!=Status.FREE){
 	   return false;
-	   }else
+	   }else{
 	   return true;
+       }
 	}
+	
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId,MenuItem item) {
