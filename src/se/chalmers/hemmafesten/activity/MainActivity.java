@@ -29,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
     public void clickCreateParty(View sender) {
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
 			Toast.makeText(MainActivity.this,
-					"Kill old party before creating to a new one!",
+					"Kill old party before creating a new one!",
 					Toast.LENGTH_SHORT).show();
 		}else{
 			createPartyService(true);
@@ -184,12 +184,8 @@ public class MainActivity extends ActionBarActivity {
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
     		findViewById(R.id.activePartyFrame).setVisibility(0);
-    		findViewById(R.id.create_new_party_button).setVisibility(8);
-    		findViewById(R.id.join_party_button).setVisibility(8);
     	}else{
     		findViewById(R.id.activePartyFrame).setVisibility(8);
-    		findViewById(R.id.create_new_party_button).setVisibility(0);
-    		findViewById(R.id.join_party_button).setVisibility(0);
     	}
     }
 
