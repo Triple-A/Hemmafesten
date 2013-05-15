@@ -7,28 +7,27 @@ import org.json.JSONException;
 
 import com.parse.ParseException;
 
+import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyController;
 import se.chalmers.hemmafesten.service.PartyService;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SongAdapter extends ArrayAdapter<SongItem> {
+public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
 
 	private Context context;
 	
-	public SongAdapter(Context context, int textViewResourceId,List<SongItem> items) {
+	public SearchSongAdapter(Context context, int textViewResourceId,List<SearchSongItem> items) {
 		super(context, textViewResourceId, items);
 		this.context = context;
 	}
@@ -40,15 +39,14 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
 	}
 	
 
-    @SuppressLint("SetJavaScriptEnabled")
 	public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        final SongItem songItem = getItem(position);
+        final SearchSongItem songItem = getItem(position);
  
         LayoutInflater myInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = myInflater.inflate(R.layout.song_list_item, null);
+            convertView = myInflater.inflate(R.layout.search_song_list_item, null);
             holder = new ViewHolder();
             holder.song = (TextView) convertView.findViewById(R.id.song);
             holder.artist = (TextView) convertView.findViewById(R.id.artist);
@@ -67,15 +65,23 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+        
         holder.button.setOnClickListener(
         		new Button.OnClickListener() {  
         	        public void onClick(View v)
         	            {
         	        	
+        	        	PartyController pc = PartyService.getParty();
+        	        	
         	        	try {
-							Song song = new Song(songItem.getJson());
-							song.save();
-						} catch (JSONException e) {
+            	        	Party party = Party.getParty(pc.getAccessCode());
+            	        	
+        	        		Song song = Song.getOrCreateSong(songItem.getJson());
+        	        		song.save();
+        	        		party.addSong(song);
+        	        		party.refresh();
+        	        		
+        	        	} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (ParseException e) {

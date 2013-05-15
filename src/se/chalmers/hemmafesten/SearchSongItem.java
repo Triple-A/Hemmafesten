@@ -8,7 +8,7 @@ import org.json.JSONObject;
  * (spotify songs)
  * @author ante
  */
-public class SongItem {
+public class SearchSongItem {
 	
 	/*
 	private String name;
@@ -20,7 +20,7 @@ public class SongItem {
 	*/
 	private JSONObject json;
 	
-	public SongItem(JSONObject song){
+	public SearchSongItem(JSONObject song){
 		this.json = song;
 	}
 	
