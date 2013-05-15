@@ -104,8 +104,7 @@ public class PartyService extends Service {
     }
     
     private Song getNext(){
-    	//TODO add code for retreiving the next song
-    	return new Song();
+    	return pc.getParty().getNext();
     }
     
     private void playSong(Song song){
