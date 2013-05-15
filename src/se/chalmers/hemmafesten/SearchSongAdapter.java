@@ -78,8 +78,10 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
             	        	
         	        		Song song = Song.getOrCreateSong(songItem.getJson());
         	        		song.save();
+        	        		
         	        		party.addSong(song);
-        	        		party.refresh();
+            	        	party.save();
+
         	        		
         	        	} catch (JSONException e) {
 							// TODO Auto-generated catch block
