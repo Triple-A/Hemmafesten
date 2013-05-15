@@ -3,21 +3,12 @@ package se.chalmers.hemmafesten.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.parse.ParseException;
 
 import se.chalmers.hemmafesten.PartySongAdapter;
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.SearchSongItem;
 import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyService;
-import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
 import android.content.ComponentName;
 import android.content.Context;
@@ -26,11 +17,12 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+
+import com.parse.ParseException;
 
 public class PartyActivity extends ActionBarActivity {
 
