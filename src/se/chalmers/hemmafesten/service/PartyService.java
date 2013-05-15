@@ -52,7 +52,7 @@ public class PartyService extends Service {
 			status = ((pc != null) ? Status.GUEST : Status.FAILED);
 		}
 		play = false;
-		startLoop();  /////// för test!!!!!!!!!!!!!
+		
 	}
 	
 	public void addSong(Song song){
@@ -95,13 +95,16 @@ public class PartyService extends Service {
     
 ////////////////////////////////////////spotify timer/player
     
+    public Boolean getPlay(){
+    	return play;
+    }
     
-    private void startLoop(){
+    public void startLoop(){
     	play = true;
     	handler.post(playback);
     }
     
-    private void stopLoop(){
+    public void stopLoop(){
     	play = false;
     }
     
@@ -119,7 +122,7 @@ public class PartyService extends Service {
     private Handler handler = new Handler();
     private Runnable playback = new Runnable(){
 
-    	private Long time = 2000L;
+    	private Long time = 0L;
     	private Song song = null;
     	  @Override
     	public void run() {

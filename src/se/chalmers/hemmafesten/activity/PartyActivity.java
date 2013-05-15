@@ -23,6 +23,7 @@ import android.os.IBinder;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 public class PartyActivity extends ActionBarActivity {
@@ -31,6 +32,16 @@ public class PartyActivity extends ActionBarActivity {
 
 	public void loadQR(){
 		new RetreiveQrTask(this, partyService).execute();
+	}
+	
+	public void onClickPlay(View sender){
+		if(psIsBound){
+			if(partyService.getPlay()){
+				partyService.stopLoop();
+			}else{
+				partyService.startLoop();
+			}
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -71,22 +82,16 @@ public class PartyActivity extends ActionBarActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		doBindService();
-		
-		/*
-		
-		ListView  listView = (ListView) findViewById(R.id.queue); 
-	    PartySongAdapter adapter = new PartySongAdapter(this,
-	                R.layout.party_song_list_item, songz);
-	     listView.setAdapter(adapter);
-
-		*/
-
-
 	}
 
 	protected void onPause(){
 		super.onPause();
 		doUnbindService();
+	}
+	
+	protected void onResume(){
+		super.onResume();
+		doBindService();
 	}
 
 	/**
