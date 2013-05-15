@@ -9,6 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -98,6 +100,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		if (song == null) {
 			song = new Song();
 			song.setSpotifyURI(spotifyUri);
+			song.save();
 		}
 		return song;
 	}
@@ -114,6 +117,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		Song song = getSongBySpotifyURI(spotifyUri);
 		if (song == null) {
 			song = new Song();
+			song.save();
 		}
 		
 		song.updateWithSpotifyJSONObject(jsonObject);
@@ -134,9 +138,12 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 			public void done(List<ParseObject> objects, ParseException e) {
 				ParseObject parseObject = (objects.size() > 0 ? objects.get(0) : null);
 				Song song = new Song(parseObject);
-				
+				if (parseObject == null) {
+					try { song.save(); }
+					catch (ParseException pe) { Log.e("DATA_LAYER", "Failed to save song with parse" + song + ". Reason "+ e.getMessage()); }
+				}
 				try { song.updateWithSpotifyJSONObject(jsonObject); }
-				catch (JSONException e1) { e1.printStackTrace(); }
+				catch (JSONException e1) { Log.e("DATA_LAYER_JSON", "Failed to update song "+song+" with JSON "+jsonObject+". Reason "+ e.getMessage()); }
 				
 				callback.done(song, e);
 			}
