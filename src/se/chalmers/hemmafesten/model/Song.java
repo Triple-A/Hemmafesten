@@ -207,7 +207,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return this.getParseObject().getString("name");
 	}
 	
-	public void setName(String name) {
+	private void setName(String name) {
 		this.getParseObject().put("name", name);
 	}
 	
@@ -215,7 +215,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return this.getParseObject().getString("album");
 	}
 	
-	public void setAlbumName(String albumName) {
+	private void setAlbumName(String albumName) {
 		this.getParseObject().put("album", albumName);
 	}
 	
@@ -223,7 +223,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return this.getParseObject().getString("artist");
 	}
 	
-	public void setArtistName(String artistName) {
+	private void setArtistName(String artistName) {
 		this.getParseObject().put("artist", artistName);
 	}
 	
@@ -231,7 +231,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return this.getParseObject().getString("spotifyURI");
 	}
 	
-	public void setSpotifyURI(String spotifyUri) {
+	private void setSpotifyURI(String spotifyUri) {
 		this.getParseObject().put("spotifyURI", spotifyUri);
 	}
 	
@@ -239,7 +239,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return this.getParseObject().getDouble("length");
 	}
 
-	public void setLength(double length) {
+	private void setLength(double length) {
 		this.getParseObject().put("length", length);
 	}
 	
@@ -248,7 +248,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return this.albumSpotifyUri;
 	}
 	
-	public void setAlbumURI(String albumUri) {
+	private void setAlbumURI(String albumUri) {
 		this.albumSpotifyUri = albumUri;
 	}
 	
@@ -256,7 +256,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return popularity;
 	}
 
-	public void setPopularity(double popularity) {
+	private void setPopularity(double popularity) {
 		this.popularity = popularity;
 	}
 	

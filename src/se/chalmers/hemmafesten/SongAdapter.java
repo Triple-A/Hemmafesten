@@ -88,7 +88,7 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
         	        	
         	        	
         	        	PartyController controller = PartyService.getParty();
-        	        	controller.addSong(album,artist,name,length,uri);
+        	        	//controller.addSong(album,artist,name,length,uri);
         	        	
         	        	CharSequence text = "Song added to party";
         	        	int duration = Toast.LENGTH_SHORT;

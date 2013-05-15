@@ -3,6 +3,7 @@ package se.chalmers.hemmafesten.service;
 
 import se.chalmers.hemmafesten.APIKeys;
 import se.chalmers.hemmafesten.model.Song;
+import se.chalmers.hemmafesten.model.SongList;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import com.parse.Parse;
 public class PartyService extends Service {
 	
 	private static PartyController pc;
+
 	private static Status status = Status.FREE;
 	public enum Status {
 	    FREE,
@@ -52,9 +54,8 @@ public class PartyService extends Service {
 		
 	}
 	
-	
-	public void addSong(String album, String artist, String name, double length, String spotifyURI){
-		pc.addSong(album,artist,name,length,spotifyURI);
+	public void addSong(Song song){
+		pc.addSong(song);
 	}
 	
 	public static Status getStatus(){
@@ -109,8 +110,7 @@ public class PartyService extends Service {
     private void playSong(Song song){
     	String uri = song.getSpotifyURI();
     	Log.d("playSong", song.toString());
-    	Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri) );
-    	
+    	Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
     	startActivity(launcher);
     }
 

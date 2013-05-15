@@ -25,6 +25,8 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
 
 
+	private View joinFrame;
+	private View activePartyFrame;
 
     public void clickCreateParty(View sender) {
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
@@ -60,7 +62,6 @@ public class MainActivity extends ActionBarActivity {
 					"Kill old party before connecting to a new one!",
 					Toast.LENGTH_SHORT).show();
 		}else{
-			View joinFrame = findViewById(R.id.joinFrame);
 	    	int visible = joinFrame.getVisibility();
 	    	if(visible == 0){ //visible
 	    		joinFrame.setVisibility(8);
@@ -160,12 +161,17 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         startService(new Intent(this, PartyService.class)); 
         doBindService();
+        
+        joinFrame = findViewById(R.id.joinFrame);
+        activePartyFrame = findViewById(R.id.activePartyFrame);
+        
         activePartyVisibility();
     }
     
     protected void onResume(){
     	super.onResume();
     	doBindService();
+    	joinFrame.setVisibility(8);
     	activePartyVisibility();
     }
     
@@ -183,9 +189,9 @@ public class MainActivity extends ActionBarActivity {
     
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
-    		findViewById(R.id.activePartyFrame).setVisibility(0);
+    		activePartyFrame.setVisibility(0);
     	}else{
-    		findViewById(R.id.activePartyFrame).setVisibility(8);
+    		activePartyFrame.setVisibility(8);
     	}
     }
 
