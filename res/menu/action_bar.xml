@@ -14,8 +14,7 @@
               android:title="Home"/>  
         <item
             android:id="@+id/leaveParty"
-            android:title="Leave Party" 
-            android:enabled="false"/>
+            android:title="Leave Party" />
         <item
             android:id="@+id/savedParties"
             android:title="Saved Parties" />

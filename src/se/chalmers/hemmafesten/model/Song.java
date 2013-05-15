@@ -2,6 +2,7 @@ package se.chalmers.hemmafesten.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import com.parse.ParseQuery;
  * 
  * @author Aron
  */
-public class Song extends se.chalmers.hemmafesten.model.Model {	
+public class Song extends se.chalmers.hemmafesten.model.Model{	
 	private static final String SPOTIFY_JSON_SONG_URI_KEY = "href";
 	private static final String SPOTIFY_JSON_SONG_NAME_KEY = "name";
 	private static final String SPOTIFY_JSON_SONG_LENGTH_KEY = "length";
@@ -223,6 +224,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return this.getParseObject().getString("spotifyURI");
 	}
 	
+	
 	private void setSpotifyURI(String spotifyUri) {
 		this.getParseObject().put("spotifyURI", spotifyUri);
 	}
@@ -286,4 +288,5 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	protected String getParseObjectNameInternal() {
 		return getParseObjectName();
 	}
+
 }

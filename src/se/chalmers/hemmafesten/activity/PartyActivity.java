@@ -34,7 +34,9 @@ import android.widget.ListView;
 
 public class PartyActivity extends ActionBarActivity {
 
-
+	private ListView listView;
+	private PartySongAdapter adapter;
+	private List<Song> songz;
 
 	public void loadQR(){
 		new RetreiveQrTask(this, partyService).execute();
@@ -91,13 +93,13 @@ public class PartyActivity extends ActionBarActivity {
 		try {
 			Party party = Party.getParty(PartyService.getParty().getAccessCode());
 			party.refresh();
-			List<Song> songz = new ArrayList<Song>();
+			
 			songz = party.getSongs();
 			
-			ListView  listView = (ListView) findViewById(R.id.queue); 
-		    PartySongAdapter adapter = new PartySongAdapter(this,
+			listView = (ListView) findViewById(R.id.queue); 
+		    adapter = new PartySongAdapter(this,
 		                R.layout.party_song_list_item, songz);
-		     listView.setAdapter(adapter);
+		    listView.setAdapter(adapter);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -115,13 +117,18 @@ public class PartyActivity extends ActionBarActivity {
 		try {
 			Party party = Party.getParty(PartyService.getParty().getAccessCode());
 			party.refresh();
-			List<Song> songz = new ArrayList<Song>();
-			songz = party.getSongs();
+			/*List<Song> songz = party.getSongs();
 			
-			ListView  listView = (ListView) findViewById(R.id.queue); 
+			*/
+			songz.clear();
+			songz.addAll(party.getSongs());
+			adapter.notifyDataSetChanged();
+			
+			/*
 		    PartySongAdapter adapter = new PartySongAdapter(this,
 		                R.layout.party_song_list_item, songz);
-		     listView.setAdapter(adapter);
+		    listView.setAdapter(adapter);*/
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

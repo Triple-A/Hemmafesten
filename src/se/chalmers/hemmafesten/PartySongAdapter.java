@@ -5,6 +5,7 @@ import java.util.List;
 import se.chalmers.hemmafesten.model.Song;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ private Context context;
         holder = (ViewHolder) convertView.getTag();
  
         holder.song.setText(song.getName());
-		holder.artist.setText(song.getArtistName());
+		holder.artist.setText(song.getArtistName());		
         
         return convertView;
     }

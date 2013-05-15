@@ -157,7 +157,7 @@ public class Party extends Model {
 	}
 	
 	public List<Song> getSongs() throws ParseException {
-		List<ParseObject> parseObjects = this.songs().getQuery().find();
+		List<ParseObject> parseObjects = this.songs().getQuery().orderByAscending("createdAt").find();
 		List<Song> songs = Song.songsFromParseObjectSongs(parseObjects);
 		return songs;
 	}

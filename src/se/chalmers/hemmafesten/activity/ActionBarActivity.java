@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 public class ActionBarActivity extends Activity {
@@ -48,8 +49,10 @@ public class ActionBarActivity extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu){
 		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
 	    	menu.findItem(R.id.menu_search).setVisible(true);
+	    	menu.findItem(R.id.leaveParty).setVisible(true);
 	    	}else{
 	    	menu.findItem(R.id.menu_search).setVisible(false);
+	    	menu.findItem(R.id.leaveParty).setVisible(false);
 			}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -76,8 +79,6 @@ public class ActionBarActivity extends Activity {
 	        	homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	        	startActivity(homeIntent);
 	        	return true;
-	        case R.id.leaveParty:
-	            return true;
 	        case R.id.savedParties:
 	            Intent savedPartiesIntent = new Intent(this, SavedPartiesActivity.class);
 	            savedPartiesIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -93,6 +94,11 @@ public class ActionBarActivity extends Activity {
 	            settingsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	            startActivity(settingsIntent);
 	        	return true;
+	        case R.id.leaveParty:
+	        	Intent backToHomeIntent = new Intent(this, MainActivity.class);
+	        	backToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+	        	startActivity(backToHomeIntent);
+	            return true;
 	        case android.R.id.home:
 	            onBackPressed();
 	            return true;
