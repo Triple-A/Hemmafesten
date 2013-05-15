@@ -145,51 +145,56 @@ public class Party extends Model {
 	public void addSong(Song song) {
 		ParseObject parseSongObject = song.getParseObject();
 		this.songs().add(parseSongObject);
+		parseSongObject.put("party", this.getParseObject());
 		this.saveEventually();
 	}
 	
 	public void removeSong(Song song) {
 		ParseObject parseSongObject = song.getParseObject();
 		this.songs().remove(parseSongObject);
+		song.deleteEventually();
 		this.saveEventually();
 	}
 	
-	public List<Song> getSongs(){
-		final List<Song> res = new LinkedList<Song>();
-		songs().getQuery().findInBackground(new FindCallback() {
+	public List<Song> getSongs() throws ParseException {
+		List<ParseObject> parseObjects = this.songs().getQuery().find();
+		List<Song> songs = Song.songsFromParseObjectSongs(parseObjects);
+		return songs;
+	}
+	
+	public void getSongsAsync(final se.chalmers.hemmafesten.model.callback.FindCallback<Song> callback){
+		this.songs().getQuery().findInBackground(new FindCallback() {
 		    public void done(List<ParseObject> results, ParseException e) {
-		      if (e != null) {
-		        // There was an error
-		      } else {
-		    	  
-		    	  for(ParseObject po : results){
-		        	res.add(new Song(po));
-		    	  }
-		      }
+		    	List<Song> songs = Song.songsFromParseObjectSongs(results);
+		    	callback.done(songs, e);
 		    }
 		});
-		return res;
 	}
 
-	public Song getNext(){
-		final List<Song> res = new LinkedList<Song>();
+	/**
+	 * The next song which should be played. Might be null if there are no more.
+	 * @return
+	 */
+	public Song getNext() {
 		ParseQuery pq = songs().getQuery();
 		pq.orderByAscending("createdAt");
 		pq.whereEqualTo("isPlayed", false);
-		pq.setLimit(1);
-		songs().getQuery().findInBackground(new FindCallback() {
-		    public void done(List<ParseObject> results, ParseException e) {
-		      if (e != null) {
-		        // There was an error
-		      } else {
-		    	  res.add(new Song(results.get(0)));
-		      }
-		    }
-		});
-		return res.get(0);
+		ParseObject nextSongParseObject = null;
+		try {
+			nextSongParseObject = pq.getFirst();
+		} catch (ParseException e) {
+			if (e.getCode() != ParseException.OBJECT_NOT_FOUND) { 
+				Log.e("DATA_LAYER", e.getMessage());
+			}
+		}
+		
+		Song nextSong = null;
+		if (nextSongParseObject != null) {
+			nextSong = new Song(nextSongParseObject);
+		}
+		
+		return nextSong;
 	}
-	
-	
 	
 	// Description
 	@Override
