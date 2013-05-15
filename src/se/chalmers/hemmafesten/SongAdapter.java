@@ -83,7 +83,6 @@ public class SongAdapter extends ArrayAdapter<SongItem> {
 							e.printStackTrace();
 						}
         	        	
-        	        	
         	        	CharSequence text = "Song added to party";
         	        	int duration = Toast.LENGTH_SHORT;
 
