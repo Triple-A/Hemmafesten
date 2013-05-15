@@ -76,8 +76,7 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
         	        	try {
             	        	Party party = Party.getParty(pc.getAccessCode());
             	        	
-        	        		Song song = Song.getOrCreateSong(songItem.getJson());
-        	        		song.save();
+        	        		Song song = Song.createSongWithSpotifyJSON(songItem.getJson());
         	        		
         	        		party.addSong(song);
             	        	party.save();

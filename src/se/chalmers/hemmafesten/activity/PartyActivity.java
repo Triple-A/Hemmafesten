@@ -77,23 +77,21 @@ public class PartyActivity extends ActionBarActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		doBindService();
-		/*
+		
 		try {
 			Party party = Party.getParty(PartyService.getParty().getAccessCode());
 			party.refresh();
-			List<Song> songz = party.getSongs();
-			Log.i("songz",songz.toString());
+			List<Song> songz = new ArrayList<Song>();
+			songz = party.getSongs();
 			
 			ListView  listView = (ListView) findViewById(R.id.queue); 
 		    PartySongAdapter adapter = new PartySongAdapter(this,
 		                R.layout.party_song_list_item, songz);
 		     listView.setAdapter(adapter);
-		     
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
 
 		
 
@@ -103,6 +101,25 @@ public class PartyActivity extends ActionBarActivity {
 	protected void onPause(){
 		super.onPause();
 		doUnbindService();
+	}
+	
+	protected void onResume(){
+		super.onResume();
+		try {
+			Party party = Party.getParty(PartyService.getParty().getAccessCode());
+			party.refresh();
+			List<Song> songz = new ArrayList<Song>();
+			songz = party.getSongs();
+			
+			ListView  listView = (ListView) findViewById(R.id.queue); 
+		    PartySongAdapter adapter = new PartySongAdapter(this,
+		                R.layout.party_song_list_item, songz);
+		     listView.setAdapter(adapter);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
