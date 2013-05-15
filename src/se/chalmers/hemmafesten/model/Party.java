@@ -1,5 +1,6 @@
 package se.chalmers.hemmafesten.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.json.JSONException;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -149,6 +151,43 @@ public class Party extends Model {
 		ParseObject parseSongObject = song.getParseObject();
 		this.songs().remove(parseSongObject);
 	}
+	
+	public List<Song> getSongs(){
+		final List<Song> res = new LinkedList<Song>();
+		songs().getQuery().findInBackground(new FindCallback() {
+		    public void done(List<ParseObject> results, ParseException e) {
+		      if (e != null) {
+		        // There was an error
+		      } else {
+		    	  
+		    	  for(ParseObject po : results){
+		        	res.add(new Song(po));
+		    	  }
+		      }
+		    }
+		});
+		return res;
+	}
+
+	public Song getNext(){
+		final List<Song> res = new LinkedList<Song>();
+		ParseQuery pq = songs().getQuery();
+		pq.orderByAscending("createdAt");
+		pq.whereEqualTo("isPlayed", false);
+		pq.setLimit(1);
+		songs().getQuery().findInBackground(new FindCallback() {
+		    public void done(List<ParseObject> results, ParseException e) {
+		      if (e != null) {
+		        // There was an error
+		      } else {
+		    	  res.add(new Song(results.get(0)));
+		      }
+		    }
+		});
+		return null;
+	}
+	
+	
 	
 	// Description
 	@Override

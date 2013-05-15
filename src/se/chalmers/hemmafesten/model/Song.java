@@ -211,6 +211,14 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		this.getParseObject().put("name", name);
 	}
 	
+	public Boolean getIsPlayed() {
+		return this.getParseObject().getBoolean("isPlayed");
+	}
+	
+	public void setIsPlayed(Boolean bool) {
+		this.getParseObject().put("isPlayed", bool);
+	}
+	
 	public String getAlbumName() {
 		return this.getParseObject().getString("album");
 	}
