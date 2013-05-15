@@ -184,7 +184,7 @@ public class Party extends Model {
 		      }
 		    }
 		});
-		return null;
+		return res.get(0);
 	}
 	
 	
