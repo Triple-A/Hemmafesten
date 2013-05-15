@@ -9,6 +9,7 @@ import com.parse.ParseException;
 
 import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
+import se.chalmers.hemmafesten.service.PartyController;
 import se.chalmers.hemmafesten.service.PartyService;
 
 import android.app.Activity;
@@ -68,14 +69,12 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
         	        public void onClick(View v)
         	            {
         	        	
+        	        	PartyController pc = PartyService.getParty();
         	        	
         	        	try {
-							Song song = new Song(songItem.getJson());
-							song.save();
+        	        		Song song = new Song(songItem.getJson());
+        	        		pc.addSong(song);
         	        	} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
