@@ -20,9 +20,16 @@ public class PartyController {
 	 * Construct for creating a new party
 	 */
 	 public PartyController() {  // creating a new party
-		party = new Party();
-		user = new ParseUser();
-		party.setHost(user);
+		
+		try {
+			party = new Party();
+			//user = new ParseUser();
+			//party.setHost(user);
+			party.save();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Log.i("PartyController","PartyController(): party created");
 	}
 	
@@ -35,8 +42,9 @@ public class PartyController {
 		try {
 			party = Party.getParty(accessCode);
 			if(party != null){
-				user = new ParseUser();
-				party.addAttendee(user);
+				//user = new ParseUser();
+				//party.addAttendee(user);
+				//party.refresh();
 		    	Log.i("PartyController","PartyController(String accessCode): joined party: "+ party.toString());
 			}
 		} catch (ParseException e) {

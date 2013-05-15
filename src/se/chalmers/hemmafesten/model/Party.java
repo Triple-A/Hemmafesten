@@ -159,7 +159,7 @@ public class Party extends Model {
 	
 	// Private helpers
 	private static String getParseObjectName() {
-		return "Song";
+		return "Party";
 	}
 	
 	@Override
