@@ -145,12 +145,14 @@ public class Party extends Model {
 	public void addSong(Song song) {
 		ParseObject parseSongObject = song.getParseObject();
 		this.songs().add(parseSongObject);
+		parseSongObject.put("party", this.getParseObject());
 		this.saveEventually();
 	}
 	
 	public void removeSong(Song song) {
 		ParseObject parseSongObject = song.getParseObject();
 		this.songs().remove(parseSongObject);
+		song.deleteEventually();
 		this.saveEventually();
 	}
 	

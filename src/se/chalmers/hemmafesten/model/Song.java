@@ -38,6 +38,30 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	private String albumSpotifyUri;
 	
 	
+	public static Song createSongWithSpotifyJSON(JSONObject jsonObject) throws ParseException, JSONException {
+		Song song = new Song(jsonObject);
+		song.save();
+		return song;
+	}
+	
+	public static Song createSongWithSpotifyURI(String spotifyUri) throws ParseException {
+		Song song = new Song();
+		song.setSpotifyURI(spotifyUri);
+		song.save();
+		return song;
+	}
+	
+	public static void createSongWithSpotifyURIAsync(String spotifyUri, final se.chalmers.hemmafesten.model.callback.GetCallback callback) {
+		final Song song = new Song();
+		song.setSpotifyURI(spotifyUri);
+		song.getParseObject().saveInBackground(new com.parse.SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				callback.done(song, e);
+			}
+		});
+	}
+	
 	/**
 	 * Asynchronously fetches a specific song from the backend.
 	 * @param songId The Parse identifier associated with the song object.
@@ -89,67 +113,6 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		
 		return song;
 	}
-	
-	/**
-	 * Synchronously gets a song from the backend.
-	 * @param spotifyUri The Spotify URI used to identify the song.
-	 * @return The song associated with the Spotify URI if found, otherwise `null`.
-	 */
-	public static Song getOrCreateSongBySpotifyURI(String spotifyUri) throws ParseException {
-		Song song = getSongBySpotifyURI(spotifyUri);
-		if (song == null) {
-			song = new Song();
-			song.setSpotifyURI(spotifyUri);
-			song.save();
-		}
-		return song;
-	}
-
-	/**
-	 * Synchronously tries to get a song for the given JSON object and if it could not be found a new song will be created.
-	 * @param jsonObject A Spotify JSON object.
-	 * @return Returns the found user object or the newly created.
-	 * @throws JSONException
-	 */
-	public static Song getOrCreateSong(JSONObject jsonObject) throws JSONException, ParseException {
-		String spotifyUri = jsonObject.getString(SPOTIFY_JSON_SONG_URI_KEY);
-		
-		Song song = getSongBySpotifyURI(spotifyUri);
-		if (song == null) {
-			song = new Song();
-			song.save();
-		}
-		
-		song.updateWithSpotifyJSONObject(jsonObject);
-		return song;
-	}
-	
-	/**
-	 * Asynchronously tries to get a song for the given JSON object and if it could not be found a new song will be created.
-	 * @param jsonObject A Spotify JSON object.
-	 * @param callback The callback which is called when the user object has been fetched or created.
-	 * @throws JSONException
-	 */
-	public static void getOrCreateSongAsync(final JSONObject jsonObject, final se.chalmers.hemmafesten.model.callback.GetCallback callback) throws JSONException {
-		String spotifyUri = jsonObject.getString(SPOTIFY_JSON_SONG_URI_KEY);
-		ParseQuery query = songQueryBySpotifyURI(spotifyUri);
-		query.findInBackground(new com.parse.FindCallback() {
-			@Override
-			public void done(List<ParseObject> objects, ParseException e) {
-				ParseObject parseObject = (objects.size() > 0 ? objects.get(0) : null);
-				Song song = new Song(parseObject);
-				if (parseObject == null) {
-					try { song.save(); }
-					catch (ParseException pe) { Log.e("DATA_LAYER", "Failed to save song with parse" + song + ". Reason "+ e.getMessage()); }
-				}
-				try { song.updateWithSpotifyJSONObject(jsonObject); }
-				catch (JSONException e1) { Log.e("DATA_LAYER_JSON", "Failed to update song "+song+" with JSON "+jsonObject+". Reason "+ e.getMessage()); }
-				
-				callback.done(song, e);
-			}
-		});
-	}
-	
 	
 	// Parse queries
 	private static ParseQuery songQueryBySpotifyURI(String spotifyUri) {
