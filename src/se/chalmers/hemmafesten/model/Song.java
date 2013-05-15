@@ -285,7 +285,6 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 		return hash;
 	}
 	
-	
 	// Private helpers
 	private static String getParseObjectName() {
 		return "Song";

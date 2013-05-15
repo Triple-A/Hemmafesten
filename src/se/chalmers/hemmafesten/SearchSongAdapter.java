@@ -14,6 +14,7 @@ import se.chalmers.hemmafesten.service.PartyService;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+        
         holder.button.setOnClickListener(
         		new Button.OnClickListener() {  
         	        public void onClick(View v)
@@ -72,9 +74,17 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
         	        	PartyController pc = PartyService.getParty();
         	        	
         	        	try {
-        	        		Song song = new Song(songItem.getJson());
-        	        		pc.addSong(song);
+            	        	Party party = Party.getParty(pc.getAccessCode());
+            	        	
+        	        		Song song = Song.getOrCreateSong(songItem.getJson());
+        	        		song.save();
+        	        		party.addSong(song);
+        	        		party.refresh();
+        	        		
         	        	} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}

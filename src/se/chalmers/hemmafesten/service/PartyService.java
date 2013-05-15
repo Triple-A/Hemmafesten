@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
