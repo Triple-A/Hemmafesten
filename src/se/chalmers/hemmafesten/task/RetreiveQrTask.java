@@ -36,10 +36,10 @@ public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
 
     protected Bitmap doInBackground(Void... arg0) {
     	try {
-    		URL url = new URL("http://api.qrserver.com/v1/create-qr-code/?size=80x80&data=" + accessCode);
+    		URL url = new URL(Messages.getString("RetreiveQrTask.restfulQrGenerator") + accessCode); //$NON-NLS-1$
     		return BitmapFactory.decodeStream(url.openConnection().getInputStream());
 		} catch (IOException e) {
-			Log.e("RetriveQrTask", e.getMessage());
+			Log.e("RetriveQrTask", e.getMessage()); //$NON-NLS-1$
 		}
     	return null;
     }

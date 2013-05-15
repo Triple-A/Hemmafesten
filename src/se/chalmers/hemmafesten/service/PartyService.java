@@ -20,6 +20,7 @@ import com.parse.ParseUser;
 public class PartyService extends Service {
 	
 	private static PartyController pc;
+	private Boolean play;
 
 	private static Status status = Status.FREE;
 	public enum Status {
@@ -50,9 +51,8 @@ public class PartyService extends Service {
 			pc = new PartyController(accessCode);
 			status = ((pc != null) ? Status.GUEST : Status.FAILED);
 		}
-		
-		
-		
+		play = false;
+		startLoop();  /////// för test!!!!!!!!!!!!!
 	}
 	
 	public void addSong(Song song){
@@ -68,6 +68,7 @@ public class PartyService extends Service {
 	}
 	
 	public void killService(){
+		stopLoop();
 		pc.killParty(status == Status.HOST);
 		pc = null;
 		status = Status.FREE;
@@ -96,11 +97,12 @@ public class PartyService extends Service {
     
     
     private void startLoop(){
+    	play = true;
     	handler.post(playback);
     }
     
     private void stopLoop(){
-    	handler.removeCallbacks(playback);    /// doesnt work!!!!!
+    	play = false;
     }
     
     private Song getNext(){
@@ -122,10 +124,11 @@ public class PartyService extends Service {
     	  @Override
     	public void run() {
     		  
-    		  song = getNext();
-    		  time = Double.valueOf(song.getLength()).longValue() * 1000;
-    		  handler.postDelayed(playback, time);
-    		  playSong(song);
+    		  if((song = getNext()) != null && play){
+        		  time = Double.valueOf(song.getLength()).longValue() * 1000;
+        		  handler.postDelayed(playback, time);
+        		  playSong(song);
+    		  }
     	}};
 }
 
