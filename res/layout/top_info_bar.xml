@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/top_info_bar_height"
-    android:layout_margin="3dp">
+    android:layout_margin="5dp">
 
     <ImageView
         android:id="@+id/qr_icon"

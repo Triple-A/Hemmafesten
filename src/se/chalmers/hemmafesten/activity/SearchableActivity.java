@@ -9,8 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.SongAdapter;
-import se.chalmers.hemmafesten.SongItem;
+import se.chalmers.hemmafesten.SearchSongAdapter;
+import se.chalmers.hemmafesten.SearchSongItem;
 import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
 
@@ -67,18 +67,18 @@ public class SearchableActivity extends ActionBarActivity {
 						JSONObject object = new JSONObject(result);
 						JSONArray arr = object.getJSONArray("tracks");
 												
-						ArrayList<SongItem> songz = new ArrayList<SongItem>();
+						ArrayList<SearchSongItem> songz = new ArrayList<SearchSongItem>();
 						
 						for(int i=0; i<arr.length(); i++){
-							SongItem song = new SongItem(arr.getJSONObject(i));
+							SearchSongItem song = new SearchSongItem(arr.getJSONObject(i));
 							songz.add(song);
 						}
 
 			
 					
 					ListView  listView = (ListView) findViewById(R.id.results_list);
-				    SongAdapter adapter = new SongAdapter(this,
-				                R.layout.song_list_item, songz);
+				    SearchSongAdapter adapter = new SearchSongAdapter(this,
+				                R.layout.search_song_list_item, songz);
 				     listView.setAdapter(adapter);
 						
 					} catch (InterruptedException e) {

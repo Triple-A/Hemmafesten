@@ -8,9 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import se.chalmers.hemmafesten.PartySongAdapter;
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.SongAdapter;
-import se.chalmers.hemmafesten.SongItem;
+import se.chalmers.hemmafesten.SearchSongItem;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
@@ -72,38 +72,14 @@ public class PartyActivity extends ActionBarActivity {
 		setupActionBar();
 		doBindService();
 		
+		/*
 		
-		RetreiveMusicTask task = new RetreiveMusicTask();
-		String result;
-		try {
-			result = task.execute("get%20lucky").get();
-			JSONObject object = new JSONObject(result);
-			JSONArray arr = object.getJSONArray("tracks");
-									
-			ArrayList<SongItem> songz = new ArrayList<SongItem>();
-			
-			for(int i=0; i<arr.length(); i++){
-				SongItem song = new SongItem(arr.getJSONObject(i));
-				songz.add(song);
-			}
-
-		
-		ListView  listView = (ListView) findViewById(R.id.queue);
-	    SongAdapter adapter = new SongAdapter(this,
-	                R.layout.song_list_item, songz);
+		ListView  listView = (ListView) findViewById(R.id.queue); 
+	    PartySongAdapter adapter = new PartySongAdapter(this,
+	                R.layout.party_song_list_item, songz);
 	     listView.setAdapter(adapter);
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		*/
 
 
 	}
