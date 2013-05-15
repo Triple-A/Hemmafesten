@@ -40,6 +40,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	
 	public static Song createSongWithSpotifyJSON(JSONObject jsonObject) throws ParseException, JSONException {
 		Song song = new Song(jsonObject);
+		song.setIsPlayed(false);
 		song.save();
 		return song;
 	}
@@ -47,6 +48,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	public static Song createSongWithSpotifyURI(String spotifyUri) throws ParseException {
 		Song song = new Song();
 		song.setSpotifyURI(spotifyUri);
+		song.setIsPlayed(false);
 		song.save();
 		return song;
 	}
@@ -54,6 +56,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	public static void createSongWithSpotifyURIAsync(String spotifyUri, final se.chalmers.hemmafesten.model.callback.GetCallback callback) {
 		final Song song = new Song();
 		song.setSpotifyURI(spotifyUri);
+		song.setIsPlayed(false);
 		song.getParseObject().saveInBackground(new com.parse.SaveCallback() {
 			@Override
 			public void done(ParseException e) {
@@ -83,11 +86,11 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	 * @param spotifyUri The Spotify URI used to identify the song.
 	 * @param callback The callback which handles the song(s) fetched.
 	 */
-	public static void getSongBySpotifyURIAsync(String spotifyUri, final se.chalmers.hemmafesten.model.callback.FindCallback callback) {
+	public static void getSongBySpotifyURIAsync(String spotifyUri, final se.chalmers.hemmafesten.model.callback.FindCallback<Song> callback) {
 		songQueryBySpotifyURI(spotifyUri).findInBackground(new com.parse.FindCallback() {
 			@Override
 			public void done(List<ParseObject> objects, ParseException e) {
-				List<Model> songs = new LinkedList<Model>();
+				List<Song> songs = new LinkedList<Song>();
 				for (ParseObject parseObject : objects) {
 					Song song = new Song(parseObject);
 					songs.add(song);
@@ -122,14 +125,25 @@ public class Song extends se.chalmers.hemmafesten.model.Model {
 	}
 	
 	
+	public static List<Song> songsFromParseObjectSongs(List<ParseObject> parseObjectSongs) {
+		List<Song> songs = new LinkedList<Song>();
+    	for(ParseObject po : parseObjectSongs){
+    		songs.add(new Song(po));
+    	}
+    	return songs;
+	}
+	
+	
 	// Constructors
 	public Song(JSONObject jsonObject) throws JSONException {
 		this();
+		this.setIsPlayed(false);
 		this.updateWithSpotifyJSONObject(jsonObject);
 	}
 	
 	public Song() {
 		this(new ParseObject(getParseObjectName()));
+		this.setIsPlayed(false);
 	}
 	
 	public Song(ParseObject parseObject) {
