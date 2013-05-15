@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:padding="5dp"
+    android:background="@color/white"
+    >
+  
+    
+    <TextView
+        android:id="@+id/partySong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:text="hejsan haha hallå eller" />
+
+    <TextView
+        android:id="@+id/partyArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/partySong"
+        android:layout_below="@+id/partySong"
+        android:paddingBottom="4dp"
+        android:text="Snälla håll käft ovan"
+        android:textColor="#808080"
+        android:textSize="14dp" />
+
+   
+</RelativeLayout>
