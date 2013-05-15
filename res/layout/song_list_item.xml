@@ -2,28 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     android:background="@color/white"
     >
-  
-      <WebView
-        android:id="@+id/webview"
+    
+         <Button
+        android:id="@+id/button1"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:contentDescription="@string/image"
-        android:src="@drawable/dp"
-        android:saveEnabled="true"
-        android:keepScreenOn="true" />
+        android:layout_marginTop="5dp"
+        android:background="@color/sp_green"
+        android:height="10dp"
+        android:width="80dp"
+        android:text="Add to party"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="12sp" />
     
     <TextView
         android:id="@+id/song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/webview"
-        android:paddingTop="5dp"
-        android:paddingBottom="4dp"
+        android:layout_toRightOf="@+id/button1"
+        android:paddingBottom="2dp"
         android:textColor="#000000"
         android:textSize="16dp"
         android:textStyle="bold"
@@ -40,18 +44,5 @@
         android:textColor="#808080"
         android:textSize="14dp" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/artist"
-        android:layout_toRightOf="@+id/webview"
-        android:background="@color/sp_green"
-        android:minHeight="10dip"
-        android:minWidth="64dip"
-        android:padding="5dp"
-        android:text="Add to Party"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-    
+   
 </RelativeLayout>

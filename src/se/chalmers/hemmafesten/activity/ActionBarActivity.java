@@ -1,40 +1,30 @@
 package se.chalmers.hemmafesten.activity;
 
-import java.util.zip.Inflater;
-
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.R.id;
-import se.chalmers.hemmafesten.R.layout;
-import se.chalmers.hemmafesten.R.menu;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
 
 import android.os.Bundle;
-import android.os.IBinder;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 public class ActionBarActivity extends Activity {
-
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_action_bar);
 	}
 
-	/**
-	 * Handler for when a menu button is clicked
-	 */
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
@@ -47,12 +37,36 @@ public class ActionBarActivity extends Activity {
 	             (SearchView) menu.findItem(R.id.menu_search).getActionView();
 	     searchView.setSearchableInfo(
 	             searchManager.getSearchableInfo(getComponentName()));
-
+	     
 		    ActionBar actionBar = getActionBar();
 		    actionBar.setDisplayHomeAsUpEnabled(true);
-	    return true;
+	    return super.onCreateOptionsMenu(menu);
 	}
 	
+	
+	@Override 
+	public boolean onPrepareOptionsMenu(Menu menu){
+		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
+	    	menu.findItem(R.id.menu_search).setVisible(true);
+	    	}else{
+	    	menu.findItem(R.id.menu_search).setVisible(false);
+			}
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	
+	@Override
+	public boolean onSearchRequested()
+	{
+	 /*
+	   if(PartyService.getStatus()!=Status.FREE){
+	   return false;
+	   }else{
+	   return true;
+       }
+       */
+		return true;
+	}
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId,MenuItem item) {

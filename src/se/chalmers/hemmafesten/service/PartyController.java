@@ -1,22 +1,16 @@
 package se.chalmers.hemmafesten.service;
 
-
-
-import java.util.List;
-
 import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
-
+import se.chalmers.hemmafesten.model.SongList;
 import android.util.Log;
 
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 
 public class PartyController {
 	
 	private Party party = null;
+	private SongList list;
 
 	
 
@@ -31,6 +25,7 @@ public class PartyController {
 		} catch (ParseException e) {
 			Log.e("PartyController","PartyController(): failed: " + e.getMessage());
 		}
+		list = new SongList(getAccessCode());
 	}
 	
 	
@@ -48,6 +43,7 @@ public class PartyController {
 			Log.e("PartyController","PartyController(String accessCode): failed: " + e.getMessage());
 	      // something went wrong
 		}
+		list = new SongList(getAccessCode());
 	}
 	
 	
@@ -56,7 +52,7 @@ public class PartyController {
 	 * 
 	 * @param spotifyURI Spotify uri as a string
 	 */
-	public void addSong(String spotifyURI){  // add song to party
+	/*public void addSong(String album, String artist, String name, double length, String spotifyURI){  // add song to party
 		if(party != null){
 			try {
 				Song song = Song.getOrCreateSongBySpotifyURI(spotifyURI);
@@ -81,6 +77,11 @@ public class PartyController {
 			Log.e("PartyController", "getList: " + e.getMessage());
 		}
 		return null;
+	}*/
+	
+	public void addSong(Song song){
+		list.addSong(song);
+		list.update();
 	}
 	
 	

@@ -6,7 +6,6 @@ import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.zxing.IntentIntegrator;
 import se.chalmers.zxing.IntentResult;
 import android.app.ActionBar;
-import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,20 +14,20 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
 
+	private View joinFrame;
+	private View activePartyFrame;
 
     public void clickCreateParty(View sender) {
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
 			Toast.makeText(MainActivity.this,
-					"Kill old party before creating to a new one!",
+					"Kill old party before creating a new one!",
 					Toast.LENGTH_SHORT).show();
 		}else{
 			createPartyService(true);
@@ -59,7 +58,6 @@ public class MainActivity extends ActionBarActivity {
 					"Kill old party before connecting to a new one!",
 					Toast.LENGTH_SHORT).show();
 		}else{
-			View joinFrame = findViewById(R.id.joinFrame);
 	    	int visible = joinFrame.getVisibility();
 	    	if(visible == 0){ //visible
 	    		joinFrame.setVisibility(8);
@@ -159,12 +157,17 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         startService(new Intent(this, PartyService.class)); 
         doBindService();
+        
+        joinFrame = findViewById(R.id.joinFrame);
+        activePartyFrame = findViewById(R.id.activePartyFrame);
+        
         activePartyVisibility();
     }
     
     protected void onResume(){
     	super.onResume();
     	doBindService();
+    	joinFrame.setVisibility(8);
     	activePartyVisibility();
     }
     
@@ -182,31 +185,27 @@ public class MainActivity extends ActionBarActivity {
     
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
-    		findViewById(R.id.activePartyFrame).setVisibility(0);
+    		activePartyFrame.setVisibility(0);
     	}else{
-    		findViewById(R.id.activePartyFrame).setVisibility(8);
+    		activePartyFrame.setVisibility(8);
     	}
     }
 
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.action_bar, menu);
-
-	    SearchManager searchManager =
-	            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-	     SearchView searchView =
-	             (SearchView) menu.findItem(R.id.menu_search).getActionView();
-	     searchView.setSearchableInfo(
-	             searchManager.getSearchableInfo(getComponentName()));
-
-		    ActionBar actionBar = getActionBar();
-		    actionBar.setDisplayHomeAsUpEnabled(false);
-
+		super.onCreateOptionsMenu(menu);
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(false);
+	    actionBar.setHomeButtonEnabled(false);
 	    return true;
 	}
 
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu){
+		return super.onPrepareOptionsMenu(menu);
+	}
 
  
 }
