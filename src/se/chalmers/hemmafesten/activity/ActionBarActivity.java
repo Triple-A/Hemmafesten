@@ -1,31 +1,19 @@
 package se.chalmers.hemmafesten.activity;
 
-import java.util.zip.Inflater;
-
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.R.id;
-import se.chalmers.hemmafesten.R.layout;
-import se.chalmers.hemmafesten.R.menu;
-import se.chalmers.hemmafesten.service.PartyController;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
 
 import android.os.Bundle;
-import android.os.IBinder;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 public class ActionBarActivity extends Activity {
 	

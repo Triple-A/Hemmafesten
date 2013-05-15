@@ -2,8 +2,6 @@ package se.chalmers.hemmafesten.activity;
 
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
@@ -13,7 +11,6 @@ import org.json.JSONObject;
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.SongAdapter;
 import se.chalmers.hemmafesten.SongItem;
-import se.chalmers.hemmafesten.task.GetAlbumImageTask;
 import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
 
@@ -22,16 +19,9 @@ import android.provider.SearchRecentSuggestions;
 import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 
 public class SearchableActivity extends ActionBarActivity {
@@ -80,11 +70,7 @@ public class SearchableActivity extends ActionBarActivity {
 						ArrayList<SongItem> songz = new ArrayList<SongItem>();
 						
 						for(int i=0; i<arr.length(); i++){
-							SongItem song = new SongItem(arr.getJSONObject(i).getString("name"),
-									arr.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("name"),
-									arr.getJSONObject(i).getString("href"),
-									arr.getJSONObject(i).getJSONObject("album").getString("name"),
-									arr.getJSONObject(i).getDouble("length"));
+							SongItem song = new SongItem(arr.getJSONObject(i));
 							songz.add(song);
 						}
 

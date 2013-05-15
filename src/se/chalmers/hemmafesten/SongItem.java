@@ -1,7 +1,7 @@
 package se.chalmers.hemmafesten;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /*
  * This class saves some stuff for presenting search result on the screen
@@ -10,59 +10,47 @@ import android.widget.ImageView;
  */
 public class SongItem {
 	
+	/*
 	private String name;
 	private String artist;
 	private String uri;
 	private String album;
-	//kanske längre fram
 	private ImageView image;
 	private double length;
+	*/
+	private JSONObject json;
 	
-	public SongItem(String name, String artist, String uri, String album, double length){
-		this.name = name;
-		this.artist = artist;
-		this.uri = uri;
-		this.album = album;
-		this.length = length;
+	public SongItem(JSONObject song){
+		this.json = song;
 	}
 	
-	public double getLength() {
-		return length;
-	}
-	public void setLength(double length) {
-		this.length = length;
-	}
-	public ImageView getImage() {
-		return image;
-	}
-	public void setImage(ImageView image) {
-		this.image = image;
-	}
-	public String getUri() {
-		return uri;
-	}
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
-	public String getArtist() {
-		return artist;
-	}
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
+	public double getLength() throws JSONException {
+			return json.getDouble("length");
 	}
 
-	public String getAlbum() {
-		return album;
+	public String getUri() throws JSONException {
+		return json.getString("href");
+	}
+	
+	public String getArtist() throws JSONException {
+		return json.getJSONArray("artists").getJSONObject(0).getString("name");
 	}
 
-	public void setAlbum(String album) {
-		this.album = album;
+	
+	public String getName() throws JSONException {
+		return json.getString("name");
+	}
+
+	public String getAlbum() throws JSONException {
+		return json.getJSONObject("album").getString("name").toString();
+	}
+
+	public JSONObject getJson() {
+		return json;
+	}
+
+	public void setJson(JSONObject json) {
+		this.json = json;
 	}
 
 }

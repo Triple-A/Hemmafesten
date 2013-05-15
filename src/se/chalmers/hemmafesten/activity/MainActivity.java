@@ -6,7 +6,6 @@ import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.zxing.IntentIntegrator;
 import se.chalmers.zxing.IntentResult;
 import android.app.ActionBar;
-import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +14,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {

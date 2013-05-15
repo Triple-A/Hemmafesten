@@ -83,11 +83,7 @@ public class PartyActivity extends ActionBarActivity {
 			ArrayList<SongItem> songz = new ArrayList<SongItem>();
 			
 			for(int i=0; i<arr.length(); i++){
-				SongItem song = new SongItem(arr.getJSONObject(i).getString("name"),
-						arr.getJSONObject(i).getJSONArray("artists").getJSONObject(0).getString("name"),
-						arr.getJSONObject(i).getString("href"),
-						arr.getJSONObject(i).getJSONObject("album").getString("name"),
-						arr.getJSONObject(i).getDouble("length"));
+				SongItem song = new SongItem(arr.getJSONObject(i));
 				songz.add(song);
 			}
 
