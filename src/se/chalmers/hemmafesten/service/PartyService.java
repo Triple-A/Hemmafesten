@@ -3,19 +3,17 @@ package se.chalmers.hemmafesten.service;
 
 import se.chalmers.hemmafesten.APIKeys;
 import se.chalmers.hemmafesten.model.Song;
-import se.chalmers.hemmafesten.model.SongList;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.parse.Parse;
+import com.parse.ParseUser;
 
 
 public class PartyService extends Service {
@@ -29,7 +27,6 @@ public class PartyService extends Service {
 	    GUEST,
 	    FAILED
 	}
-	private Bitmap qrCode = null;
 	private final IBinder mBinder = new LocalBinder();
 
 
@@ -41,6 +38,7 @@ public class PartyService extends Service {
 	
 	public void initiateParty(Intent intent){
 		
+
 		Bundle bundle = intent.getExtras();      // get passed parameters
 		
 		if(bundle.getBoolean("isCreator")){  // if service started by creator
@@ -51,6 +49,8 @@ public class PartyService extends Service {
 			pc = new PartyController(accessCode);
 			status = ((pc != null) ? Status.GUEST : Status.FAILED);
 		}
+		
+		
 		
 	}
 	
