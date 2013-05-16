@@ -23,7 +23,7 @@ public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
 	
 	public RetreiveQrTask(Activity activity, PartyService partyService){
 		this.activity = activity;
-		this.accessCode = partyService.getParty().getAccessCode();
+		this.accessCode = partyService.getPartyController().getAccessCode();
 	}
 	
 	
