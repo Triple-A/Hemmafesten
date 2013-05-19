@@ -3,7 +3,9 @@ package se.chalmers.hemmafesten.service;
 
 import se.chalmers.hemmafesten.APIKeys;
 import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
