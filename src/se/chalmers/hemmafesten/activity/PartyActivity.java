@@ -1,15 +1,15 @@
 package se.chalmers.hemmafesten.activity;
 
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import se.chalmers.hemmafesten.PartySongAdapter;
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
+import se.chalmers.hemmafesten.task.updatePlaylistTask;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,21 +17,29 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.parse.ParseException;
-
 public class PartyActivity extends ActionBarActivity {
 
 	private ListView listView;
-	private PartySongAdapter adapter;
 	private List<Song> songz;
+	private PartySongAdapter adapter = null;
+	
 
-	public void loadQR(){
-		new RetreiveQrTask(this, partyService).execute();
+	private void loadQR(){
+		if(psIsBound){
+			new RetreiveQrTask(this, partyService).execute();
+		}
+	}
+	
+	private void loadList(){
+		if(psIsBound){
+			new updatePlaylistTask(songz, partyService.getPartyController().getParty(), adapter).execute();
+		}
 	}
 	
 	public void onClickPlay(View sender){
@@ -54,6 +62,7 @@ public class PartyActivity extends ActionBarActivity {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			partyService = ((PartyService.LocalBinder)service).getService();
 			loadQR();
+			loadList();
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
@@ -81,21 +90,20 @@ public class PartyActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_party);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		listView = (ListView) findViewById(R.id.queue);
+		songz = new LinkedList<Song>();
+		Log.d("onCreate", "create song list");
+		adapter = new PartySongAdapter(this,
+	            R.layout.party_song_list_item, songz);
+		listView.setAdapter(adapter);
+
 		doBindService();
-		try {
-			Party party = Party.getParty(PartyService.getParty().getAccessCode());
-			party.refresh();
-			
-			songz = party.getSongs();
-			
-			listView = (ListView) findViewById(R.id.queue); 
-		    adapter = new PartySongAdapter(this,
-		                R.layout.party_song_list_item, songz);
-		    listView.setAdapter(adapter);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
+	
+	protected void onStart(){
+		super.onStart();
+		doBindService();
 	}
 
 	protected void onPause(){
@@ -103,28 +111,15 @@ public class PartyActivity extends ActionBarActivity {
 		doUnbindService();
 	}
 	
+	
 	protected void onResume(){
 		super.onResume();
 		doBindService();
-		try {
-			Party party = Party.getParty(PartyService.getParty().getAccessCode());
-			party.refresh();
-			/*List<Song> songz = party.getSongs();
-			
-			*/
-			songz.clear();
-			songz.addAll(party.getSongs());
-			adapter.notifyDataSetChanged();
-			
-			/*
-		    PartySongAdapter adapter = new PartySongAdapter(this,
-		                R.layout.party_song_list_item, songz);
-		    listView.setAdapter(adapter);*/
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
+	
+	protected void onStop(){
+		super.onStop();
+		doUnbindService();
 	}
 
 	/**

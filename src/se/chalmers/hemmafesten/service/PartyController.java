@@ -66,7 +66,7 @@ public class PartyController {
 	}
 
 
-	public Party getParty() {   /// is this needed??????????
+	public Party getParty() {
 		return party;
 	}
 	

@@ -71,7 +71,7 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
         	        public void onClick(View v)
         	            {
         	        	
-        	        	PartyController pc = PartyService.getParty();
+        	        	PartyController pc = PartyService.getPartyController();
         	        	
         	        	try {
             	        	Party party = Party.getParty(pc.getAccessCode());
