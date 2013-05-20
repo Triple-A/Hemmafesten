@@ -141,16 +141,16 @@ public class Party extends Model {
 		this.getParseObject().put("host", host);
 	}
 	
-	public ParseRelation attendees() {
+	public ParseRelation getAttendeesRelation() {
 		return this.getParseObject().getRelation("attendees");
 	}
 	
 	public void addAttendee(ParseUser user) {
-		this.attendees().add(user);
+		this.getAttendeesRelation().add(user);
 	}
 	
 	public void removeAttendee(ParseUser user) {
-		this.attendees().remove(user);
+		this.getAttendeesRelation().remove(user);
 	}
 	
 	public ParseRelation songs() {
