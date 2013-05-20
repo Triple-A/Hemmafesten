@@ -73,6 +73,26 @@ public class Party extends Model {
 		getPartyAsync(accessCode, callback);
 	}
 	
+	public static Party getPartsForHostAccessCode(String hostAccessCode) throws ParseException {
+		ParseQuery query = new ParseQuery(getParseObjectName()).whereEqualTo("hostAccessCode", hostAccessCode);
+		ParseObject parsePartyObject = null;
+		try {
+			parsePartyObject = query.getFirst();
+		} catch (ParseException e) {
+			if (e.getCode() != ParseException.OBJECT_NOT_FOUND) {
+				Log.e("DATA_LAYER", "getParty(String): failed: " + e.getMessage());
+				throw e;
+			}
+		}
+		
+		Party party = null;
+		if (parsePartyObject != null) {
+			party = new Party(parsePartyObject);
+		}
+		
+		return party;
+	}
+	
 	/**
 	 * 
 	 * @param callback
