@@ -20,9 +20,10 @@
         android:layout_alignBaseline="@+id/active_party_button"
         android:layout_alignBottom="@+id/active_party_button"
         android:layout_alignParentRight="true"
-        android:background="@color/sp_green"
+        android:background="@color/sp_orange"
+        android:textColor="@color/white"
         android:onClick="clickKillParty"
-        android:text="X" 
+        android:text="@string/kill_party_title" 
         />
 
 </RelativeLayout>
