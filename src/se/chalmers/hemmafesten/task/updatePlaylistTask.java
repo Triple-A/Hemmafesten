@@ -19,8 +19,6 @@ public class updatePlaylistTask extends AsyncTask<String, Boolean, List<Song>> {
 	private Party party;
 	
 	
-	
-	
 	public updatePlaylistTask(List<Song> songz, Party party, PartySongAdapter adapter) {
 		super();
 		this.party = party; 

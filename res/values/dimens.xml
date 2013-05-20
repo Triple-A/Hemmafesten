@@ -1,13 +1,13 @@
 <resources>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">10dp</dimen>
-    <dimen name="activity_vertical_margin">10dp</dimen>
+    <dimen name="activity_horizontal_margin">10sp</dimen>
+    <dimen name="activity_vertical_margin">10sp</dimen>
     
-    <dimen name="top_info_bar_height">80dp</dimen>
-	<dimen name="top_info_bar_qr_size">80dp</dimen>
-	<dimen name="top_info_bar_qr_padding">10dp</dimen>
+    <dimen name="top_info_bar_height">80sp</dimen>
+	<dimen name="top_info_bar_qr_size">80sp</dimen>
+	<dimen name="top_info_bar_qr_padding">10sp</dimen>
 	
-	<dimen name="join_party_sidebutton">70dp</dimen>
-	<dimen name="between_buttons_margin">10dp</dimen>
+	<dimen name="join_party_sidebutton">70sp</dimen>
+	<dimen name="between_buttons_margin">10sp</dimen>
 </resources>
