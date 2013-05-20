@@ -2,22 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:paddingTop="5sp"
+    android:paddingBottom="5sp"
     android:background="@color/white"
     >
     
          <Button
         android:id="@+id/button1"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="100sp"
+        android:layout_height="40sp"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:layout_marginTop="5sp"
         android:background="@color/sp_green"
-        android:height="10dp"
-        android:width="80dp"
-        android:text="Add to party"
+        android:height="10sp"
+        android:width="80sp"
+        android:text="@string/add_to_party_button"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="12sp" />
@@ -27,11 +27,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/button1"
-        android:paddingBottom="2dp"
+        android:paddingBottom="2sp"
         android:textColor="#000000"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:text="hejsan haha hallå eller" />
+        android:text="@string/song_name" />
 
     <TextView
         android:id="@+id/artist"
@@ -39,10 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/song"
         android:layout_below="@+id/song"
-        android:paddingBottom="4dp"
-        android:text="Snälla håll käft ovan"
+        android:paddingBottom="4sp"
+        android:text="@string/artist_name"
         android:textColor="#808080"
-        android:textSize="14dp" />
+        android:textSize="14sp" />
 
    
 </RelativeLayout>

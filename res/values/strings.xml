@@ -20,6 +20,12 @@
     <string name="title_activity_help">HelpActivity</string>
     <string name="search_hint">Search for songs</string>
     <string name="title_activity_searchable">Result:</string>
+    <string name="songs">Songs</string>
+    <string name="song_name">song</string>
+    <string name="artist_name">artist</string>
+    <string name="add_to_party_button">Add to party</string>
+    <string name="access_code">Access code:</string>
+    <string name="party">Party</string>
     <string name="image"></string>
 
 </resources>
