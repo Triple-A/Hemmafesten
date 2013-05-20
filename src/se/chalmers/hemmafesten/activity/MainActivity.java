@@ -1,5 +1,9 @@
 package se.chalmers.hemmafesten.activity;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
@@ -20,7 +24,7 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
-
+	
 	private View joinFrame;
 	private View activePartyFrame;
 
@@ -154,6 +158,16 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		try {
+			openFileOutput("savedParties.dat", MODE_PRIVATE).close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
         setContentView(R.layout.activity_main);
 
         startService(new Intent(this, PartyService.class)); 

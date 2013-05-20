@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/top_info_bar_height"
@@ -40,5 +39,19 @@
         android:layout_centerVertical="true"
         android:src="@drawable/play_button"
         android:onClick="onClickPlay" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/info_bar_partycode"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/info_bar_partycode"
+        android:layout_toLeftOf="@+id/imageButton1"
+        android:background="@color/sp_green"
+        android:text="@string/save_party_button" 
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:onClick="savePartyClicked"/>
 
 </RelativeLayout>

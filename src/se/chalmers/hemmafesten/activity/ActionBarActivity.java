@@ -7,6 +7,7 @@ import se.chalmers.hemmafesten.service.PartyService.Status;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -92,4 +93,5 @@ public class ActionBarActivity extends Activity {
 	            return false;
 	    }
 	}
+
 }
