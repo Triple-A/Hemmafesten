@@ -38,7 +38,7 @@ public class PartyActivity extends ActionBarActivity {
 	
 	private void loadList(){
 		if(psIsBound){
-			new updatePlaylistTask(songz, partyService.getPartyController().getParty(), adapter).execute();
+			new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
 		}
 	}
 	
