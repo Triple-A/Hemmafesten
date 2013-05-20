@@ -211,6 +211,32 @@ public class Party extends Model {
 		return nextSong;
 	}
 	
+	private void deleteSongsInBackgroundEventually() {
+		this.getSongsAsync(new se.chalmers.hemmafesten.model.callback.FindCallback<Song>() {
+			@Override
+			public void done(List<Song> songs, ParseException e) {
+				for (Song song : songs) {
+					song.deleteEventually();
+				}
+			}
+		});
+	}
+	
+	public void delete() throws ParseException {
+		this.deleteSongsInBackgroundEventually();
+		super.delete();
+	}
+	
+	public void deleteInBackground() {
+		this.deleteSongsInBackgroundEventually();
+		super.deleteInBackground();
+	}
+	
+	public void deleteEventually() {
+		this.deleteSongsInBackgroundEventually();
+		super.deleteEventually();
+	}
+	
 	// Description
 	@Override
 	public String toString() {
