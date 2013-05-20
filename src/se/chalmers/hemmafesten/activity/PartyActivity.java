@@ -1,27 +1,45 @@
 package se.chalmers.hemmafesten.activity;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.util.LinkedList;
 import java.util.List;
 
 import se.chalmers.hemmafesten.PartySongAdapter;
 import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.SavePartyItem;
 import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
 import se.chalmers.hemmafesten.task.updatePlaylistTask;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class PartyActivity extends ActionBarActivity {
 
@@ -38,12 +56,12 @@ public class PartyActivity extends ActionBarActivity {
 	
 	private void loadList(){
 		if(psIsBound){
-			new updatePlaylistTask(songz, partyService.getPartyController().getParty(), adapter).execute();
+			new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
 		}
 	}
 	
 	public void onClickPlay(View sender){
-		if(psIsBound){
+		if(psIsBound) {
 			if(partyService.getPlay()){
 				partyService.stopLoop();
 			}else{
@@ -51,6 +69,56 @@ public class PartyActivity extends ActionBarActivity {
 			}
 		}
 	}
+
+//////////////DIALOG METHODS ////////////////////////////////////////////////////////
+	
+	public void savePartyClicked(View sender){
+	
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("Save party");
+		alert.setMessage("Enter a name to save the party");
+
+		// Set an EditText view to get user input 
+		final EditText input = new EditText(this);
+		alert.setView(input);
+
+		alert.setPositiveButton(R.string.save_party_button, new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  SavePartyItem saveParty = new SavePartyItem(input.getText().toString(),partyService.getPartyController().getAccessCode());
+		  
+		  try {
+			//debug test
+			FileOutputStream fileOutput = openFileOutput("savedParties.dat", Context.MODE_APPEND);
+			ObjectOutputStream saveObject = new ObjectOutputStream(fileOutput);
+			saveObject.writeObject(saveParty);
+			saveObject.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (StreamCorruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		  Toast.makeText(PartyActivity.this, "Party saved", Toast.LENGTH_SHORT).show();
+		  }
+		});
+
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		    // Canceled.
+		  }
+		});
+
+		alert.show();
+	}
+
+	
 
 ///////////////////////////////////////////////////////////////////////////////////////
     
@@ -131,14 +199,12 @@ public class PartyActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//return super.onCreateOptionsMenu(menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu){
-		return super.onCreateOptionsMenu(menu);
+		return super.onPrepareOptionsMenu(menu);
 	}
 	
 	@Override

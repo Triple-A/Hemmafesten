@@ -1,7 +1,6 @@
 package se.chalmers.hemmafesten.service;
 
 
-import se.chalmers.hemmafesten.APIKeys;
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.activity.PartyActivity;
 import se.chalmers.hemmafesten.model.Song;
@@ -23,9 +22,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 
 
 public class PartyService extends Service {
@@ -103,7 +100,6 @@ public class PartyService extends Service {
 	public void onCreate() {
 	        super.onCreate();
 	        setup();
-	        Parse.initialize(this, APIKeys.ParseApplicationID(), APIKeys.ParseClientKey());
 	        Log.i("PartyService", "Service Started.");
 	}
 

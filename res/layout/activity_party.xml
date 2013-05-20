@@ -12,14 +12,12 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Songs"
+        android:text="@string/songs"
         android:textStyle="bold"
         android:textColor="@color/white" 
-        android:padding="3dp"
+        android:padding="3sp"
         android:background="@color/sp_green"/>
     
     <include layout="@layout/queue"/>
-
-
 
 </LinearLayout>

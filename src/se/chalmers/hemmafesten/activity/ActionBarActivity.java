@@ -7,6 +7,7 @@ import se.chalmers.hemmafesten.service.PartyService.Status;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -57,20 +58,6 @@ public class ActionBarActivity extends Activity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
-	
-	@Override
-	public boolean onSearchRequested()
-	{
-	 /*
-	   if(PartyService.getStatus()!=Status.FREE){
-	   return false;
-	   }else{
-	   return true;
-       }
-       */
-		return true;
-	}
-	
 	@Override
 	public boolean onMenuItemSelected(int featureId,MenuItem item) {
 	    switch (item.getItemId()) {
@@ -79,6 +66,11 @@ public class ActionBarActivity extends Activity {
 	        	homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	        	startActivity(homeIntent);
 	        	return true;
+	        case R.id.leaveParty:
+	        	Intent backToHomeIntent = new Intent(this, MainActivity.class);
+	        	backToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+	        	startActivity(backToHomeIntent);
+	            return true;
 	        case R.id.savedParties:
 	            Intent savedPartiesIntent = new Intent(this, SavedPartiesActivity.class);
 	            savedPartiesIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -94,11 +86,6 @@ public class ActionBarActivity extends Activity {
 	            settingsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	            startActivity(settingsIntent);
 	        	return true;
-	        case R.id.leaveParty:
-	        	Intent backToHomeIntent = new Intent(this, MainActivity.class);
-	        	backToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-	        	startActivity(backToHomeIntent);
-	            return true;
 	        case android.R.id.home:
 	            onBackPressed();
 	            return true;
@@ -106,4 +93,5 @@ public class ActionBarActivity extends Activity {
 	            return false;
 	    }
 	}
+
 }

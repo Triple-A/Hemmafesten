@@ -20,6 +20,19 @@
     <string name="title_activity_help">HelpActivity</string>
     <string name="search_hint">Search for songs</string>
     <string name="title_activity_searchable">Result:</string>
+    <string name="songs">Songs</string>
+    <string name="song_name">song</string>
+    <string name="artist_name">artist</string>
+    <string name="add_to_party_button">Add to party</string>
+    <string name="access_code">Access code:</string>
+    <string name="party">Party</string>
+    <string name="save_party_button">Save party</string>
+    <string name="join_saved_party_button_text">Join</string>
+    <string name="saved_party_name">party name</string>
+    <string name="party_date_saved">date</string>
     <string name="image"></string>
+    <string name="qr_code_image_content_description">QR-code for the Party</string>
+    <string name="play_button_content_description"></string>
+    <string name="kill_party_title">X</string>
 
 </resources>

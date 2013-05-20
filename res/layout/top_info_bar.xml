@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/top_info_bar_height"
-    android:layout_margin="5dp">
+    android:layout_margin="5sp">
 
     <ImageView
         android:id="@+id/qr_icon"
@@ -10,17 +9,17 @@
         android:layout_height="@dimen/top_info_bar_qr_size"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_action_overflow" />
+        android:src="@drawable/ic_action_overflow" android:contentDescription="@string/qr_code_image_content_description"/>
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5sp"
+        android:layout_marginLeft="5sp"
         android:layout_toRightOf="@+id/qr_icon"
-        android:text="Access Code:"
+        android:text="@string/access_code"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -29,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
-        android:text="test"
+        android:text="@string/party"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
@@ -39,6 +38,20 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/play_button"
-        android:onClick="onClickPlay" />
+        android:onClick="onClickPlay" android:contentDescription="@string/play_button_content_description"/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/info_bar_partycode"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/info_bar_partycode"
+        android:layout_toLeftOf="@+id/imageButton1"
+        android:background="@color/sp_green"
+        android:text="@string/save_party_button" 
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:onClick="savePartyClicked"/>
 
 </RelativeLayout>
