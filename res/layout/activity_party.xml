@@ -20,6 +20,4 @@
     
     <include layout="@layout/queue"/>
 
-
-
 </LinearLayout>

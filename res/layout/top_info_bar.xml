@@ -10,7 +10,7 @@
         android:layout_height="@dimen/top_info_bar_qr_size"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_action_overflow" />
+        android:src="@drawable/ic_action_overflow" android:contentDescription="@string/qr_code_image_content_description"/>
 
     <TextView
         android:id="@+id/textView1"
@@ -39,6 +39,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/play_button"
-        android:onClick="onClickPlay" />
+        android:onClick="onClickPlay" android:contentDescription="@string/play_button_content_description"/>
 
 </RelativeLayout>

@@ -27,5 +27,7 @@
     <string name="access_code">Access code:</string>
     <string name="party">Party</string>
     <string name="image"></string>
+    <string name="qr_code_image_content_description">QR-code for the Party</string>
+    <string name="play_button_content_description"></string>
 
 </resources>
