@@ -182,7 +182,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume(){
     	super.onResume();
     	doBindService();
-    	joinFrame.setVisibility(8);
+    	joinFrame.setVisibility(View.GONE);
     	activePartyVisibility();
     }
     
@@ -200,9 +200,9 @@ public class MainActivity extends ActionBarActivity {
     
     private void activePartyVisibility(){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
-    		activePartyFrame.setVisibility(0);
+    		activePartyFrame.setVisibility(View.VISIBLE);
     	}else{
-    		activePartyFrame.setVisibility(8);
+    		activePartyFrame.setVisibility(View.GONE);
     	}
     }
 

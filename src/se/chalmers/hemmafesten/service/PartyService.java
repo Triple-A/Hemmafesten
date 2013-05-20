@@ -1,11 +1,8 @@
 package se.chalmers.hemmafesten.service;
 
 
-import se.chalmers.hemmafesten.APIKeys;
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
-import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -17,9 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 
 
 public class PartyService extends Service {
@@ -83,7 +78,6 @@ public class PartyService extends Service {
 	@Override
 	public void onCreate() {
 	        super.onCreate();
-	        Parse.initialize(this, APIKeys.ParseApplicationID(), APIKeys.ParseClientKey());
 	        Log.i("PartyService", "Service Started.");
 	}
 

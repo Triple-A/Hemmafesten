@@ -31,5 +31,8 @@
     <string name="saved_party_name">party name</string>
     <string name="party_date_saved">date</string>
     <string name="image"></string>
+    <string name="qr_code_image_content_description">QR-code for the Party</string>
+    <string name="play_button_content_description"></string>
+    <string name="kill_party_title">X</string>
 
 </resources>

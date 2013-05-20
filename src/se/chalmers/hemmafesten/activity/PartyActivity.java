@@ -56,12 +56,12 @@ public class PartyActivity extends ActionBarActivity {
 	
 	private void loadList(){
 		if(psIsBound){
-			new updatePlaylistTask(songz, partyService.getPartyController().getParty(), adapter).execute();
+			new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
 		}
 	}
 	
 	public void onClickPlay(View sender){
-		if(psIsBound){
+		if(psIsBound) {
 			if(partyService.getPlay()){
 				partyService.stopLoop();
 			}else{
@@ -199,14 +199,12 @@ public class PartyActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//return super.onCreateOptionsMenu(menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu){
-		return super.onCreateOptionsMenu(menu);
+		return super.onPrepareOptionsMenu(menu);
 	}
 	
 	@Override

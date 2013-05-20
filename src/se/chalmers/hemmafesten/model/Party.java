@@ -1,5 +1,7 @@
 package se.chalmers.hemmafesten.model;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,6 +73,26 @@ public class Party extends Model {
 		getPartyAsync(accessCode, callback);
 	}
 	
+	public static Party getPartsForHostAccessCode(String hostAccessCode) throws ParseException {
+		ParseQuery query = new ParseQuery(getParseObjectName()).whereEqualTo("hostAccessCode", hostAccessCode);
+		ParseObject parsePartyObject = null;
+		try {
+			parsePartyObject = query.getFirst();
+		} catch (ParseException e) {
+			if (e.getCode() != ParseException.OBJECT_NOT_FOUND) {
+				Log.e("DATA_LAYER", "getParty(String): failed: " + e.getMessage());
+				throw e;
+			}
+		}
+		
+		Party party = null;
+		if (parsePartyObject != null) {
+			party = new Party(parsePartyObject);
+		}
+		
+		return party;
+	}
+	
 	/**
 	 * 
 	 * @param callback
@@ -89,11 +111,20 @@ public class Party extends Model {
 	// To create a new party object you should really use the static
 	// createPartyAsync method.
 	public Party() {
-		super(new ParseObject(getParseObjectName()));
+		this(new ParseObject(getParseObjectName()));
 	}
 	
 	public Party(ParseObject parseObject) {
 		super(parseObject);
+		
+		String hostAccessCode = generateHostAccessCode().toString().substring(0, 10);
+		parseObject.put("hostAccessCode", hostAccessCode);
+	}
+	
+	private static String generateHostAccessCode()
+	{
+		SecureRandom random = new SecureRandom();
+		return new BigInteger(130, random).toString(32);
 	}
 	
 	
@@ -118,6 +149,10 @@ public class Party extends Model {
 		return this.getParseObject().getObjectId();
 	}
 	
+	public String getHostAccessCode() {
+		return this.getParseObject().getString("hostAccessCode");
+	}
+	
 	public ParseUser getHost() {
 		return this.getParseObject().getParseUser("host");
 	}
@@ -126,16 +161,16 @@ public class Party extends Model {
 		this.getParseObject().put("host", host);
 	}
 	
-	public ParseRelation attendees() {
+	public ParseRelation getAttendeesRelation() {
 		return this.getParseObject().getRelation("attendees");
 	}
 	
 	public void addAttendee(ParseUser user) {
-		this.attendees().add(user);
+		this.getAttendeesRelation().add(user);
 	}
 	
 	public void removeAttendee(ParseUser user) {
-		this.attendees().remove(user);
+		this.getAttendeesRelation().remove(user);
 	}
 	
 	public ParseRelation songs() {
@@ -194,6 +229,32 @@ public class Party extends Model {
 		}
 		
 		return nextSong;
+	}
+	
+	private void deleteSongsInBackgroundEventually() {
+		this.getSongsAsync(new se.chalmers.hemmafesten.model.callback.FindCallback<Song>() {
+			@Override
+			public void done(List<Song> songs, ParseException e) {
+				for (Song song : songs) {
+					song.deleteEventually();
+				}
+			}
+		});
+	}
+	
+	public void delete() throws ParseException {
+		this.deleteSongsInBackgroundEventually();
+		super.delete();
+	}
+	
+	public void deleteInBackground() {
+		this.deleteSongsInBackgroundEventually();
+		super.deleteInBackground();
+	}
+	
+	public void deleteEventually() {
+		this.deleteSongsInBackgroundEventually();
+		super.deleteEventually();
 	}
 	
 	// Description
