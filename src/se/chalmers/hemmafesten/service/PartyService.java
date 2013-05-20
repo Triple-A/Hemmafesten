@@ -83,7 +83,6 @@ public class PartyService extends Service {
 	@Override
 	public void onCreate() {
 	        super.onCreate();
-	        Parse.initialize(this, APIKeys.ParseApplicationID(), APIKeys.ParseClientKey());
 	        Log.i("PartyService", "Service Started.");
 	}
 
