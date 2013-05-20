@@ -100,8 +100,7 @@ public class PartyController {
 	
 	public void killParty(boolean isCreator){
 		if(isCreator){
-			party.deleteInBackground();
-			// TODO delete all songs connected to party
+			party.deleteEventually();
 			Log.i("PartyController","killParty: Creator is killing the party");
 		}else{
 			Log.i("PartyController","killParty: joiner is leaving the party");
