@@ -1,5 +1,7 @@
 package se.chalmers.hemmafesten.model;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,11 +91,20 @@ public class Party extends Model {
 	// To create a new party object you should really use the static
 	// createPartyAsync method.
 	public Party() {
-		super(new ParseObject(getParseObjectName()));
+		this(new ParseObject(getParseObjectName()));
 	}
 	
 	public Party(ParseObject parseObject) {
 		super(parseObject);
+		
+		String hostAccessCode = generateHostAccessCode().toString().substring(0, 10);
+		parseObject.put("hostAccessCode", hostAccessCode);
+	}
+	
+	private static String generateHostAccessCode()
+	{
+		SecureRandom random = new SecureRandom();
+		return new BigInteger(130, random).toString(32);
 	}
 	
 	
@@ -116,6 +127,10 @@ public class Party extends Model {
 	 */
 	public String getAccessCode() {
 		return this.getParseObject().getObjectId();
+	}
+	
+	public String getHostAccessCode() {
+		return this.getParseObject().getString("hostAccessCode");
 	}
 	
 	public ParseUser getHost() {
