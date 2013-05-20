@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/top_info_bar_height"
-    android:layout_margin="5dp">
+    android:layout_margin="5sp">
 
     <ImageView
         android:id="@+id/qr_icon"
@@ -17,10 +17,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5sp"
+        android:layout_marginLeft="5sp"
         android:layout_toRightOf="@+id/qr_icon"
-        android:text="Access Code:"
+        android:text="@string/access_code"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
-        android:text="test"
+        android:text="@string/party"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
