@@ -3,7 +3,7 @@ package se.chalmers.hemmafesten.task;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.chalmers.hemmafesten.PartySongAdapter;
+import se.chalmers.hemmafesten.adapter.PartySongAdapter;
 import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
 import android.os.AsyncTask;

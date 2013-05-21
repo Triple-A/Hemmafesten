@@ -9,8 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.SearchSongAdapter;
-import se.chalmers.hemmafesten.SearchSongItem;
+import se.chalmers.hemmafesten.adapter.SearchSongAdapter;
+import se.chalmers.hemmafesten.item.SearchSongItem;
 import se.chalmers.hemmafesten.task.RetreiveMusicTask;
 
 

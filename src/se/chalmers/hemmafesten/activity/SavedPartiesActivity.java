@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.chalmers.hemmafesten.PartySongAdapter;
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.SavePartyItem;
-import se.chalmers.hemmafesten.SavedPartiesAdapter;
+import se.chalmers.hemmafesten.adapter.PartySongAdapter;
+import se.chalmers.hemmafesten.adapter.SavedPartiesAdapter;
+import se.chalmers.hemmafesten.item.SavePartyItem;
 import se.chalmers.hemmafesten.model.Song;
 import android.os.Bundle;
 import android.util.Log;
