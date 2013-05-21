@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,6 +47,7 @@ public class PartyActivity extends ActionBarActivity {
 
 	private ListView listView;
 	private List<Song> songz;
+	private ArrayList<SavePartyItem> items;
 	private PartySongAdapter adapter = null;
 	
 
@@ -82,14 +85,14 @@ public class PartyActivity extends ActionBarActivity {
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
 		alert.setView(input);
-
+				
 		alert.setPositiveButton(R.string.save_party_button, new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 		  SavePartyItem saveParty = new SavePartyItem(input.getText().toString(),partyService.getPartyController().getAccessCode());
 		  
 		  try {
-			//debug test
-			FileOutputStream fileOutput = openFileOutput("savedParties.dat", Context.MODE_APPEND);
+			
+			FileOutputStream fileOutput = openFileOutput("saveparty.dat", Context.MODE_PRIVATE);
 			ObjectOutputStream saveObject = new ObjectOutputStream(fileOutput);
 			saveObject.writeObject(saveParty);
 			saveObject.close();
@@ -103,10 +106,13 @@ public class PartyActivity extends ActionBarActivity {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 		  
-		  Toast.makeText(PartyActivity.this, "Party saved", Toast.LENGTH_SHORT).show();
+		  for(SavePartyItem item: items){
+			  Log.i("partyItem", item.getPartyName());
 		  }
+		  
+		  Toast.makeText(PartyActivity.this, "Party saved", Toast.LENGTH_SHORT).show();}
 		});
 
 		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
