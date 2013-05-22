@@ -68,8 +68,6 @@ public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
 
         	        	Toast toast = Toast.makeText(context, text, duration);
         	        	toast.show();*/
-        	        	
-        	        	
         	           }
         	         });       
 
