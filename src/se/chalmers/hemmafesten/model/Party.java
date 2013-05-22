@@ -169,32 +169,32 @@ public class Party extends Model {
 		this.getAttendeesRelation().remove(user);
 	}
 	
-	public ParseRelation songs() {
+	public ParseRelation getSongsRelation() {
 		return this.getParseObject().getRelation("songs");
 	}
 	
 	public void addSong(Song song) {
 		ParseObject parseSongObject = song.getParseObject();
-		this.songs().add(parseSongObject);
+		this.getSongsRelation().add(parseSongObject);
 		parseSongObject.put("party", this.getParseObject());
 		this.saveEventually();
 	}
 	
 	public void removeSong(Song song) {
 		ParseObject parseSongObject = song.getParseObject();
-		this.songs().remove(parseSongObject);
+		this.getSongsRelation().remove(parseSongObject);
 		song.deleteEventually();
 		this.saveEventually();
 	}
 	
 	public List<Song> getSongs() throws ParseException {
-		List<ParseObject> parseObjects = this.songs().getQuery().orderByAscending("createdAt").find();
+		List<ParseObject> parseObjects = this.getSongsRelation().getQuery().orderByAscending("createdAt").find();
 		List<Song> songs = Song.songsFromParseObjectSongs(parseObjects);
 		return songs;
 	}
 	
 	public void getSongsAsync(final se.chalmers.hemmafesten.model.callback.FindCallback<Song> callback){
-		this.songs().getQuery().findInBackground(new FindCallback() {
+		this.getSongsRelation().getQuery().findInBackground(new FindCallback() {
 		    public void done(List<ParseObject> results, ParseException e) {
 		    	List<Song> songs = Song.songsFromParseObjectSongs(results);
 		    	callback.done(songs, e);
@@ -207,7 +207,7 @@ public class Party extends Model {
 	 * @return
 	 */
 	public Song getNext() {
-		ParseQuery pq = songs().getQuery();
+		ParseQuery pq = getSongsRelation().getQuery();
 		pq.orderByAscending("createdAt");
 		pq.whereEqualTo("isPlayed", false);
 		ParseObject nextSongParseObject = null;
