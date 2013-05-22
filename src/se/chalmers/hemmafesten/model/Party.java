@@ -201,6 +201,18 @@ public class Party extends Model {
 		    }
 		});
 	}
+	
+	public void markAllSongsAsPlayed(final boolean isPlayed) {
+		this.getSongsAsync(new se.chalmers.hemmafesten.model.callback.FindCallback<Song>() {
+			@Override
+			public void done(List<Song> songs, ParseException e) {
+				for (Song song : songs) {
+					song.setIsPlayed(isPlayed);
+					song.saveEventually();
+				}
+			}
+		});
+	}
 
 	/**
 	 * The next song which should be played. Might be null if there are no more.
