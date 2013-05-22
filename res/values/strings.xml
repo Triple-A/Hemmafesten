@@ -4,6 +4,7 @@
     <string name="app_name">HemmaFesten</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="desc">Description goes here</string>
     <string name="create_a_new_party_button_title">Create a new party</string>
     <string name="join_a_party_button_title">Join a party</string>
     <string name="title_activity_create_party">CreatePartyActivity</string>

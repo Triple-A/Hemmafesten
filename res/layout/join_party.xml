@@ -21,6 +21,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/between_buttons_margin"
         android:ems="10"
+        android:inputType="textNoSuggestions"
         android:singleLine="true" >
 
         <requestFocus />

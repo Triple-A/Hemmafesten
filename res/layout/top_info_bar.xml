@@ -29,6 +29,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:text="@string/party"
+        android:contentDescription="@string/desc"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:background="@null"
         android:src="@drawable/play_button"
         android:onClick="onClickPlay" android:contentDescription="@string/play_button_content_description"/>
 

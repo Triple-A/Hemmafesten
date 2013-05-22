@@ -16,6 +16,7 @@ import se.chalmers.hemmafesten.adapter.PartySongAdapter;
 import se.chalmers.hemmafesten.adapter.SavedPartiesAdapter;
 import se.chalmers.hemmafesten.item.SavePartyItem;
 import se.chalmers.hemmafesten.model.Song;
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,26 +26,26 @@ import android.widget.TextView;
 public class SavedPartiesActivity extends ActionBarActivity {
 
 	private ListView listView;
-	private List<SavePartyItem> parties;
 	private SavedPartiesAdapter adapter = null;
+	private ArrayList<SavePartyItem> items;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActionBar bar = getActionBar();
+		bar.setTitle("Saved parties");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_saved_parties);
-		// Show the Up button in the action bar.
 		
-		//listView = (ListView) findViewById(R.id.saved_parties);
-		parties = new ArrayList<SavePartyItem>();
+		items = new ArrayList<SavePartyItem>();
 		
 		try {
-			FileInputStream fis = openFileInput("savedParties.dat");
+			FileInputStream fis = openFileInput("savedParties.txt");
 			ObjectInputStream is = new ObjectInputStream(fis);
-			//SavePartyItem partyItem = (SavePartyItem) is.readObject();
-			//parties.add(partyItem);
-				SavePartyItem item = (SavePartyItem) is.readObject();
-				parties.add(item);
+			ArrayList<SavePartyItem> partyItems = (ArrayList<SavePartyItem>) is.readObject();
+			items.addAll(partyItems);
 
+			is.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,12 +60,12 @@ public class SavedPartiesActivity extends ActionBarActivity {
 			e.printStackTrace();
 		}
 		
+		Log.i("itemsSize", Integer.toString(items.size()));
 	
-		if(parties.size()!=0){
+		if(items.size()!=0){
 			listView = (ListView) findViewById(R.id.saved_parties);
-			Log.i("listContains", parties.get(0).getPartyName());
 		adapter = new SavedPartiesAdapter(this,
-	            R.layout.saved_party_list_item, parties);
+	            R.layout.saved_party_list_item, items);
 		listView.setAdapter(adapter);
 		}
 	}
