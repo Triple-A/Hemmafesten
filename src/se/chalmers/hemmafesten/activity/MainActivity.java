@@ -1,8 +1,5 @@
 package se.chalmers.hemmafesten.activity;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
@@ -90,6 +87,7 @@ public class MainActivity extends ActionBarActivity {
         }).start();   
     }
     
+    
     public void clickActiveParty(View sender){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
     		Intent intent = new Intent(this, PartyActivity.class);
@@ -125,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
 		Intent intent = new Intent(this, PartyActivity.class);
 		startActivity(intent);
     }
-    
+  
     
     private String getCodeInput(){
 		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
@@ -169,16 +167,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-		try {
-			openFileOutput("savedParties.dat", MODE_PRIVATE).close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
         setContentView(R.layout.activity_main);
         Log.d("skit", "skit");

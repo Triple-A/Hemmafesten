@@ -7,14 +7,12 @@ import se.chalmers.hemmafesten.service.PartyService.Status;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SearchView;
 
 public class ActionBarActivity extends Activity {

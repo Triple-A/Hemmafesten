@@ -3,12 +3,9 @@ package se.chalmers.hemmafesten.adapter;
 import java.util.List;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.R.id;
-import se.chalmers.hemmafesten.R.layout;
 import se.chalmers.hemmafesten.model.Song;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
