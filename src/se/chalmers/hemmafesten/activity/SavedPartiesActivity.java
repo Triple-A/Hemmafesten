@@ -28,7 +28,6 @@ public class SavedPartiesActivity extends ActionBarActivity {
 	private SavedPartiesAdapter adapter = null;
 	private ArrayList<SavePartyItem> items;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +39,7 @@ public class SavedPartiesActivity extends ActionBarActivity {
 		items = new ArrayList<SavePartyItem>();
 		
 		try {
-			FileInputStream fis = openFileInput("saveparty.dat");
+			FileInputStream fis = openFileInput("savedParties.dat");
 			ObjectInputStream is = new ObjectInputStream(fis);
 			SavePartyItem partyItem = (SavePartyItem) is.readObject();
 			items.add(partyItem);

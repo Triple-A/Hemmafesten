@@ -92,7 +92,7 @@ public class PartyActivity extends ActionBarActivity {
 		  
 		  try {
 			
-			FileOutputStream fileOutput = openFileOutput("saveparty.dat", Context.MODE_PRIVATE);
+			FileOutputStream fileOutput = openFileOutput("savedParties.dat", Context.MODE_PRIVATE);
 			ObjectOutputStream saveObject = new ObjectOutputStream(fileOutput);
 			saveObject.writeObject(saveParty);
 			saveObject.close();
