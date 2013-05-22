@@ -149,7 +149,7 @@ public class PartyService extends Service {
     }
     
     private void playSong(Song song){
-    	song.getParseObject().put("isPlayed", true);
+    	song.setIsPlayed(true);
     	song.saveEventually();
 		String uri = song.getSpotifyURI();
 	    Log.d("playSong", song.toString() + "     " +Double.valueOf(song.getLength()).longValue());
