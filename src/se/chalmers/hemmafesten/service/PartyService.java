@@ -156,9 +156,9 @@ public class PartyService extends Service {
 	    	
 	    startNext(10L);//Double.valueOf(song.getLength()).longValue()
 	    
-	    /*Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
+	    Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
 	    launcher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	    startActivity(launcher);*/
+	    startActivity(launcher);
     }
     
     public void next(){

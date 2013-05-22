@@ -20,6 +20,7 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -69,7 +70,7 @@ public class SavedPartiesActivity extends ActionBarActivity {
 		listView.setAdapter(adapter);
 		}
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return super.onCreateOptionsMenu(menu);
