@@ -29,7 +29,6 @@ public class PartyService extends Service {
 	
 	private static PartyController pc;
 	private Boolean play;
-	//private PlayAlarm alarm;
 	private Notification note; 
 	
 	private PendingIntent pi;
@@ -67,7 +66,6 @@ public class PartyService extends Service {
 			pc = new PartyController(accessCode);
 			status = ((pc != null) ? Status.GUEST : Status.FAILED);
 		}
-		//alarm = new PlayAlarm(this);
 		play = false;
 		
 	}
@@ -88,7 +86,7 @@ public class PartyService extends Service {
 		stopLoop();
 		pc.killParty(status == Status.HOST);
 		pc = null;
-		wl.release();
+		//wl.release();
 		am.cancel(pi);
 	    unregisterReceiver(br);
 	    
@@ -142,8 +140,8 @@ public class PartyService extends Service {
     
     public void stopLoop(){
     	play = false;
-    	wl.release();
-    	//alarm.CancelAlarm(this);
+    	stopForeground(true);
+    	//wl.release();
     }
     
     private Song getNext(){
@@ -156,13 +154,11 @@ public class PartyService extends Service {
 		String uri = song.getSpotifyURI();
 	    Log.d("playSong", song.toString() + "     " +Double.valueOf(song.getLength()).longValue());
 	    	
-	    //alarm.SetAlarm(this, Double.valueOf(song.getLength()).longValue());
-	    	
-	    startNext(Double.valueOf(song.getLength()).longValue());
+	    startNext(10L);//Double.valueOf(song.getLength()).longValue()
 	    
-	    Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
+	    /*Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
 	    launcher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	    startActivity(launcher);
+	    startActivity(launcher);*/
     }
     
     public void next(){
@@ -172,23 +168,6 @@ public class PartyService extends Service {
 		}
     }
 
-    /*private Handler handler = new Handler();
-    private Runnable playback = new Runnable(){
-
-    	private Long time = 0L;
-    	private Song song = null;
-    	Alarm alarm = new Alarm();
-    	  @Override
-    	public void run() {
-    		  
-    		  if((song = getNext()) != null && play){
-        		  time = Double.valueOf(song.getLength()).longValue() * 1000;
-        		  handler.postDelayed(playback, time);
-        		  playSong(song);
-        		  
-    		  }
-    	}};*/
-    
     
     private void setup() {
         br = new BroadcastReceiver() {
@@ -197,13 +176,13 @@ public class PartyService extends Service {
                    next();
                }
         };
-        registerReceiver(br, new IntentFilter("com.authorwjf.wakeywakey") );
-        pi = PendingIntent.getBroadcast( this, 0, new Intent("com.authorwjf.wakeywakey"),
+        registerReceiver(br, new IntentFilter("se.chalmers.hemmafesten.service.filter") );
+        pi = PendingIntent.getBroadcast( this, 0, new Intent("se.chalmers.hemmafesten.service.filter"),
         		0 );
-        am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+        /*am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
         pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-        wl.acquire();
+        wl.acquire();*/
     }
     
     private void startNext(long time){
