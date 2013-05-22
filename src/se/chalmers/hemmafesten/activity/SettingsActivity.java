@@ -21,6 +21,9 @@ import android.provider.SearchRecentSuggestions;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import se.chalmers.hemmafesten.R;
@@ -80,6 +83,14 @@ public class SettingsActivity extends PreferenceActivity{
 		    }
 		});
 		
+		Preference removeSavedParties = (Preference) findPreference("remove_parties");
+		removeSavedParties.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+			public boolean onPreferenceClick(Preference preference){
+				removeSavedParties();
+				return true;
+			}
+		});
+		
 	
 	}
 
@@ -92,6 +103,12 @@ public class SettingsActivity extends PreferenceActivity{
 				Toast.LENGTH_SHORT).show();
 	}
 	
+	public void removeSavedParties(){
+			getApplicationContext().deleteFile("savedParties.txt");
+			Toast.makeText(thisActivity,
+					"All your saved parties are now removed!",
+					Toast.LENGTH_SHORT).show();
+	}
 	
 	/** {@inheritDoc} */
 	@Override
