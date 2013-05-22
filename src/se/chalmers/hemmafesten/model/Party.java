@@ -2,11 +2,7 @@ package se.chalmers.hemmafesten.model;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.LinkedList;
 import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.util.Log;
 
