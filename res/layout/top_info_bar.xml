@@ -29,6 +29,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:text="@string/party"
+        android:contentDescription="@string/desc"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton

@@ -16,6 +16,7 @@ import se.chalmers.hemmafesten.adapter.PartySongAdapter;
 import se.chalmers.hemmafesten.adapter.SavedPartiesAdapter;
 import se.chalmers.hemmafesten.item.SavePartyItem;
 import se.chalmers.hemmafesten.model.Song;
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,21 +29,21 @@ public class SavedPartiesActivity extends ActionBarActivity {
 	private SavedPartiesAdapter adapter = null;
 	private ArrayList<SavePartyItem> items;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ActionBar bar = getActionBar();
+		bar.setTitle("Saved parties");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_saved_parties);
-		// Show the Up button in the action bar.
-		
-		//listView = (ListView) findViewById(R.id.saved_parties);
 		
 		items = new ArrayList<SavePartyItem>();
 		
 		try {
-			FileInputStream fis = openFileInput("savedParties.dat");
+			FileInputStream fis = openFileInput("savedParties.txt");
 			ObjectInputStream is = new ObjectInputStream(fis);
-			SavePartyItem partyItem = (SavePartyItem) is.readObject();
-			items.add(partyItem);
+			ArrayList<SavePartyItem> partyItems = (ArrayList<SavePartyItem>) is.readObject();
+			items.addAll(partyItems);
 
 			is.close();
 		} catch (FileNotFoundException e) {
@@ -59,6 +60,7 @@ public class SavedPartiesActivity extends ActionBarActivity {
 			e.printStackTrace();
 		}
 		
+		Log.i("itemsSize", Integer.toString(items.size()));
 	
 		if(items.size()!=0){
 			listView = (ListView) findViewById(R.id.saved_parties);

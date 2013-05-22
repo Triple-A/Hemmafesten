@@ -20,6 +20,7 @@ import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
 import se.chalmers.hemmafesten.task.updatePlaylistTask;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
@@ -85,17 +86,45 @@ public class PartyActivity extends ActionBarActivity {
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
 		alert.setView(input);
-				
+		
+		items = new ArrayList<SavePartyItem>();
+		
 		alert.setPositiveButton(R.string.save_party_button, new DialogInterface.OnClickListener() {
+		@SuppressWarnings("unchecked")
 		public void onClick(DialogInterface dialog, int whichButton) {
 		  SavePartyItem saveParty = new SavePartyItem(input.getText().toString(),partyService.getPartyController().getAccessCode());
 		  
 		  try {
+			FileInputStream fileInput = openFileInput("savedParties.txt");
+			ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+			items.addAll((ArrayList<SavePartyItem>)objectInput.readObject());
 			
-			FileOutputStream fileOutput = openFileOutput("savedParties.dat", Context.MODE_PRIVATE);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (StreamCorruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		  Log.i("beforesavethisParty", Integer.toString(items.size()));
+		  
+		  items.add(saveParty);
+		  
+		  try {
+			  
+			FileOutputStream fileOutput = openFileOutput("savedParties.txt", Context.MODE_PRIVATE);
 			ObjectOutputStream saveObject = new ObjectOutputStream(fileOutput);
-			saveObject.writeObject(saveParty);
+			saveObject.writeUnshared(items);
 			saveObject.close();
+			fileOutput.close();
+			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -111,6 +140,8 @@ public class PartyActivity extends ActionBarActivity {
 		  for(SavePartyItem item: items){
 			  Log.i("partyItem", item.getPartyName());
 		  }
+		  
+		  Log.i("beforeMakeToastItemsSize",Integer.toString(items.size()));
 		  
 		  Toast.makeText(PartyActivity.this, "Party saved", Toast.LENGTH_SHORT).show();}
 		});
