@@ -5,20 +5,14 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import com.parse.ParseException;
-
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.R.id;
-import se.chalmers.hemmafesten.R.layout;
 import se.chalmers.hemmafesten.item.SearchSongItem;
 import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyController;
 import se.chalmers.hemmafesten.service.PartyService;
-
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
 
 public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
 
