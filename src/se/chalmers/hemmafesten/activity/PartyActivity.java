@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,23 +19,16 @@ import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
 import se.chalmers.hemmafesten.task.updatePlaylistTask;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.text.Editable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,6 +65,7 @@ public class PartyActivity extends ActionBarActivity {
 			}
 		}
 	}
+	
 
 //////////////DIALOG METHODS ////////////////////////////////////////////////////////
 	
@@ -186,7 +179,7 @@ public class PartyActivity extends ActionBarActivity {
 			psIsBound = false;
 		}
 	}	
-
+	
 ///////////////////////////////////////////////////////////////////////////////////////////////7	
 
 	@Override
@@ -198,7 +191,6 @@ public class PartyActivity extends ActionBarActivity {
 		
 		listView = (ListView) findViewById(R.id.queue);
 		songz = new LinkedList<Song>();
-		Log.d("onCreate", "create song list");
 		adapter = new PartySongAdapter(this,
 	            R.layout.party_song_list_item, songz);
 		listView.setAdapter(adapter);

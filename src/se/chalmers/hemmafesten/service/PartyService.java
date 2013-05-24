@@ -4,10 +4,8 @@ package se.chalmers.hemmafesten.service;
 import java.util.Calendar;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.activity.MainActivity;
 import se.chalmers.hemmafesten.activity.PartyActivity;
 import se.chalmers.hemmafesten.model.Song;
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -19,14 +17,10 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.parse.ParseException;
 
 
 public class PartyService extends Service {
@@ -35,11 +29,7 @@ public class PartyService extends Service {
 	private Boolean play;
 	private Notification note; 
 	
-	private PendingIntent pi;
-    private BroadcastReceiver br;
-    private AlarmManager am;
-    private PowerManager pm;
-    private PowerManager.WakeLock wl;
+	
 
 	private static Status status = Status.FREE;
 	public enum Status {
@@ -90,7 +80,6 @@ public class PartyService extends Service {
 		stopLoop();
 		pc.killParty(status == Status.HOST);
 		pc = null;
-		//wl.release();
 		am.cancel(pi);
 	    unregisterReceiver(br);
 	    
@@ -101,7 +90,18 @@ public class PartyService extends Service {
 	@Override
 	public void onCreate() {
 	        super.onCreate();
-	        setup();
+	        am = (AlarmManager)(this.getSystemService(Context.ALARM_SERVICE ));
+	        pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+	        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
+	        br = new BroadcastReceiver() {
+	               @Override
+	               public void onReceive(Context c, Intent i) {
+	                   wl.acquire();
+	                   next();
+	                   wl.release();
+	               }
+	        };
+	        registerReceiver(br, new IntentFilter("se.chalmers.hemmafesten.service.PartyService&br") );
 	        Log.i("PartyService", "Service Started.");
 	}
 
@@ -123,6 +123,8 @@ public class PartyService extends Service {
     }
     
     public void startLoop(){
+    	
+		
     	play = true;
     		
         //////////////////////////////////////////////////////////
@@ -161,14 +163,9 @@ public class PartyService extends Service {
 	    Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
 	    launcher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	    
-	    startNext(Double.valueOf(song.getLength()).longValue());//Double.valueOf(song.getLength()).longValue()
+	    startNext(Double.valueOf(song.getLength()).longValue());
 	    
-	    /*Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
-	    launcher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
 	    startActivity(launcher);
-	    Toast.makeText(PartyService.this,
-				"starter song:" + uri,
-				Toast.LENGTH_SHORT).show();
     }
     
     public void next(){
@@ -178,31 +175,22 @@ public class PartyService extends Service {
 		}
     }
 
+
     
-    private void setup() {
-    	am = (AlarmManager)(this.getSystemService(Context.ALARM_SERVICE ));
-        pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-        br = new BroadcastReceiver() {
-               @Override
-               public void onReceive(Context c, Intent i) {
-                   wl.acquire();
-                   Log.d("broadcast re", "nu jävlar");
-                   next();
-                   
-                   wl.release();
-               }
-        };
-        registerReceiver(br, new IntentFilter("se.chalmers.hemmafesten.service.PartyService.br") );
-    }
+    private PendingIntent pi;
+    private BroadcastReceiver br;
+    private AlarmManager am;
+    private PowerManager pm;
+    private PowerManager.WakeLock wl;
+    
+    
     
     private void startNext(long time){
     	Log.d("next", "nu jävlar");
-    	pi = PendingIntent.getBroadcast( this, 0, new Intent("se.chalmers.hemmafesten.service.PartyService.br"),
+    	pi = PendingIntent.getBroadcast( this, 0, new Intent("se.chalmers.hemmafesten.service.PartyService&br"),
         		0 );
-    	Calendar cal = Calendar.getInstance();
-    	cal.add(Calendar.SECOND, (int) time);
-    	am.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, cal.getTimeInMillis(), pi );
+    	int SecondsFromNow = (int) (System.currentTimeMillis() + (time * 1000));
+    	am.set( AlarmManager.RTC_WAKEUP, SecondsFromNow, pi );
     }
 }
 
