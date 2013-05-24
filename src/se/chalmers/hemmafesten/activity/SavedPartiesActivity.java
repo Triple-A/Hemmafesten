@@ -1,27 +1,20 @@
 package se.chalmers.hemmafesten.activity;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.adapter.PartySongAdapter;
 import se.chalmers.hemmafesten.adapter.SavedPartiesAdapter;
 import se.chalmers.hemmafesten.item.SavePartyItem;
-import se.chalmers.hemmafesten.model.Song;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class SavedPartiesActivity extends ActionBarActivity {
 
@@ -32,8 +25,6 @@ public class SavedPartiesActivity extends ActionBarActivity {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ActionBar bar = getActionBar();
-		bar.setTitle("Saved parties");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_saved_parties);
 		
@@ -68,11 +59,16 @@ public class SavedPartiesActivity extends ActionBarActivity {
 	            R.layout.saved_party_list_item, items);
 		listView.setAdapter(adapter);
 		}
+		
 	}
-
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
+		super.onCreateOptionsMenu(menu);
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle("Saved Parties");
+	    return true;
 	}
 
 }

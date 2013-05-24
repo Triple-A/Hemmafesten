@@ -104,6 +104,12 @@ public class PartyService extends Service {
 	        registerReceiver(br, new IntentFilter("se.chalmers.hemmafesten.service.PartyService&br") );
 	        Log.i("PartyService", "Service Started.");
 	}
+	
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+	}
 
 	public IBinder onBind(Intent arg0) {
 		return mBinder;

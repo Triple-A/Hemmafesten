@@ -1,15 +1,12 @@
 package se.chalmers.hemmafesten.activity;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.zxing.IntentIntegrator;
 import se.chalmers.zxing.IntentResult;
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +31,13 @@ public class MainActivity extends ActionBarActivity {
 					"Kill old party before creating a new one!",
 					Toast.LENGTH_SHORT).show();
 		}else{
-			createPartyService(true);
+			final ProgressDialog loader = ProgressDialog.show(this, "", "Creating party, please wait...", true);
+	          new Thread(new Runnable(){
+	              public void run() {
+	      				createPartyService(true);
+	                if(loader!=null){
+	                  loader.dismiss();}}
+	          }).start();   
 		}
     }
     
@@ -75,8 +78,15 @@ public class MainActivity extends ActionBarActivity {
     
     
     public void clickConnect(View sender){
-    	createPartyService(false);
+    	final ProgressDialog loader = ProgressDialog.show(this, "", "Connecting to party, please wait...", true);
+        new Thread(new Runnable(){
+            public void run() {
+    				createPartyService(false);
+              if(loader!=null){
+                loader.dismiss();}}
+        }).start();   
     }
+    
     
     public void clickActiveParty(View sender){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
@@ -108,13 +118,12 @@ public class MainActivity extends ActionBarActivity {
 		if(!isCreator){
 			partyIntent.putExtra("accessCode", getCodeInput()); //
 		}
-		
+
 		partyService.initiateParty(partyIntent);
-		
 		Intent intent = new Intent(this, PartyActivity.class);
 		startActivity(intent);
     }
-    
+  
     
     private String getCodeInput(){
 		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
@@ -158,15 +167,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		try {
-			openFileOutput("savedParties.dat", MODE_PRIVATE).close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
         setContentView(R.layout.activity_main);
         Log.d("skit", "skit");
