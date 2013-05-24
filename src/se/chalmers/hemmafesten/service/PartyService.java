@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-import android.widget.Toast;
 
 
 public class PartyService extends Service {
@@ -29,7 +28,11 @@ public class PartyService extends Service {
 	private Boolean play;
 	private Notification note; 
 	
-	
+	private PendingIntent pi;
+    private BroadcastReceiver br;
+    private AlarmManager am;
+    private PowerManager pm;
+    private PowerManager.WakeLock wl;
 
 	private static Status status = Status.FREE;
 	public enum Status {
@@ -171,6 +174,8 @@ public class PartyService extends Service {
 	    
 	    startNext(Double.valueOf(song.getLength()).longValue());
 	    
+	    Log.d("playSong",  uri);
+	    
 	    startActivity(launcher);
     }
     
@@ -183,11 +188,7 @@ public class PartyService extends Service {
 
 
     
-    private PendingIntent pi;
-    private BroadcastReceiver br;
-    private AlarmManager am;
-    private PowerManager pm;
-    private PowerManager.WakeLock wl;
+    
     
     
     
@@ -195,8 +196,9 @@ public class PartyService extends Service {
     	Log.d("next", "nu jävlar");
     	pi = PendingIntent.getBroadcast( this, 0, new Intent("se.chalmers.hemmafesten.service.PartyService&br"),
         		0 );
-    	int SecondsFromNow = (int) (System.currentTimeMillis() + (time * 1000));
-    	am.set( AlarmManager.RTC_WAKEUP, SecondsFromNow, pi );
+    	Calendar cal = Calendar.getInstance();
+    	cal.add(Calendar.SECOND, (int)time);
+    	am.set( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi );
     }
 }
 
