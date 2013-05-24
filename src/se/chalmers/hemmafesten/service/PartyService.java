@@ -104,6 +104,12 @@ public class PartyService extends Service {
 	        setup();
 	        Log.i("PartyService", "Service Started.");
 	}
+	
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+	}
 
 	public IBinder onBind(Intent arg0) {
 		return mBinder;

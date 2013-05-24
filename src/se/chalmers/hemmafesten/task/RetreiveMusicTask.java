@@ -34,8 +34,6 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, ArrayList<SearchS
 	}
 	
 	
-	
-	
 	/**
 	 * makes an HTTP request to spotify for making a search.
 	 * Saves the JSON response in String
@@ -44,8 +42,9 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, ArrayList<SearchS
 	protected ArrayList<SearchSongItem> doInBackground(String... params) {
 		StringBuilder response  = new StringBuilder();
 	     try{
-	     //String temp=params[0];
-	     query.replaceAll(" ", "%20");
+	     
+	     String query = this.query.replaceAll(" ", "%20");
+	     
 	     URL url = new URL("http://ws.spotify.com/search/1/track.json?q="+query);
 	     HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
 	     if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
@@ -78,9 +77,9 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, ArrayList<SearchS
 	         }
 	     }
 	     }catch(IOException e){
-	    	 e.printStackTrace();
+	    	 Log.e("IORetrieveError",e.getMessage());
 	     }
-	     return null;
+	     return new ArrayList<SearchSongItem>();
 	 }
 	 
 	/**

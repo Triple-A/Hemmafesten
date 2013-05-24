@@ -28,11 +28,6 @@ public class SearchableActivity extends ActionBarActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
 	
-	@Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-	
 	/**
 	 * Gets search query which is typed and performs a search to the spotify
 	 * metadata API. presents the result in a ListView

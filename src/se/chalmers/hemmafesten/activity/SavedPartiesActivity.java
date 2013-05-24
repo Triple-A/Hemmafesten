@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 
-public class SavedPartiesActivity extends MainActivity {
+public class SavedPartiesActivity extends ActionBarActivity {
 
 	private ListView listView;
 	private SavedPartiesAdapter adapter = null;
@@ -59,6 +59,7 @@ public class SavedPartiesActivity extends MainActivity {
 	            R.layout.saved_party_list_item, items);
 		listView.setAdapter(adapter);
 		}
+		
 	}
 	
 	
@@ -67,8 +68,6 @@ public class SavedPartiesActivity extends MainActivity {
 		super.onCreateOptionsMenu(menu);
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle("Saved Parties");
-	    actionBar.setDisplayHomeAsUpEnabled(false);
-	    actionBar.setHomeButtonEnabled(false);
 	    return true;
 	}
 

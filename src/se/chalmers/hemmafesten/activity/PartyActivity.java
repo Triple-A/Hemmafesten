@@ -194,8 +194,9 @@ public class PartyActivity extends ActionBarActivity {
 		adapter = new PartySongAdapter(this,
 	            R.layout.party_song_list_item, songz);
 		listView.setAdapter(adapter);
-
+		
 		doBindService();
+		
 	}
 	
 	protected void onStart(){
