@@ -35,13 +35,7 @@ public class MainActivity extends ActionBarActivity {
 					"Kill old party before creating a new one!",
 					Toast.LENGTH_SHORT).show();
 		}else{
-			final ProgressDialog loader = ProgressDialog.show(this, "", "Creating party, please wait...", true);
-	          new Thread(new Runnable(){
-	              public void run() {
-	      				createPartyService(true);
-	                if(loader!=null){
-	                  loader.dismiss();}}
-	          }).start();   
+	      	createPartyService(true);
 		}
     }
     
@@ -96,13 +90,7 @@ public class MainActivity extends ActionBarActivity {
 	 * @param sender
 	 */
     public void clickConnect(View sender){
-    	final ProgressDialog loader = ProgressDialog.show(this, "", "Connecting to party, please wait...", true);
-        new Thread(new Runnable(){
-            public void run() {
-    				createPartyService(false);
-              if(loader!=null){
-                loader.dismiss();}}
-        }).start();   
+    	createPartyService(false); 
     }
     
     
@@ -139,17 +127,23 @@ public class MainActivity extends ActionBarActivity {
      * @param isCreator true=with new party. false = connected to existing party.
      */
     private void createPartyService(boolean isCreator){
-		Intent partyIntent = new Intent(this, PartyService.class); //                          
+		final Intent partyIntent = new Intent(this, PartyService.class); //                          
 		partyIntent.putExtra("isCreator", isCreator);                  //
 		if(!isCreator){
 			partyIntent.putExtra("accessCode", getCodeInput()); //
 			EditText et = (EditText)findViewById(R.id.accessInput);
     	    et.setText("");
 		}
-
-		partyService.initiateParty(partyIntent);
-		Intent intent = new Intent(this, PartyActivity.class);
-		startActivity(intent);
+		
+		final ProgressDialog loader = ProgressDialog.show(this, "", "Connecting to party, please wait...", true);
+        new Thread(new Runnable(){
+            public void run() {
+            	partyService.initiateParty(partyIntent);
+        		Intent intent = new Intent(MainActivity.this, PartyActivity.class);
+        		startActivity(intent);
+              if(loader!=null){
+                loader.dismiss();}}
+        }).start();
     }
   
     
