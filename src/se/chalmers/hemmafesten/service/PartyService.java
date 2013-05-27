@@ -81,7 +81,7 @@ public class PartyService extends Service {
 	
 	public void killService(){
 		stopLoop();
-		pc.killParty(status == Status.HOST);
+		pc.killParty();
 		pc = null;
 		am.cancel(pi);
 	    
@@ -184,6 +184,9 @@ public class PartyService extends Service {
     	if((song = getNext()) != null && play){
   		  	playSong(song);
 		}
+    	else{
+    		stopLoop();
+    	}
     }
 
 

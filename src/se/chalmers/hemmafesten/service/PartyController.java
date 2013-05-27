@@ -98,13 +98,7 @@ public class PartyController {
 		return party;
 	}
 	
-	public void killParty(boolean isCreator){
-		if(isCreator){
-			party.deleteEventually();
-			Log.i("PartyController","killParty: Creator is killing the party");
-		}else{
-			Log.i("PartyController","killParty: joiner is leaving the party");
-		}
+	public void killParty(){
 		party = null;
 	}
 	
