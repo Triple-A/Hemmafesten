@@ -101,7 +101,7 @@ public class MainActivity extends ActionBarActivity {
         createPartyService(false);
     }
     
-    
+
     /**
      * open party you are already connected to
      * @param sender
@@ -153,7 +153,6 @@ public class MainActivity extends ActionBarActivity {
                 loader.dismiss();}}
         }).start();
     }
-
     
     /**
      * get the inputed accesscode

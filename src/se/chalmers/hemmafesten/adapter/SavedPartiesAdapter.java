@@ -2,12 +2,8 @@ package se.chalmers.hemmafesten.adapter;
 
 import java.util.List;
 
-import com.parse.ParseException;
-
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.activity.MainActivity;
 import se.chalmers.hemmafesten.item.SavePartyItem;
-import se.chalmers.hemmafesten.model.Party;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,7 +19,6 @@ import android.widget.Toast;
 public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
 
 	private Context context;
-	private View view;
 	
 	/**
 	 * creates a savedpartiesadapter for a saved party
@@ -33,7 +28,7 @@ public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
 	 */
 	public SavedPartiesAdapter(Context context, int textViewResourceId,List<SavePartyItem> items) {
 		super(context, textViewResourceId, items);
-		this.context = context;
+		this.context = context;	
 	}
 
 	/**
@@ -68,13 +63,13 @@ public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
         
         holder = (ViewHolder) convertView.getTag();
  
+        	Log.i("testGetCorrectParty",partyItem.getAccessCode());
 			holder.partyName.setText(partyItem.getPartyName());
 	        holder.partyDate.setText(partyItem.getDate());
         
 	        
 	        holder.joinPartyButton.setOnClickListener(
         		new Button.OnClickListener() {  
-        	        @SuppressWarnings("static-access")
 					public void onClick(View v)
         	            {
         	        	
@@ -83,9 +78,9 @@ public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
 
         	        	Toast toast = Toast.makeText(context, text, duration);
         	        	toast.show();
-        	        	
+						
         	           }
-        	         });       
+        	         });      
 
         
         

@@ -63,6 +63,7 @@ public class SavedPartiesActivity extends ActionBarActivity {
 		listView.setAdapter(adapter);
 		}
 		
+		
 	}
 	
 	/**
