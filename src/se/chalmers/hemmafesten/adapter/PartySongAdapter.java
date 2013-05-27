@@ -6,6 +6,7 @@ import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.model.Song;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,11 @@ private Context context;
         holder = (ViewHolder) convertView.getTag();
  
         holder.song.setText(song.getName());
-		holder.artist.setText(song.getArtistName());		
+		holder.artist.setText(song.getArtistName());
+		if(song.getIsPlayed()==true){
+			convertView.setBackgroundColor(Color.parseColor("#E8E6E6"));
+		}
+		
         
         return convertView;
     }
