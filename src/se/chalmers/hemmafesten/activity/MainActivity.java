@@ -5,17 +5,22 @@ import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.zxing.IntentIntegrator;
 import se.chalmers.zxing.IntentResult;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -63,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
     	  // else continue with any other code you need in the method
     }
     
-
+    
     /**
      * open the Join Party frame
      * @param sender
@@ -76,7 +81,7 @@ public class MainActivity extends ActionBarActivity {
 		}else{
 	    	int visible = joinFrame.getVisibility();
 	    	if(visible == 0){ //visible
-	    		joinFrame.setVisibility(8);
+	    		joinFrame.setVisibility(8);   		
 	    	}else if(visible == 4){  //invisible
 	    		joinFrame.setVisibility(0);
 	    	}else{// 8 = gone
@@ -191,7 +196,8 @@ public class MainActivity extends ActionBarActivity {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    @Override
+    @SuppressLint("ResourceAsColor")
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -204,6 +210,34 @@ public class MainActivity extends ActionBarActivity {
         activePartyFrame = findViewById(R.id.activePartyFrame);
         
         activePartyVisibility();
+        
+        EditText et = (EditText) findViewById(R.id.accessInput);
+        final Button joinButton = (Button) findViewById(R.id.connect);
+        joinButton.setBackgroundColor(Color.GRAY);
+        joinButton.setEnabled(false);
+        et.addTextChangedListener(new TextWatcher(){
+			 
+	        @Override
+	        public void afterTextChanged(Editable s) {
+	        	if(s.length()!=10){
+	                joinButton.setBackgroundColor(Color.GRAY);
+	        		joinButton.setEnabled(false);
+	        	}
+	        }
+	        @Override
+	        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+	        @Override
+	        public void onTextChanged(CharSequence s, int start, int before,int count) {
+	        	if(s.length()==10){
+	        		int spGreen = getApplicationContext().getResources().getColor(R.color.sp_green);
+	        		joinButton.setBackgroundColor(spGreen);
+	        		joinButton.setEnabled(true);
+	        	}else{
+	                joinButton.setBackgroundColor(Color.GRAY);
+	        		joinButton.setEnabled(false);
+	        	}
+	        }
+	    });
     }
     
     protected void onResume(){

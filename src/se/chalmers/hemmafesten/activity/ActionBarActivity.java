@@ -14,17 +14,28 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
-
+/**
+ * Activity for the actionbar which is extended in 
+ * most of the activities
+ * @author AnteKioksy
+ *
+ */
 public class ActionBarActivity extends Activity {
 	
 	
+	/**
+	 * creates an instnace of an actionbar activity and sets
+	 * the content view to the actionbar activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_action_bar);
 	}
 
-	
+	/**
+	 * sets up menu settings for the action bar menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
@@ -43,7 +54,9 @@ public class ActionBarActivity extends Activity {
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
-	
+	/**
+	 * Menu settings when returning to an actionbar activity
+	 */
 	@Override 
 	public boolean onPrepareOptionsMenu(Menu menu){
 		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
@@ -56,6 +69,9 @@ public class ActionBarActivity extends Activity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
+	/**
+	 * When menu item is selected
+	 */
 	@Override
 	public boolean onMenuItemSelected(int featureId,MenuItem item) {
 	    switch (item.getItemId()) {
