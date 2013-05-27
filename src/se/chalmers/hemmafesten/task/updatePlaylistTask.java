@@ -35,6 +35,9 @@ public class updatePlaylistTask extends AsyncTask<String, Boolean, List<Song>> {
 		}
 	}
 	
+	/**
+	 * gets all the songs from parse
+	 */
 	@Override
 	protected List<Song> doInBackground(String... arg0) {
 		try {
@@ -46,6 +49,9 @@ public class updatePlaylistTask extends AsyncTask<String, Boolean, List<Song>> {
 		return new LinkedList<Song>();
 	}
 	
+	/**
+	 * upadates the partySongAdapter
+	 */
 	protected void onPostExecute(List<Song> list) {
 		songz.clear();
 		songz.addAll(list);

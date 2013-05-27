@@ -50,9 +50,12 @@ public class PartyService extends Service {
 	    return Service.START_NOT_STICKY;
 	}
 	
+	
+	/**
+	 * initiates a party based on an intent ( manly because the method was originaly called from onStartCommand)
+	 * @param intent with extra bool isCreator and String accessCode
+	 */
 	public void initiateParty(Intent intent){
-		
-		
 		Bundle bundle = intent.getExtras();      // get passed parameters
 		
 		if(bundle.getBoolean("isCreator")){  // if service started by creator
@@ -67,18 +70,34 @@ public class PartyService extends Service {
 		
 	}
 	
+	/**
+	 * adds song to party.
+	 * @param song
+	 */
+	
 	public void addSong(Song song){
 		pc.addSong(song);
 	}
 	
+	/**
+	 * 
+	 * @return the status of partyService
+	 */
 	public static Status getStatus(){
 		return status;
 	}
      
+	/**
+	 * 
+	 * @return the party controller ( null if free)
+	 */
 	public static PartyController getPartyController() {
 		return pc;
 	}
 	
+	/**
+	 * disconnect from party
+	 */
 	public void killService(){
 		stopLoop();
 		pc.killParty();
@@ -126,10 +145,17 @@ public class PartyService extends Service {
     
 ////////////////////////////////////////spotify timer/player
     
+    /**
+     * returns playstatate
+     * @return
+     */
     public Boolean getPlay(){
     	return play;
     }
     
+    /**
+     * starts the playloop
+     */
     public void startLoop(){
     	
 		
@@ -152,6 +178,9 @@ public class PartyService extends Service {
     	
     }
     
+    /**
+     * stops the playLoop
+     */
     public void stopLoop(){
     	if(play){
     		play = false;
@@ -159,10 +188,18 @@ public class PartyService extends Service {
     	}
     }
     
+    /**
+     * gets the next song in database
+     * @return the next song to play
+     */
     private Song getNext(){
     	return pc.getParty().getNext();
     }
     
+    /**
+     * starts a song and sets the timer to know when to start next
+     * @param song song to be played
+     */
     private void playSong(Song song){
     	song.setIsPlayed(true);
     	song.saveEventually();
@@ -179,6 +216,9 @@ public class PartyService extends Service {
 	    startActivity(launcher);
     }
     
+    /**
+     * checks if the app is in playstate and has more songs to play then starts next song
+     */
     public void next(){
     	Song song = null;
     	if((song = getNext()) != null && play){
@@ -188,13 +228,12 @@ public class PartyService extends Service {
     		stopLoop();
     	}
     }
-
-
     
     
-    
-    
-    
+    /**
+     * timer
+     * @param time seconds
+     */
     private void startNext(long time){
     	pi = PendingIntent.getBroadcast( this, 0, new Intent("se.chalmers.hemmafesten.service.PartyService&br"),
         		0 );

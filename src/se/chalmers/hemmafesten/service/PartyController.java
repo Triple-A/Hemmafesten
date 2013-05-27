@@ -81,6 +81,10 @@ public class PartyController {
 		}
 	}
 	
+	/** 
+	 * adds  song to party
+	 * @param song to be added
+	 */
 	public void addSong(Song song){
 		party.addSong(song);
 	}
@@ -94,10 +98,17 @@ public class PartyController {
 	}
 
 
+	/**
+	 * 
+	 * @return the party object
+	 */
 	public Party getParty() {
 		return party;
 	}
 	
+	/**
+	 * kills the party
+	 */
 	public void killParty(){
 		party = null;
 	}

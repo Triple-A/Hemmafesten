@@ -17,6 +17,7 @@ import se.chalmers.hemmafesten.adapter.PartySongAdapter;
 import se.chalmers.hemmafesten.item.SavePartyItem;
 import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyService;
+import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
 import se.chalmers.hemmafesten.task.updatePlaylistTask;
 import android.app.AlertDialog;
@@ -33,6 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,20 +44,32 @@ public class PartyActivity extends ActionBarActivity {
 	private List<Song> songz;
 	private ArrayList<SavePartyItem> items;
 	private PartySongAdapter adapter = null;
+	private ImageButton playButton;
 	
 
+	/**
+	 * loads connection qrcode via ASyncTask and restfull qr generator
+	 */
 	private void loadQR(){
 		if(psIsBound){
 			new RetreiveQrTask(this, partyService).execute();
 		}
 	}
 	
+	/**
+	 * loads playlist via ASyncTask
+	 */
 	private void loadList(){
 		if(psIsBound){
 			new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
 		}
 	}
 	
+	/** 
+	 * button listener to change play state
+	 * 
+	 * @param sender
+	 */
 	public void onClickPlay(View sender){
 		if(psIsBound) {
 			if(partyService.getPlay()){
@@ -64,11 +78,31 @@ public class PartyActivity extends ActionBarActivity {
 				partyService.startLoop();
 			}
 		}
+		updatePartyButton();
 	}
 	
+	public void updatePartyButton(){
+		if(psIsBound) {
+			if(partyService.getStatus() == Status.HOST){
+				playButton.setVisibility(0);
+				if(partyService.getPlay()){
+					playButton.setImageResource(R.drawable.stop_button);
+				}else{
+					playButton.setImageResource(R.drawable.play_button);
+				}
+			}else{
+				playButton.setVisibility(8);
+			}
+		}
+	}
+
 
 //////////////DIALOG METHODS ////////////////////////////////////////////////////////
 	
+	/**
+	 * save a party
+	 * @param sender
+	 */
 	public void savePartyClicked(View sender){
 	
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -160,6 +194,7 @@ public class PartyActivity extends ActionBarActivity {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			partyService = ((PartyService.LocalBinder)service).getService();
 			loadQR();
+			updatePartyButton();
 			loadList();
 		}
 
@@ -168,11 +203,17 @@ public class PartyActivity extends ActionBarActivity {
 		}
 	};
 
+	/**
+	 * bind to the party service
+	 */
 	void doBindService() {
 		bindService(new Intent(this, PartyService.class), mConnection, Context.BIND_AUTO_CREATE);
 		psIsBound = true;
 	}
 
+	/**
+	 * unbind from the party service
+	 */
 	void doUnbindService() {
 		if (psIsBound) {
 			unbindService(mConnection);
@@ -194,9 +235,10 @@ public class PartyActivity extends ActionBarActivity {
 		adapter = new PartySongAdapter(this,
 	            R.layout.party_song_list_item, songz);
 		listView.setAdapter(adapter);
+		playButton = (ImageButton) findViewById(R.id.playButton);
+		
 		
 		doBindService();
-		
 	}
 	
 	protected void onStart(){

@@ -1,16 +1,11 @@
 package se.chalmers.hemmafesten.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.util.Log;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -21,7 +16,8 @@ import com.parse.ParseQuery;
  * 
  * @author Aron
  */
-public class Song extends se.chalmers.hemmafesten.model.Model{	
+public class Song extends se.chalmers.hemmafesten.model.Model {
+	// Spotify metadata API JSON keys
 	private static final String SPOTIFY_JSON_SONG_URI_KEY = "href";
 	private static final String SPOTIFY_JSON_SONG_NAME_KEY = "name";
 	private static final String SPOTIFY_JSON_SONG_LENGTH_KEY = "length";
@@ -36,9 +32,15 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 	//private static final String SPOTIFY_JSON_ARTISTS_ARTIST_URI_KEY = "href";
 	
 	private double popularity;
-	private String albumSpotifyUri;
 	
-	
+	/**
+	 * Create a Song instance from a Spotify metadata API JSON object and saves it to Parse.
+	 * 
+	 * @param jsonObject The JSON returned by Spotify’s metadata API, as an 
+	 * @return A newly created Song instance initialized with the values in the JSON dictionary or `null`. 
+	 * @throws ParseException If the the save to Parse failed.
+	 * @throws JSONException If the given JSON was malformed.
+	 */
 	public static Song createSongWithSpotifyJSON(JSONObject jsonObject) throws ParseException, JSONException {
 		Song song = new Song(jsonObject);
 		song.setIsPlayed(false);
@@ -46,6 +48,15 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 		return song;
 	}
 	
+	/**
+	 * Create a Song instance from a Spotify song URI and saves it to Parse.
+	 * 
+	 * It will be empty except for the Spotify song URI and its Parse identifier. 
+	 * 
+	 * @param spotifyUri The Spotify URI.
+	 * @return A newly created Song instance initialized with the given Spotify song URI.
+	 * @throws ParseException If the save to Parse failed.
+	 */
 	public static Song createSongWithSpotifyURI(String spotifyUri) throws ParseException {
 		Song song = new Song();
 		song.setSpotifyURI(spotifyUri);
@@ -54,6 +65,15 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 		return song;
 	}
 	
+	/**
+	 * Create a Song instance from a Spotify song URI and saves it asynchronously to Parse.
+	 * 
+	 * It will be empty except for the Spotify song URI and its Parse identifier. 
+	 * 
+	 * @param spotifyUri The Spotify URI.
+	 * @param callback The callback which should handle the object once it has been created and saved to Parse.
+	 * @return A newly created Song instance initialized with the given Spotify song URI.
+	 */
 	public static void createSongWithSpotifyURIAsync(String spotifyUri, final se.chalmers.hemmafesten.model.callback.GetCallback callback) {
 		final Song song = new Song();
 		song.setSpotifyURI(spotifyUri);
@@ -119,13 +139,18 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 	}
 	
 	// Parse queries
+	// Query for finding a all songs equal to a given Spotify URI.
 	private static ParseQuery songQueryBySpotifyURI(String spotifyUri) {
 		ParseQuery query = new ParseQuery(getParseObjectName());
 		query.whereEqualTo("spotifyURI", spotifyUri);
 		return query;
 	}
 	
-	
+	/**
+	 * Create Song model instances from a list of song ParseObjects. 
+	 * @param parseObjectSongs The ParseObjects which represent the songs.
+	 * @return A list of Song instances.
+	 */
 	public static List<Song> songsFromParseObjectSongs(List<ParseObject> parseObjectSongs) {
 		List<Song> songs = new LinkedList<Song>();
     	for(ParseObject po : parseObjectSongs){
@@ -136,17 +161,29 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 	
 	
 	// Constructors
+	/**
+	 * Initialize a Song instance with the given Spotify metadata API JSON object.
+	 * @param jsonObject The Spotify metadata API JSON object used to initialize the instance.
+	 * @throws JSONException If the JSON object was malformed.
+	 */
 	public Song(JSONObject jsonObject) throws JSONException {
 		this();
 		this.setIsPlayed(false);
 		this.updateWithSpotifyJSONObject(jsonObject);
 	}
 	
+	/**
+	 * Initialize a Song instance and associate it with a new ParseObject instance.
+	 */
 	public Song() {
 		this(new ParseObject(getParseObjectName()));
 		this.setIsPlayed(false);
 	}
 	
+	/**
+	 * Initialize a Song instance with the given ParseObject instance.
+	 * @param parseObject The ParseObject instance which will back the Song instance.
+	 */
 	public Song(ParseObject parseObject) {
 		super(parseObject);
 	}
@@ -156,7 +193,7 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 	/**
 	 * Update the song object with the data in the Spotify JSON object.
 	 * @param jsonObject The JSON object gotten from Spotify.
-	 * @throws JSONException
+	 * @throws JSONException If the JSON was malformed.
 	 */
 	public void updateWithSpotifyJSONObject(JSONObject jsonObject) throws JSONException {
 		this.setName(jsonObject.getString(SPOTIFY_JSON_SONG_NAME_KEY));
@@ -187,69 +224,143 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 
 	
 	// Getters and setters
-	// Parse
+	// Parse backed
+	/**
+	 * Get the name of the song.
+	 * @return
+	 */
 	public String getName() {
 		return this.getParseObject().getString("name");
 	}
 	
+	/**
+	 * Set the name of the song.
+	 * @param name The new name.
+	 * @private
+	 */
 	private void setName(String name) {
 		this.getParseObject().put("name", name);
 	}
 	
+	/**
+	 * Get whether the song has been played.
+	 * @return
+	 */
 	public Boolean getIsPlayed() {
 		return this.getParseObject().getBoolean("isPlayed");
 	}
 	
-	public void setIsPlayed(Boolean bool) {
-		this.getParseObject().put("isPlayed", bool);
+	/**
+	 * Set whether the song has been played.
+	 * @param hasBeenPlayed A boolean indicating whether it has been played (true) or not (false).
+	 */
+	public void setIsPlayed(Boolean hasBeenPlayed) {
+		this.getParseObject().put("isPlayed", hasBeenPlayed);
 	}
 	
+	/**
+	 * Get the name of the album the song belongs to.
+	 * @return The name of the album which the song belongs to.
+	 */
 	public String getAlbumName() {
 		return this.getParseObject().getString("album");
 	}
 	
+	/**
+	 * Set the name of the album the song belongs to.
+	 * @param albumName The name of the album which the song belongs to.
+	 */
 	private void setAlbumName(String albumName) {
 		this.getParseObject().put("album", albumName);
 	}
 	
+	/**
+	 * Get the name(s) of the artist(s) which created the song. 
+	 * 
+	 * Comma-separated list if multiple artists; e.g. "Jane Doe, John Doe".
+	 * 
+	 * @return The name(s) of the artist(s) (comma-separated if multiple) which created the song.
+	 */
 	public String getArtistName() {
 		return this.getParseObject().getString("artist");
 	}
 	
+	/**
+	 * Set the name(s) of the artist(s) which created the song.
+	 * 
+	 * Comma-separated list if multiple artists; e.g. "Jane Doe, John Doe".
+	 * 
+	 * @param artistName The name(s) of the artist(s) (comma-separated if multiple)
+	 */
 	private void setArtistName(String artistName) {
 		this.getParseObject().put("artist", artistName);
 	}
 	
+	/**
+	 * Get the song’s Spotify URI.
+	 * @return The song’s Spotify URI.
+	 */
 	public String getSpotifyURI() {
 		return this.getParseObject().getString("spotifyURI");
 	}
 	
-	
+	/**
+	 * Set the song’s Spotify URI.
+	 * @param spotifyUri The Spotify URI of the song.
+	 */
 	private void setSpotifyURI(String spotifyUri) {
 		this.getParseObject().put("spotifyURI", spotifyUri);
 	}
 	
+	/**
+	 * The playback length of the song, in seconds.
+	 * @return The playback length of the song, in seconds.
+	 */
 	public double getLength() {
 		return this.getParseObject().getDouble("length");
 	}
 
+	/**
+	 * Set the playback length of the song, in seconds.
+	 * @param length The playback length of the song, in seconds.
+	 */
 	private void setLength(double length) {
 		this.getParseObject().put("length", length);
 	}
 	
-	// Local
+	/**
+	 * The Spotify URI for the album which the song belongs to.
+	 * @return The Spotify URI for the album which the song belongs to.
+	 */
 	public String getAlbumURI() {
-		return this.albumSpotifyUri;
+		return this.getParseObject().getString("albumSpotifyURI");
 	}
 	
+	/**
+	 * Set the Spotify URI for the album which the song belongs to.
+	 * @param albumUri The Spotify URI which the album belongs to.
+	 */
 	private void setAlbumURI(String albumUri) {
-		this.albumSpotifyUri = albumUri;
+		this.getParseObject().put("albumSpotifyURI", albumUri);
 	}
 	
+	/**
+	 * The popularity of the song.
+	 * 
+	 * Only available when the song has been created from Spotify JSON metadata and not persisted to Parse.
+	 * 
+	 * @return The popularity of the song. 
+	 */
 	public double getPopularity() {
 		return popularity;
 	}
 
+	/**
+	 * Set the popularity of the song.
+	 * Only available when the song has been created from Spotify JSON metadata and not persisted to Parse.
+	 * 
+	 * @param popularity The popularity of the song.
+	 */
 	private void setPopularity(double popularity) {
 		this.popularity = popularity;
 	}
@@ -280,6 +391,10 @@ public class Song extends se.chalmers.hemmafesten.model.Model{
 	}
 	
 	// Private helpers
+	/**
+	 * The ParseObject for the Parse type which backs the Song model.
+	 * @return The ParseObject for the Parse type which backs the Song model. 
+	 */
 	private static String getParseObjectName() {
 		return "Song";
 	}

@@ -32,6 +32,10 @@ public class MainActivity extends ActionBarActivity {
 	private View joinFrame;
 	private View activePartyFrame;
 
+	/**
+	 * create a new party
+	 * @param sender
+	 */
     public void clickCreateParty(View sender) {
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
 			Toast.makeText(MainActivity.this,
@@ -48,11 +52,18 @@ public class MainActivity extends ActionBarActivity {
 		}
     }
     
+    /**
+     * open the qr scanner
+     * @param sender
+     */
     public void scanQRParty(View sender) {
     	IntentIntegrator integrator = new IntentIntegrator(this);
     	integrator.initiateScan();
     }
     
+    /**
+     * handle the result from qr scanner
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     	  IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
     	  if (scanResult != null) {
@@ -65,7 +76,11 @@ public class MainActivity extends ActionBarActivity {
     	  // else continue with any other code you need in the method
     }
     
-   
+
+    /**
+     * open the Join Party frame
+     * @param sender
+     */
 	public void clickJoinParty(View sender) {
 		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
 			Toast.makeText(MainActivity.this,
@@ -84,6 +99,10 @@ public class MainActivity extends ActionBarActivity {
     }
     
     
+	/**
+	 * connect to existing party
+	 * @param sender
+	 */
     public void clickConnect(View sender){
     	final ProgressDialog loader = ProgressDialog.show(this, "", "Connecting to party, please wait...", true);
         new Thread(new Runnable(){
@@ -95,6 +114,10 @@ public class MainActivity extends ActionBarActivity {
     }
     
     
+    /**
+     * open party you are already connected to
+     * @param sender
+     */
     public void clickActiveParty(View sender){
     	if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
     		Intent intent = new Intent(this, PartyActivity.class);
@@ -102,6 +125,10 @@ public class MainActivity extends ActionBarActivity {
     	}
     }
     
+    /**
+     * disconnect from the party you are connected to
+     * @param sender
+     */
     public void clickKillParty(View sender){
     	if(psIsBound){
     		partyService.killService();
@@ -136,6 +163,10 @@ public class MainActivity extends ActionBarActivity {
     }
   
     
+    /**
+     * get the inputed accesscode
+     * @return accesscode as string
+     */
     private String getCodeInput(){
 		EditText et = (EditText)findViewById(R.id.accessInput);  // accessCode input
 		return et.getText().toString();             			// get accessCode
