@@ -2,12 +2,16 @@ package se.chalmers.hemmafesten.adapter;
 
 import java.util.List;
 
+import com.parse.ParseException;
+
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.activity.MainActivity;
 import se.chalmers.hemmafesten.item.SavePartyItem;
+import se.chalmers.hemmafesten.model.Party;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +74,8 @@ public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
 	        
 	        holder.joinPartyButton.setOnClickListener(
         		new Button.OnClickListener() {  
-        	        public void onClick(View v)
+        	        @SuppressWarnings("static-access")
+					public void onClick(View v)
         	            {
         	        	
         	        	CharSequence text = "Soon you will be able to join saved parties";
@@ -78,6 +83,7 @@ public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
 
         	        	Toast toast = Toast.makeText(context, text, duration);
         	        	toast.show();
+        	        	
         	           }
         	         });       
 

@@ -153,27 +153,7 @@ public class MainActivity extends ActionBarActivity {
                 loader.dismiss();}}
         }).start();
     }
-    
-    public void reJoinParty(boolean isCreator, String accessCode){
-    	final Intent partyIntent = new Intent(this, PartyService.class); //                          
-		partyIntent.putExtra("isCreator", isCreator);                  //
-		
-		if(!isCreator){
-			partyIntent.putExtra("accessCode", accessCode); //
-			EditText et = (EditText)findViewById(R.id.accessInput);
-    	    et.setText("");
-		}
-		final ProgressDialog loader = ProgressDialog.show(this, "", "Connecting to party, please wait...", true);
-        new Thread(new Runnable(){
-            public void run() {
-            	partyService.initiateParty(partyIntent);
-        		Intent intent = new Intent(MainActivity.this, PartyActivity.class);
-        		startActivity(intent);
-              if(loader!=null){
-                loader.dismiss();}}
-        }).start();
-    }
-  
+
     
     /**
      * get the inputed accesscode
