@@ -35,5 +35,43 @@
     <string name="qr_code_image_content_description">QR-code for the Party</string>
     <string name="play_button_content_description"></string>
     <string name="kill_party_title">X</string>
-
+    <string name="party_help">Party</string>
+    <string name="create_party_help">
+        <Data>
+        <![CDATA[<html>
+        <h3>Create a party</h3>
+        To create a party just press the button named "create a new party"
+        <br /><br />
+        <h3>Join a party</h3>
+        To join a party press the button join a party and either type in
+        a given access code or scan a partys qr code with barcode scanner (must be installed)
+        <h3>Save a party</h3>
+        To save a party just press the button named "save party" and choose name to save your party.
+        All your saved parties can be found under the menu "saved parties" and all parties can be deleted
+        in settings.
+        <h3>Leave a party</h3>
+        To leave a party just go to the "Home" screen of the app and simply press the "X" button
+        which is shown when you are connected to a party
+        </html>]]>
+        </Data>
+    </string>
+    <string name="search_help">Search</string>
+     <string name="search_help_text_view">
+        <Data>
+        <![CDATA[<html>
+        <h3>General info</h3>
+        To be able to search for songs or artists you need to be connected to
+        a party (either created party or joined).
+        <br/>
+        <h3>Search for Songs</h3>
+        To search for songs just hit the name of the song you want to find.
+        <h3>Search for Artists</h3>
+		To search for artists just hit the name of the artist you whish to find songs for. The
+		artists most popular songs will be displayed.
+		<h3>Clear recent search history</h3>
+		To clear the recent search tags go to settings and press "Clear search history". All your
+		history should now be removed :)
+        </html>]]>
+        </Data>
+        </string>
 </resources>
