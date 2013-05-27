@@ -17,6 +17,7 @@ import se.chalmers.hemmafesten.adapter.PartySongAdapter;
 import se.chalmers.hemmafesten.item.SavePartyItem;
 import se.chalmers.hemmafesten.model.Song;
 import se.chalmers.hemmafesten.service.PartyService;
+import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.hemmafesten.task.RetreiveQrTask;
 import se.chalmers.hemmafesten.task.updatePlaylistTask;
 import android.app.AlertDialog;
@@ -75,6 +76,22 @@ public class PartyActivity extends ActionBarActivity {
 				partyService.stopLoop();
 			}else{
 				partyService.startLoop();
+			}
+		}
+		updatePartyButton();
+	}
+	
+	public void updatePartyButton(){
+		if(psIsBound) {
+			if(partyService.getStatus() == Status.HOST){
+				playButton.setVisibility(0);
+				if(partyService.getPlay()){
+					playButton.setImageResource(R.drawable.stop_button);
+				}else{
+					playButton.setImageResource(R.drawable.play_button);
+				}
+			}else{
+				playButton.setVisibility(8);
 			}
 		}
 	}
@@ -177,6 +194,7 @@ public class PartyActivity extends ActionBarActivity {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			partyService = ((PartyService.LocalBinder)service).getService();
 			loadQR();
+			updatePartyButton();
 			loadList();
 		}
 
@@ -219,8 +237,8 @@ public class PartyActivity extends ActionBarActivity {
 		listView.setAdapter(adapter);
 		playButton = (ImageButton) findViewById(R.id.playButton);
 		
-		doBindService();
 		
+		doBindService();
 	}
 	
 	protected void onStart(){
