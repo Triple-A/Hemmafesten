@@ -33,6 +33,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,20 +43,32 @@ public class PartyActivity extends ActionBarActivity {
 	private List<Song> songz;
 	private ArrayList<SavePartyItem> items;
 	private PartySongAdapter adapter = null;
+	private ImageButton playButton;
 	
 
+	/**
+	 * loads connection qrcode via ASyncTask and restfull qr generator
+	 */
 	private void loadQR(){
 		if(psIsBound){
 			new RetreiveQrTask(this, partyService).execute();
 		}
 	}
 	
+	/**
+	 * loads playlist via ASyncTask
+	 */
 	private void loadList(){
 		if(psIsBound){
 			new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
 		}
 	}
 	
+	/** 
+	 * button listener to change play state
+	 * 
+	 * @param sender
+	 */
 	public void onClickPlay(View sender){
 		if(psIsBound) {
 			if(partyService.getPlay()){
@@ -65,10 +78,14 @@ public class PartyActivity extends ActionBarActivity {
 			}
 		}
 	}
-	
+
 
 //////////////DIALOG METHODS ////////////////////////////////////////////////////////
 	
+	/**
+	 * save a party
+	 * @param sender
+	 */
 	public void savePartyClicked(View sender){
 	
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -168,11 +185,17 @@ public class PartyActivity extends ActionBarActivity {
 		}
 	};
 
+	/**
+	 * bind to the party service
+	 */
 	void doBindService() {
 		bindService(new Intent(this, PartyService.class), mConnection, Context.BIND_AUTO_CREATE);
 		psIsBound = true;
 	}
 
+	/**
+	 * unbind from the party service
+	 */
 	void doUnbindService() {
 		if (psIsBound) {
 			unbindService(mConnection);
@@ -194,6 +217,7 @@ public class PartyActivity extends ActionBarActivity {
 		adapter = new PartySongAdapter(this,
 	            R.layout.party_song_list_item, songz);
 		listView.setAdapter(adapter);
+		playButton = (ImageButton) findViewById(R.id.playButton);
 		
 		doBindService();
 		

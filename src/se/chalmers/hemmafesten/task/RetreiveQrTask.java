@@ -34,6 +34,9 @@ public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
         accessCode_text = (TextView) activity.findViewById(R.id.info_bar_partycode);
     }
 
+	/**
+	 * downloads a generated qr-code from a restful qr generator
+	 */
     protected Bitmap doInBackground(Void... arg0) {
     	try {
     		URL url = new URL(Messages.getString("RetreiveQrTask.restfulQrGenerator") + accessCode); //$NON-NLS-1$
@@ -43,6 +46,9 @@ public class RetreiveQrTask extends AsyncTask<Void, Void, Bitmap>{
 		}
     	return null;
     }
+    /**
+     * sets the image view to the downloaded qr-Code
+     */
     protected void onPostExecute(Bitmap qrCode) {
     	qr_view.setImageBitmap(qrCode);
     	accessCode_text.setText(accessCode);
