@@ -1,12 +1,7 @@
 package se.chalmers.hemmafesten.activity;
 
-import com.parse.Parse;
-import com.parse.ParseException;
-
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.R.color;
-import se.chalmers.hemmafesten.model.Model;
-import se.chalmers.hemmafesten.model.Party;
+
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.zxing.IntentIntegrator;
@@ -242,7 +237,7 @@ public class MainActivity extends ActionBarActivity {
         final Button joinButton = (Button) findViewById(R.id.connect);
         joinButton.setBackgroundColor(Color.GRAY);
         joinButton.setEnabled(false);
-        et.addTextChangedListener(new  TextWatcher(){
+        et.addTextChangedListener(new TextWatcher(){
 			 
 	        @Override
 	        public void afterTextChanged(Editable s) {
