@@ -1,6 +1,10 @@
 package se.chalmers.hemmafesten.activity;
 
+import com.parse.Parse;
+import com.parse.ParseException;
+
 import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.zxing.IntentIntegrator;
@@ -13,9 +17,12 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -58,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
     	  // else continue with any other code you need in the method
     }
     
-    
+   
 	public void clickJoinParty(View sender) {
 		if(PartyService.getStatus() == Status.GUEST || PartyService.getStatus() == Status.HOST){
 			Toast.makeText(MainActivity.this,
@@ -81,10 +88,10 @@ public class MainActivity extends ActionBarActivity {
     	final ProgressDialog loader = ProgressDialog.show(this, "", "Connecting to party, please wait...", true);
         new Thread(new Runnable(){
             public void run() {
-    				createPartyService(false);
+	    		createPartyService(false);
               if(loader!=null){
                 loader.dismiss();}}
-        }).start();   
+        }).start();
     }
     
     
@@ -115,13 +122,15 @@ public class MainActivity extends ActionBarActivity {
     private void createPartyService(boolean isCreator){
 		Intent partyIntent = new Intent(this, PartyService.class); //                          
 		partyIntent.putExtra("isCreator", isCreator);                  //
+		
 		if(!isCreator){
 			partyIntent.putExtra("accessCode", getCodeInput()); //
 			EditText et = (EditText)findViewById(R.id.accessInput);
     	    et.setText("");
 		}
-
+		
 		partyService.initiateParty(partyIntent);
+
 		Intent intent = new Intent(this, PartyActivity.class);
 		startActivity(intent);
     }
