@@ -65,7 +65,7 @@ public class ActionBarActivity extends Activity {
 	        	startActivity(homeIntent);
 	        	return true;
 	        case R.id.leaveParty:
-	        	PartyService.getPartyController().killParty(true);
+	        	PartyService.getPartyController().killParty();
 	        	Intent backToHomeIntent = new Intent(this, MainActivity.class);
 	        	backToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	        	startActivity(backToHomeIntent);

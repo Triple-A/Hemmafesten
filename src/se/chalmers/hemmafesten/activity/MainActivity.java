@@ -117,6 +117,8 @@ public class MainActivity extends ActionBarActivity {
 		partyIntent.putExtra("isCreator", isCreator);                  //
 		if(!isCreator){
 			partyIntent.putExtra("accessCode", getCodeInput()); //
+			EditText et = (EditText)findViewById(R.id.accessInput);
+    	    et.setText("");
 		}
 
 		partyService.initiateParty(partyIntent);

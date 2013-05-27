@@ -81,10 +81,9 @@ public class PartyService extends Service {
 	
 	public void killService(){
 		stopLoop();
-		pc.killParty(status == Status.HOST);
+		pc.killParty();
 		pc = null;
 		am.cancel(pi);
-	    unregisterReceiver(br);
 	    
 		status = Status.FREE;
 	}
@@ -154,9 +153,10 @@ public class PartyService extends Service {
     }
     
     public void stopLoop(){
-    	play = false;
-    	stopForeground(true);
-    	//wl.release();
+    	if(play){
+    		play = false;
+        	stopForeground(true);
+    	}
     }
     
     private Song getNext(){
@@ -184,6 +184,9 @@ public class PartyService extends Service {
     	if((song = getNext()) != null && play){
   		  	playSong(song);
 		}
+    	else{
+    		stopLoop();
+    	}
     }
 
 
@@ -193,11 +196,10 @@ public class PartyService extends Service {
     
     
     private void startNext(long time){
-    	Log.d("next", "nu jävlar");
     	pi = PendingIntent.getBroadcast( this, 0, new Intent("se.chalmers.hemmafesten.service.PartyService&br"),
         		0 );
     	Calendar cal = Calendar.getInstance();
-    	cal.add(Calendar.SECOND, (int)time);
+    	cal.add(Calendar.SECOND, (int)time -2);
     	am.set( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi );
     }
 }
