@@ -3,6 +3,7 @@ package se.chalmers.hemmafesten.adapter;
 import java.util.List;
 
 import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.activity.MainActivity;
 import se.chalmers.hemmafesten.item.SavePartyItem;
 
 import android.app.Activity;
@@ -18,18 +19,33 @@ import android.widget.Toast;
 public class SavedPartiesAdapter extends ArrayAdapter<SavePartyItem> {
 
 	private Context context;
+	private View view;
 	
+	/**
+	 * creates a savedpartiesadapter for a saved party
+	 * @param context
+	 * @param textViewResourceId
+	 * @param items
+	 */
 	public SavedPartiesAdapter(Context context, int textViewResourceId,List<SavePartyItem> items) {
 		super(context, textViewResourceId, items);
 		this.context = context;
 	}
 
+	/**
+	 * holder for the view
+	 * @author AnteKioksy
+	 *
+	 */
 	private class ViewHolder {
 		 Button joinPartyButton;
 	     TextView partyName;
 	     TextView partyDate;
 	}
 	
+	/**
+	 * returns a view for the saved party
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         final SavePartyItem partyItem = getItem(position);

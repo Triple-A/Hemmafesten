@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 public class HelpActivity extends ActionBarActivity {
 
+	/**
+	 * settings for when creating an instance of HelpActivity
+	 * generates html to the view for cdata in strings
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,6 +29,10 @@ public class HelpActivity extends ActionBarActivity {
 		searchHelp.setText(searchResult);
 	}
 
+	/**
+	 * adds title to actionbar and also returns actionbarsettings from 
+	 * super class
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		ActionBar bar = getActionBar();

@@ -18,7 +18,12 @@ public class updatePlaylistTask extends AsyncTask<String, Boolean, List<Song>> {
 	private List<Song> songz;
 	private Party party;
 	
-	
+	/**
+	 * new tast for updating the party list
+	 * @param songz
+	 * @param party
+	 * @param adapter
+	 */
 	public updatePlaylistTask(List<Song> songz, Party party, PartySongAdapter adapter) {
 		super();
 		this.party = party; 
@@ -26,6 +31,9 @@ public class updatePlaylistTask extends AsyncTask<String, Boolean, List<Song>> {
 		this.adapter = adapter;
 	}
 
+	/**
+	 * refresh the list to see if there are any new songs
+	 */
 	protected void onPreExecute() {
 		try {
 			party.refresh();

@@ -22,6 +22,9 @@ public class SavedPartiesActivity extends ActionBarActivity {
 	private SavedPartiesAdapter adapter = null;
 	private ArrayList<SavePartyItem> items;
 	
+	/**
+	 * loads all saved parties
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,9 @@ public class SavedPartiesActivity extends ActionBarActivity {
 		
 	}
 	
-	
+	/**
+	 * get actionbar settings from super class
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);

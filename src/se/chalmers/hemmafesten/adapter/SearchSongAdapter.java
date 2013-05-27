@@ -27,11 +27,22 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
 
 	private Context context;
 	
+	/**
+	 * creates a new searchsongadapter for a result in search
+	 * @param context
+	 * @param textViewResourceId
+	 * @param items
+	 */
 	public SearchSongAdapter(Context context, int textViewResourceId,List<SearchSongItem> items) {
 		super(context, textViewResourceId, items);
 		this.context = context;
 	}
 
+	/**
+	 * holder for the view
+	 * @author AnteKioksy
+	 *
+	 */
 	private class ViewHolder {
 		 Button button;
 	     TextView song;
@@ -39,6 +50,9 @@ public class SearchSongAdapter extends ArrayAdapter<SearchSongItem> {
 	}
 	
 
+	/**
+	 * returns a searchresult item in listview
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         final SearchSongItem songItem = getItem(position);

@@ -26,6 +26,12 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, ArrayList<SearchS
 	private String query;
 	private SearchableActivity searchableActivity;
 	
+	/**
+	 * create a new list view with string for search result
+	 * @param listView
+	 * @param query
+	 * @param searchableActivity
+	 */
 	public RetreiveMusicTask(ListView listView, String query, SearchableActivity searchableActivity){
 		super();
 		this.listView = listView;
@@ -83,7 +89,7 @@ public class RetreiveMusicTask extends AsyncTask<String, Void, ArrayList<SearchS
 	 }
 	 
 	/**
-	 * updatera listViewn
+	 * update listview
 	 */
 	 @Override
 	 protected void onPostExecute(ArrayList<SearchSongItem> songz){

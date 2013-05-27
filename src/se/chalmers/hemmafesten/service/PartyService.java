@@ -4,6 +4,7 @@ package se.chalmers.hemmafesten.service;
 import java.util.Calendar;
 
 import se.chalmers.hemmafesten.R;
+import se.chalmers.hemmafesten.activity.MainActivity;
 import se.chalmers.hemmafesten.activity.PartyActivity;
 import se.chalmers.hemmafesten.model.Song;
 import android.app.AlarmManager;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class PartyService extends Service {

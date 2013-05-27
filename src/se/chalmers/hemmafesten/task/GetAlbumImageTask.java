@@ -15,6 +15,9 @@ import android.widget.ImageView;
 
 public class GetAlbumImageTask extends AsyncTask<String,Void,String>{
 
+	/**
+	 * get source for album and save it as a string
+	 */
 	@Override
 	protected String doInBackground(String... urls) {
         String url = urls[0];

@@ -16,17 +16,31 @@ public class PartySongAdapter extends ArrayAdapter<Song> {
 
 private Context context;
 	
+   /**
+    * creates a new partysongadapter for song in party
+    * @param context
+    * @param textViewResourceId
+    * @param items
+    */
 	public PartySongAdapter(Context context, int textViewResourceId,List<Song> items) {
 		super(context, textViewResourceId, items);
 		this.context = context;
 	}
 
+	/**
+	 * holder for the view
+	 * @author AnteKioksy
+	 *
+	 */
 	private class ViewHolder {
 	     TextView song;
 	     TextView artist;
 	}
 	
 
+	/**
+	 * returns a listview item with song for the party
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         final Song song = getItem(position);

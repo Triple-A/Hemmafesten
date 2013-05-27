@@ -5,6 +5,7 @@ import com.parse.ParseException;
 
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.R.color;
+import se.chalmers.hemmafesten.model.Model;
 import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
@@ -101,7 +102,8 @@ public class MainActivity extends ActionBarActivity {
 	 * @param sender
 	 */
     public void clickConnect(View sender){
-    	createPartyService(false); 
+    	//WwD4JWNrdi
+        createPartyService(false);
     }
     
     
@@ -143,6 +145,26 @@ public class MainActivity extends ActionBarActivity {
 		
 		if(!isCreator){
 			partyIntent.putExtra("accessCode", getCodeInput()); //
+			EditText et = (EditText)findViewById(R.id.accessInput);
+    	    et.setText("");
+		}
+		final ProgressDialog loader = ProgressDialog.show(this, "", "Connecting to party, please wait...", true);
+        new Thread(new Runnable(){
+            public void run() {
+            	partyService.initiateParty(partyIntent);
+        		Intent intent = new Intent(MainActivity.this, PartyActivity.class);
+        		startActivity(intent);
+              if(loader!=null){
+                loader.dismiss();}}
+        }).start();
+    }
+    
+    public void reJoinParty(boolean isCreator, String accessCode){
+    	final Intent partyIntent = new Intent(this, PartyService.class); //                          
+		partyIntent.putExtra("isCreator", isCreator);                  //
+		
+		if(!isCreator){
+			partyIntent.putExtra("accessCode", accessCode); //
 			EditText et = (EditText)findViewById(R.id.accessInput);
     	    et.setText("");
 		}

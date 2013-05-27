@@ -15,7 +15,9 @@ import android.widget.ListView;
 
 public class SearchableActivity extends ActionBarActivity {
 		
-	
+	/**
+	 * settings for creating an instance
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,6 +25,9 @@ public class SearchableActivity extends ActionBarActivity {
 		handleIntent(getIntent());
 	}
 
+	/**
+	 * actionbar settings from superclass
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return super.onCreateOptionsMenu(menu);

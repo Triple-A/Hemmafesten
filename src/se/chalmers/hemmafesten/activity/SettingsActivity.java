@@ -89,6 +89,9 @@ public class SettingsActivity extends PreferenceActivity{
 	
 	}
 
+	/**
+	 * clear the search history
+	 */
 	public void clickClearHistory(){
 		SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
 		        SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
@@ -98,6 +101,9 @@ public class SettingsActivity extends PreferenceActivity{
 				Toast.LENGTH_SHORT).show();
 	}
 	
+	/**
+	 * remove all saved parties
+	 */
 	public void removeSavedParties(){
 			getApplicationContext().deleteFile("savedParties.txt");
 			Toast.makeText(thisActivity,
@@ -141,12 +147,18 @@ public class SettingsActivity extends PreferenceActivity{
 		}
 	}
 	
+	/**
+	 * settings for action bar
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
 	    return true;
 	}
 	
+	/**
+	 * actionbar item selected
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch(item.getItemId()) {
