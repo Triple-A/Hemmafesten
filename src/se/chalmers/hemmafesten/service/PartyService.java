@@ -169,7 +169,7 @@ public class PartyService extends Service {
 		String uri = song.getSpotifyURI();
 	    Log.d("playSong", song.toString() + "     " +Double.valueOf(song.getLength()).longValue());
 	    	
-	    Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse("spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe"));
+	    Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri));
 	    launcher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	    
 	    startNext(Double.valueOf(song.getLength()).longValue());
