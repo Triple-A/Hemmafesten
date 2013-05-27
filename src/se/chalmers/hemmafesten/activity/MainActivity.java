@@ -1,10 +1,6 @@
 package se.chalmers.hemmafesten.activity;
 
-import com.parse.Parse;
-import com.parse.ParseException;
-
 import se.chalmers.hemmafesten.R;
-import se.chalmers.hemmafesten.model.Party;
 import se.chalmers.hemmafesten.service.PartyService;
 import se.chalmers.hemmafesten.service.PartyService.Status;
 import se.chalmers.zxing.IntentIntegrator;
@@ -17,12 +13,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
