@@ -209,7 +209,7 @@ public class PartyActivity extends ActionBarActivity {
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
-			timer.cancel();
+			
 			partyService = null;
 		}
 	};
@@ -227,6 +227,7 @@ public class PartyActivity extends ActionBarActivity {
 	 */
 	void doUnbindService() {
 		if (psIsBound) {
+			timer.cancel();
 			unbindService(mConnection);
 			psIsBound = false;
 		}
@@ -270,6 +271,11 @@ public class PartyActivity extends ActionBarActivity {
 	
 	protected void onStop(){
 		super.onStop();
+		doUnbindService();
+	}
+	
+	protected void onDestroy(){
+		super.onDestroy();
 		doUnbindService();
 	}
 
