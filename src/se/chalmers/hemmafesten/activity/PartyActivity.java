@@ -47,6 +47,7 @@ public class PartyActivity extends ActionBarActivity {
 	private ArrayList<SavePartyItem> items;
 	private PartySongAdapter adapter = null;
 	private ImageButton playButton;
+	private Timer timer;
 	
 
 	/**
@@ -64,12 +65,13 @@ public class PartyActivity extends ActionBarActivity {
 	private void loadList(){
 		long delay = 5000;
 		long period = 1000;
-		Timer timer = new Timer();
+		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask(){
 			public void run(){
 		        new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
 			}
 		},delay,period);
+		
 
 	}
 	
@@ -207,6 +209,7 @@ public class PartyActivity extends ActionBarActivity {
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
+			timer.cancel();
 			partyService = null;
 		}
 	};
