@@ -11,6 +11,8 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import se.chalmers.hemmafesten.R;
 import se.chalmers.hemmafesten.adapter.PartySongAdapter;
@@ -60,7 +62,15 @@ public class PartyActivity extends ActionBarActivity {
 	 * loads playlist via ASyncTask
 	 */
 	private void loadList(){
-        new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
+		long delay = 5000;
+		long period = 1000;
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask(){
+			public void run(){
+		        new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
+			}
+		},delay,period);
+
 	}
 	
 	/** 
