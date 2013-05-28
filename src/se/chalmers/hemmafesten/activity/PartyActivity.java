@@ -60,9 +60,7 @@ public class PartyActivity extends ActionBarActivity {
 	 * loads playlist via ASyncTask
 	 */
 	private void loadList(){
-		if(psIsBound){
-			new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
-		}
+        new updatePlaylistTask(songz, PartyService.getPartyController().getParty(), adapter).execute();
 	}
 	
 	/** 

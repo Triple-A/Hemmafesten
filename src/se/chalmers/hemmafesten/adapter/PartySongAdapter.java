@@ -63,6 +63,8 @@ private Context context;
 		holder.artist.setText(song.getArtistName());
 		if(song.getIsPlayed()==true){
 			convertView.setBackgroundColor(Color.parseColor("#E8E6E6"));
+		}else{
+			convertView.setBackgroundColor(Color.WHITE);
 		}
 		
         
